@@ -3,5 +3,5 @@
 #include<stdio.h>
 void main()
 {
-	printf("euid is %d \n",geteuid());
+	printf("geteuid is %d \n",geteuid());
 }
