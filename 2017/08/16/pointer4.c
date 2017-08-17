@@ -13,7 +13,7 @@ int main()
         "Hi,good morning.",
         "Hello World"
     };
-    char s[80];
+    char s[80] = {'\0'};
     strcat(s, str[0]); //也可写成 strcpy(s,*str);
     strcat(s, str[1]); //也可写成 strcpy(s,*(str+1));
     strcat(s, str[2]); //也可写成 strcpy(s,*(str+2));
