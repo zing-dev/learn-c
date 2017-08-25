@@ -41,11 +41,11 @@ int watch_inotify_events(int fd)
         {
             if(event->mask & IN_CREATE)
             {
-                printf("create file: %s\n",event->name);
+                printf("zing --> create file: %s\n",event->name);
             }
             else
             {
-                printf("delete file: %s\n",event->name);
+                printf("zing --> delete file: %s\n",event->name);
             }
         }
 
