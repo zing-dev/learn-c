@@ -1,0 +1,31 @@
+/Applications/Snip.app/Contents/MacOS/Snip
+/Applications/VirtualBox.app/Contents/MacOS/VBoxHeadless
+/Applications/VirtualBox.app/Contents/MacOS/VBoxNetAdpCtl
+/Applications/VirtualBox.app/Contents/MacOS/VBoxNetDHCP
+/Applications/VirtualBox.app/Contents/MacOS/VBoxNetNAT
+/Applications/VirtualBox.app/Contents/MacOS/VirtualBox
+/Applications/VirtualBox.app/Contents/MacOS/VirtualBoxVM
+/bin/ps
+/Library/Application Support/ShadowsocksX/shadowsocks_sysconf
+/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/MacOS/ARDAgent
+/Users/zhangrongxiang/CLionProjects/learn-c/2017/08/18/test.txt
+/Users/zhangrongxiang/Library/Application Support/byteexec/pac-cmd
+/usr/bin/at
+/usr/bin/atq
+/usr/bin/atrm
+/usr/bin/batch
+/usr/bin/crontab
+/usr/bin/login
+/usr/bin/newgrp
+/usr/bin/quota
+/usr/bin/su
+/usr/bin/sudo
+/usr/bin/top
+/usr/bin/wall
+/usr/bin/write
+/usr/libexec/authopen
+/usr/libexec/security_authtrampoline
+/usr/sbin/postdrop
+/usr/sbin/postqueue
+/usr/sbin/traceroute
+/usr/sbin/traceroute6
