@@ -15,9 +15,13 @@ MYSQL_ROW g_row; // 字符串数组，mysql 记录行
 #define MAX_BUF_SIZE 1024 // 缓冲区最大字节数
 
 const char *g_host_name = "localhost";
+
 const char *g_user_name = "root";
+
 const char *g_password = "root";
+
 const char *g_db_name = "demo";
+
 const unsigned int g_db_port = 3306;
 
 void print_mysql_error(const char *msg)
@@ -61,12 +65,12 @@ int main(void)
     print_mysql_error(NULL);
 
     char sql[MAX_BUF_SIZE];
-	for(int i=0; i < 100; i++){
-		memset(sql,0,MAX_BUF_SIZE);
-		sprintf(sql, "INSERT INTO `stu`(`name`,`age`,`qq`) VALUES('zing->%d',%d,'%d')",i,10 + i,5994909 + i);
-		if (executesql(sql))
-			print_mysql_error(NULL);
-	}
+    for (int i = 0; i < 100; i++) {
+        memset(sql, 0, MAX_BUF_SIZE);
+        sprintf(sql, "INSERT INTO `stu`(`name`,`age`,`qq`) VALUES('zing->%d',%d,'%d')", i, 10 + i, 5994909 + i);
+        if (executesql(sql))
+            print_mysql_error(NULL);
+    }
     //sprintf(sql, "INSERT INTO `stu`(`name`,`age`,`qq`) VALUES('zhangrxiang',22,'599490911')");
     //if (executesql(sql))
     //    print_mysql_error(NULL);
