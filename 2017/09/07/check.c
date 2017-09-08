@@ -36,21 +36,30 @@ int main(int argc, char **argv) {
 
     addr = (struct sockaddr_in *) &(ifr.ifr_addr);
     address = inet_ntoa(addr->sin_addr);
-    printf("inet addr: %s ", address);
+    printf("inet addr: %s \n", address);
 
     if (ioctl(sockfd, SIOCGIFBRDADDR, &ifr) == -1)
         perror("ioctl error"), exit(1);
 
     addr = (struct sockaddr_in *) &ifr.ifr_broadaddr;
     address = inet_ntoa(addr->sin_addr);
-    printf("broad addr: %s ", address);
+    printf("broad addr: %s \n", address);
 
     if (ioctl(sockfd, SIOCGIFNETMASK, &ifr) == -1)
         perror("ioctl error"), exit(1);
     addr = (struct sockaddr_in *) &ifr.ifr_addr;
     address = inet_ntoa(addr->sin_addr);
-    printf("inet mask: %s ", address);
+    printf("inet mask: %s \n", address);
 
+    if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) == -1)
+        perror("ioctl error"), exit(1);
+    printf("ifr_hwaddr : %02x:%02x:%02x:%02x:%02x:%02x\n",
+           (unsigned char) ifr.ifr_hwaddr.sa_data[0],
+           (unsigned char) ifr.ifr_hwaddr.sa_data[1],
+           (unsigned char) ifr.ifr_hwaddr.sa_data[2],
+           (unsigned char) ifr.ifr_hwaddr.sa_data[3],
+           (unsigned char) ifr.ifr_hwaddr.sa_data[4],
+           (unsigned char) ifr.ifr_hwaddr.sa_data[5]);
     printf("\n");
     exit(0);
 }
