@@ -6,15 +6,15 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-
-   config.vm.define :jessie do |jessie|
-    jessie.vm.provider "virtualbox" do |v|
-          v.customize ["modifyvm", :id, "--name", "jessie", "--memory", "512"]
+  
+   config.vm.define :ubuntu do |ubuntu|
+    ubuntu.vm.provider "virtualbox" do |v|
+          v.customize ["modifyvm", :id, "--name", "ubuntu", "--memory", "512"]
     end
-    jessie.vm.box = "debian/jessie64"
-    jessie.vm.hostname = "debian"
-    jessie.vm.network :private_network, ip: "192.168.33.10"
-    jessie.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
+    ubuntu.vm.box = "laravel/homestead"
+    ubuntu.vm.hostname = "ubuntu"
+    ubuntu.vm.network :private_network, ip: "192.168.33.10"
+    ubuntu.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
   end
 
   config.vm.define :l1 do |l1|
@@ -37,5 +37,14 @@ Vagrant.configure("2") do |config|
     l2.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
   end
 
+  config.vm.define :jessie do |jessie|
+    jessie.vm.provider "virtualbox" do |v|
+          v.customize ["modifyvm", :id, "--name", "jessie", "--memory", "512"]
+    end
+    jessie.vm.box = "debian/jessie64"
+    jessie.vm.hostname = "debian"
+    jessie.vm.network :private_network, ip: "192.168.33.9"
+    #jessie.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
+  end
   
 end
