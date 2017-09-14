@@ -55,3 +55,4 @@ cmake-build-debug/
 /udp-demo/client
 /udp-demo/server
 /string/1
+.vagrant/
