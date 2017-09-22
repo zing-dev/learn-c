@@ -20,6 +20,8 @@ int main() {
     y2k.tm_mon = info->tm_mon;
     y2k.tm_mday = info->tm_mday;
     seconds = difftime(mktime(&y2k), timer);
+    if(seconds < 0)
+        seconds += 3600 *24;
     int h = (int) seconds / 3600;
     int m = (int) ((seconds - h * 3600) / 60);
     int s = (int) seconds % 60;
