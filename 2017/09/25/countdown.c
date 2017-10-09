@@ -8,7 +8,7 @@
 #include <time.h>       /* time_t, struct tm, difftime, time, mktime */
 #include <unistd.h>
 
-void print_time(){
+void print_time() {
     time_t timer;
     struct tm y2k = {0}, *info;
     double seconds;
@@ -22,8 +22,8 @@ void print_time(){
     y2k.tm_mon = info->tm_mon;
     y2k.tm_mday = info->tm_mday;
     seconds = difftime(mktime(&y2k), timer);
-    if(seconds < 0)
-        seconds += 3600 *24;
+    if (seconds < 0)
+        seconds += 3600 * 24;
     int h = (int) seconds / 3600;
     int m = (int) ((seconds - h * 3600) / 60);
     int s = (int) seconds % 60;
@@ -35,14 +35,15 @@ void print_time(){
            info->tm_min,
            info->tm_sec
     );
-    if((int)seconds % 3600 == 0){
+    if ((int) seconds % 3600 == 0) {
         printf("还剩%d小时下班了!\n", h);
-    } else{
+    } else {
         printf("还剩%d小时%d分钟%d秒下班了!\n", h, m, s);
     }
 }
+
 void main() {
-    while (1){
+    while (1) {
         print_time();
         sleep(2);
     }
