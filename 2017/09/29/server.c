@@ -49,7 +49,7 @@ int main() {
     s_addr_in.sin_family = AF_INET;
     s_addr_in.sin_addr.s_addr = htonl(INADDR_ANY);  //trans addr from uint32_t host byte order to network byte order.
     s_addr_in.sin_port = htons(SOCK_PORT);          //trans port from uint16_t host byte order to network byte order.
-    fd_temp = bind(sockfd_server, (struct scokaddr *) (&s_addr_in), sizeof(s_addr_in));
+    fd_temp = bind(sockfd_server, (struct sockaddr *) (&s_addr_in), sizeof(s_addr_in));
     if (fd_temp == -1) {
         fprintf(stderr, "bind error!\n");
         exit(1);
@@ -67,7 +67,7 @@ int main() {
         client_length = sizeof(s_addr_client);
 
         //Block here. Until server accpets a new connection.
-        sockfd = accept(sockfd_server, (struct sockaddr_ *) (&s_addr_client), (socklen_t * )(&client_length));
+        sockfd = accept(sockfd_server, (struct sockaddr *) (&s_addr_client), (socklen_t * )(&client_length));
         if (sockfd == -1) {
             fprintf(stderr, "Accept error!\n");
             continue;                               //ignore current socket ,continue while loop.
