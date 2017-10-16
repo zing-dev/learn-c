@@ -15,6 +15,8 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.hostname = "ubuntu"
     ubuntu.vm.network :private_network, ip: "192.168.33.10"
     ubuntu.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
+    #ubuntu.vm.synced_folder "E:\\ClionProjects", "/home/vagrant"
+
   end
 
   config.vm.define :l1 do |l1|
@@ -46,5 +48,28 @@ Vagrant.configure("2") do |config|
     jessie.vm.network :private_network, ip: "192.168.33.9"
     #jessie.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
   end
-  
+  config.vm.define :debian do |debian|
+    debian.vm.provider "virtualbox" do |v|
+          v.customize ["modifyvm", :id, "--name", "debian", "--memory", "512"]
+    end
+    # debian.vm.box = "debian/jessie64"
+    debian.vm.box = "debian/contrib-jessie64"
+    debian.vm.hostname = "debian"
+    debian.vm.network :public_network, ip: "192.168.10.210"
+    debian.vm.network :private_network, ip: "192.168.33.13"
+    debian.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
+  end
+  config.vm.define :debian2 do |debian2|
+    debian2.vm.provider "virtualbox" do |v|
+          v.customize ["modifyvm", :id, "--name", "debian2", "--memory", "512"]
+    end
+    # debian2.vm.box = "debian/jessie64"
+    debian2.vm.box = "debian/contrib-jessie64"
+    debian2.vm.hostname = "debian2"
+    debian2.vm.network :public_network, ip: "192.168.10.211"
+    debian2.vm.network :private_network, ip: "192.168.33.14"
+    debian2.vm.network :private_network, ip: "10.158.175.238"
+    debian2.vm.synced_folder "E:\\ClionProjects", "/home/vagrant/cproject"
+  end
+
 end
