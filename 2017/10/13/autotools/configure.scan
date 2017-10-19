@@ -1,0 +1,35 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+# 需要的最低autoconf版本，如：AC_PREREQ([2.65])
+AC_PREREQ([2.69])
+
+# autoconf 强制性初始化。告诉autoconf包名称，版本，一个bug报告emall。
+AC_INIT([test[, [1.0], [599490911@qq.com])
+
+# 一个安全的检查。FILE将是一个发布的源文件。
+# 这让configure脚本确保自己运行在正确的目录中。如：AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([get.c])
+
+AC_CONFIG_HEADERS([config.h])
+
+
+# 配置辅助脚本位置，如install-sh和depcomp等。如：AC_CONFIG_AUX_DIR([build-aux])
+# AC_CONFIG_AUX_DIR(DIRECTORY)
+
+# 编译器检测。
+# AC_PROG_CC, AC_PROG_CXX, AC_PROG_F77, …
+
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_CHECK_HEADERS([stdlib.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+AC_OUTPUT
