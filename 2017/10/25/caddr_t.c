@@ -20,6 +20,8 @@ void dumpbuf(char *data, int len) {
     size_t buflen;
     int i = 0, j = 0;
     buflen = (len * 2) + (len / 4) + (len / 32) + 3;
+    printf("buflen %d\n", buflen);
+    printf("len %d\n", len);
     buf = malloc(buflen);
     while (j < len) {
         if (j % 32 == 0)
