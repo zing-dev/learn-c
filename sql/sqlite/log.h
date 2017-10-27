@@ -15,6 +15,7 @@
 sqlite3 *db;
 char *zErrMsg = 0;
 int rc;
+
 typedef struct _DB_LOG_TAG {
     char name[16];
     int priority;
@@ -78,7 +79,7 @@ void insert(DB_LOG db_log) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "INSERT INTO DB_LOG successfully\n");
+//        fprintf(stdout, "INSERT INTO DB_LOG successfully\n");
     }
 }
 
@@ -89,7 +90,7 @@ int selectTable() {
     int j = 0;
     char *sql;
     char *zErrMsg;
-    sql = "SELECT * FROM DB_LOG";
+    sql = "SELECT * FROM DB_LOG  order  by id desc  limit 10 ";
 
 //    int sqlite3_get_table(
 //            sqlite3 *db,          /* An open database */
