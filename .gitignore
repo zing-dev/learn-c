@@ -79,3 +79,6 @@ cmake-build-debug/
 
 client
 server
+
+2017/10/26/WriteLog.log
+*.db
