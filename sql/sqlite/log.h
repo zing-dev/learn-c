@@ -44,6 +44,15 @@ DB_LOG_TAG db_log_tag[DB_LEVEL_BASE + 1] = {
         {"INVALID", DB_LEVEL_BASE},
 };
 
+void createTable();
+
+void insert(DB_LOG db_log);
+
+int selectTable();
+
+int getLength();
+
+int getMoreLogs(void *data, int *num);
 
 void createTable() {
 
@@ -88,20 +97,14 @@ int selectTable() {
     char **azResult = 0;
     int i = 0;
     int j = 0;
-    char *sql;
+    char sql[100];
     char *zErrMsg;
-    sql = "SELECT * FROM DB_LOG  order  by id desc  limit 10 ";
-
-//    int sqlite3_get_table(
-//            sqlite3 *db,          /* An open database */
-//            const char *zSql,     /* SQL to be evaluated */
-//            char ***pazResult,    /* Results of the query */
-//            int *pnRow,           /* Number of result rows written here */
-//            int *pnColumn,        /* Number of result columns written here */
-//            char **pzErrmsg       /* Error msg written here */
-//    );
-//    void sqlite3_free_table(char **result);
-
+    int db_len = getLength();
+    if (db_len > 50) {
+        db_len = 20;
+    }
+    printf("------%d-------\n", db_len);
+    sprintf(sql, "SELECT * FROM DB_LOG  order  by id desc  limit %d", db_len);
     if (SQLITE_OK != sqlite3_get_table(db, sql, &azResult, &nrow, &ncolumn, &zErrMsg)) {
         printf("operate failed: %s\n", zErrMsg);
     }
@@ -109,18 +112,13 @@ int selectTable() {
     DB_LOG db_log[nrow];
     memset(db_log, 0, sizeof(db_log[50]));
     printf("The result of querying is :\n");
-
     for (i = 0; i < (nrow + 1) * ncolumn; i++) {
-//        printf("azResult[%d] = %s\n", i, azResult[i]);
         if (i % ncolumn == 0 && i >= ncolumn) {
-//            printf("i is %d\n",i);
-//            printf("azResult[i] is %d\n", atoi(azResult[i]));
             db_log[j].id = atoi(azResult[i]);
             strcpy(db_log[j].content, azResult[i + 1]);
             db_log[j].level = atoi(azResult[i + 2]);
             db_log[j].time = (time_t) atoi(azResult[i + 3]);
             j++;
-//            printf("%d\n",db_log[i].time);
         }
     }
     for (j = 0; j < nrow; ++j) {
@@ -135,4 +133,47 @@ int selectTable() {
     return 0;
 }
 
+int getLength() {
+    int nrow = 0, ncolumn = 0;
+    char **azResult = 0;
+    int i = 0;
+    int j = 0;
+    char *sql;
+    char *zErrMsg;
+    sql = "SELECT count(*) FROM DB_LOG";
+    if (SQLITE_OK != sqlite3_get_table(db, sql, &azResult, &nrow, &ncolumn, &zErrMsg)) {
+        printf("operate failed: %s\n", zErrMsg);
+    }
+    sqlite3_free_table(azResult);
+    return atoi(azResult[1]);
+}
+
+int getMoreLogs(void *data, int *num) {
+    int nrow = 0, ncolumn = 0;
+    char **azResult = 0;
+    int i = 0;
+    int j = 0;
+    char sql[100];
+    char *zErrMsg;
+    DB_LOG *db_log;
+
+    int db_len = getLength();
+    if (db_len > 50) {
+        db_len = 20;
+    }
+    *num = db_len;
+    sprintf(sql, "SELECT * FROM DB_LOG  order  by id desc  limit %d", db_len);
+    if (SQLITE_OK != sqlite3_get_table(db, sql, &azResult, &nrow, &ncolumn, &zErrMsg)) {
+        printf("operate failed: %s\n", zErrMsg);
+    }
+    for (i = 0; i < nrow; i++) {
+        db_log = (DB_LOG *) (data + i * sizeof(DB_LOG));
+        db_log->id = atoi(azResult[(i + 1) * 4]);
+        memcpy(db_log->content, azResult[(i + 1) * 4 + 1], strlen(azResult[(i + 1) * 4 + 1]));
+        db_log->level = atoi(azResult[(i + 1) * 4 + 2]);
+        db_log->time = atol(azResult[(i + 1) * 4 + 3]);
+    }
+    sqlite3_free_table(azResult);
+    return 1;
+}
 #endif //LEARN_C_LOG_H
