@@ -36,5 +36,7 @@ int main() {
     printf("%d\n", 0x00000037 - 0x00000035); //24
     printf("%d\n", 0x00000038 - 0x00000035); //24
 
+    printf("HEAD_DB_LOG - 0x00000035  %d\n", HEAD_DB_LOG - 0x00000035); //24
+
 
 }
