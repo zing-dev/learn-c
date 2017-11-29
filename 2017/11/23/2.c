@@ -43,5 +43,6 @@ int main() {
     }
     printf("unsigned int   --> %d\n", sizeof(unsigned int));
     printf("unsigned char  --> %d\n", sizeof(unsigned char));
+    printf("unsigned char  --> %d\n", sizeof(cids));
 
 }
