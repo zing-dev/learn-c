@@ -1,130 +1,122 @@
-#include "stdio.h"    
-#include "stdlib.h"   
-#include "io.h"  
-#include "math.h"  
-#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 #define OK 1
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXSIZE 100 /* ´æ´¢¿Õ¼ä³õÊ¼·ÖÅäÁ¿ */
+#define MAXSIZE 100 /* å­˜å‚¨ç©ºé—´åˆå§‹åˆ†é…é‡ */
 
-typedef int Status;	/* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */ 
+typedef int Status;    /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 
-/* ¶ş²æÊ÷µÄ¶ş²æÁ´±í½áµã½á¹¹¶¨Òå */
-typedef  struct BiTNode	/* ½áµã½á¹¹ */
+/* äºŒå‰æ ‘çš„äºŒå‰é“¾è¡¨ç»“ç‚¹ç»“æ„å®šä¹‰ */
+typedef struct BiTNode    /* ç»“ç‚¹ç»“æ„ */
 {
-	int data;	/* ½áµãÊı¾İ */
-	struct BiTNode *lchild, *rchild;	/* ×óÓÒº¢×ÓÖ¸Õë */
+    int data;    /* ç»“ç‚¹æ•°æ® */
+    struct BiTNode *lchild, *rchild;    /* å·¦å³å­©å­æŒ‡é’ˆ */
 } BiTNode, *BiTree;
 
 
-/* µİ¹é²éÕÒ¶ş²æÅÅĞòÊ÷TÖĞÊÇ·ñ´æÔÚkey, */
-/* Ö¸ÕëfÖ¸ÏòTµÄË«Ç×£¬Æä³õÊ¼µ÷ÓÃÖµÎªNULL */
-/* Èô²éÕÒ³É¹¦£¬ÔòÖ¸ÕëpÖ¸Ïò¸ÃÊı¾İÔªËØ½áµã£¬²¢·µ»ØTRUE */
-/* ·ñÔòÖ¸ÕëpÖ¸Ïò²éÕÒÂ·¾¶ÉÏ·ÃÎÊµÄ×îºóÒ»¸ö½áµã²¢·µ»ØFALSE */
-Status SearchBST(BiTree T, int key, BiTree f, BiTree *p) 
-{  
-	if (!T)	/*  ²éÕÒ²»³É¹¦ */
-	{ 
-		*p = f;  
-		return FALSE; 
-	}
-	else if (key==T->data) /*  ²éÕÒ³É¹¦ */
-	{ 
-		*p = T;  
-		return TRUE; 
-	} 
-	else if (key<T->data) 
-		return SearchBST(T->lchild, key, T, p);  /*  ÔÚ×ó×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
-	else  
-		return SearchBST(T->rchild, key, T, p);  /*  ÔÚÓÒ×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
+/* é€’å½’æŸ¥æ‰¾äºŒå‰æ’åºæ ‘Tä¸­æ˜¯å¦å­˜åœ¨key, */
+/* æŒ‡é’ˆfæŒ‡å‘Tçš„åŒäº²ï¼Œå…¶åˆå§‹è°ƒç”¨å€¼ä¸ºNULL */
+/* è‹¥æŸ¥æ‰¾æˆåŠŸï¼Œåˆ™æŒ‡é’ˆpæŒ‡å‘è¯¥æ•°æ®å…ƒç´ ç»“ç‚¹ï¼Œå¹¶è¿”å›TRUE */
+/* å¦åˆ™æŒ‡é’ˆpæŒ‡å‘æŸ¥æ‰¾è·¯å¾„ä¸Šè®¿é—®çš„æœ€åä¸€ä¸ªç»“ç‚¹å¹¶è¿”å›FALSE */
+Status SearchBST(BiTree T, int key, BiTree f, BiTree *p) {
+    if (!T)    /*  æŸ¥æ‰¾ä¸æˆåŠŸ */
+    {
+        *p = f;
+        return FALSE;
+    } else if (key == T->data) /*  æŸ¥æ‰¾æˆåŠŸ */
+    {
+        *p = T;
+        return TRUE;
+    } else if (key < T->data)
+        return SearchBST(T->lchild, key, T, p);  /*  åœ¨å·¦å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
+    else
+        return SearchBST(T->rchild, key, T, p);  /*  åœ¨å³å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
 }
 
 
-/*  µ±¶ş²æÅÅĞòÊ÷TÖĞ²»´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØÊ±£¬ */
-/*  ²åÈëkey²¢·µ»ØTRUE£¬·ñÔò·µ»ØFALSE */
-Status InsertBST(BiTree *T, int key) 
-{  
-	BiTree p,s;
-	if (!SearchBST(*T, key, NULL, &p)) /* ²éÕÒ²»³É¹¦ */
-	{
-		s = (BiTree)malloc(sizeof(BiTNode));
-		s->data = key;  
-		s->lchild = s->rchild = NULL;  
-		if (!p) 
-			*T = s;			/*  ²åÈësÎªĞÂµÄ¸ù½áµã */
-		else if (key<p->data) 
-			p->lchild = s;	/*  ²åÈësÎª×óº¢×Ó */
-		else 
-			p->rchild = s;  /*  ²åÈësÎªÓÒº¢×Ó */
-		return TRUE;
-	} 
-	else 
-		return FALSE;  /*  Ê÷ÖĞÒÑÓĞ¹Ø¼ü×ÖÏàÍ¬µÄ½áµã£¬²»ÔÙ²åÈë */
+/*  å½“äºŒå‰æ’åºæ ‘Tä¸­ä¸å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ æ—¶ï¼Œ */
+/*  æ’å…¥keyå¹¶è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE */
+Status InsertBST(BiTree *T, int key) {
+    BiTree p, s;
+    if (!SearchBST(*T, key, NULL, &p)) /* æŸ¥æ‰¾ä¸æˆåŠŸ */
+    {
+        s = (BiTree) malloc(sizeof(BiTNode));
+        s->data = key;
+        s->lchild = s->rchild = NULL;
+        if (!p)
+            *T = s;            /*  æ’å…¥sä¸ºæ–°çš„æ ¹ç»“ç‚¹ */
+        else if (key < p->data)
+            p->lchild = s;    /*  æ’å…¥sä¸ºå·¦å­©å­ */
+        else
+            p->rchild = s;  /*  æ’å…¥sä¸ºå³å­©å­ */
+        return TRUE;
+    } else
+        return FALSE;  /*  æ ‘ä¸­å·²æœ‰å…³é”®å­—ç›¸åŒçš„ç»“ç‚¹ï¼Œä¸å†æ’å…¥ */
 }
 
-/* ´Ó¶ş²æÅÅĞòÊ÷ÖĞÉ¾³ı½áµãp£¬²¢ÖØ½ÓËüµÄ×ó»òÓÒ×ÓÊ÷¡£ */
-Status Delete(BiTree *p)
-{
-	BiTree q,s;
-	if((*p)->rchild==NULL) /* ÓÒ×ÓÊ÷¿ÕÔòÖ»ĞèÖØ½ÓËüµÄ×ó×ÓÊ÷£¨´ıÉ¾½áµãÊÇÒ¶×ÓÒ²×ß´Ë·ÖÖ§) */
-	{
-		q=*p; *p=(*p)->lchild; free(q);
-	}
-	else if((*p)->lchild==NULL) /* Ö»ĞèÖØ½ÓËüµÄÓÒ×ÓÊ÷ */
-	{
-		q=*p; *p=(*p)->rchild; free(q);
-	}
-	else /* ×óÓÒ×ÓÊ÷¾ù²»¿Õ */
-	{
-		q=*p; s=(*p)->lchild;
-		while(s->rchild) /* ×ª×ó£¬È»ºóÏòÓÒµ½¾¡Í·£¨ÕÒ´ıÉ¾½áµãµÄÇ°Çı£© */
-		{
-			q=s;
-			s=s->rchild;
-		}
-		(*p)->data=s->data; /*  sÖ¸Ïò±»É¾½áµãµÄÖ±½ÓÇ°Çı£¨½«±»É¾½áµãÇ°ÇıµÄÖµÈ¡´ú±»É¾½áµãµÄÖµ£© */
-		if(q!=*p)
-			q->rchild=s->lchild; /*  ÖØ½ÓqµÄÓÒ×ÓÊ÷ */ 
-		else
-			q->lchild=s->lchild; /*  ÖØ½ÓqµÄ×ó×ÓÊ÷ */
-		free(s);
-	}
-	return TRUE;
+/* ä»äºŒå‰æ’åºæ ‘ä¸­åˆ é™¤ç»“ç‚¹pï¼Œå¹¶é‡æ¥å®ƒçš„å·¦æˆ–å³å­æ ‘ã€‚ */
+Status Delete(BiTree *p) {
+    BiTree q, s;
+    if ((*p)->rchild == NULL) /* å³å­æ ‘ç©ºåˆ™åªéœ€é‡æ¥å®ƒçš„å·¦å­æ ‘ï¼ˆå¾…åˆ ç»“ç‚¹æ˜¯å¶å­ä¹Ÿèµ°æ­¤åˆ†æ”¯) */
+    {
+        q = *p;
+        *p = (*p)->lchild;
+        free(q);
+    } else if ((*p)->lchild == NULL) /* åªéœ€é‡æ¥å®ƒçš„å³å­æ ‘ */
+    {
+        q = *p;
+        *p = (*p)->rchild;
+        free(q);
+    } else /* å·¦å³å­æ ‘å‡ä¸ç©º */
+    {
+        q = *p;
+        s = (*p)->lchild;
+        while (s->rchild) /* è½¬å·¦ï¼Œç„¶åå‘å³åˆ°å°½å¤´ï¼ˆæ‰¾å¾…åˆ ç»“ç‚¹çš„å‰é©±ï¼‰ */
+        {
+            q = s;
+            s = s->rchild;
+        }
+        (*p)->data = s->data; /*  sæŒ‡å‘è¢«åˆ ç»“ç‚¹çš„ç›´æ¥å‰é©±ï¼ˆå°†è¢«åˆ ç»“ç‚¹å‰é©±çš„å€¼å–ä»£è¢«åˆ ç»“ç‚¹çš„å€¼ï¼‰ */
+        if (q != *p)
+            q->rchild = s->lchild; /*  é‡æ¥qçš„å³å­æ ‘ */
+        else
+            q->lchild = s->lchild; /*  é‡æ¥qçš„å·¦å­æ ‘ */
+        free(s);
+    }
+    return TRUE;
 }
 
-/* Èô¶ş²æÅÅĞòÊ÷TÖĞ´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØÊ±£¬ÔòÉ¾³ı¸ÃÊı¾İÔªËØ½áµã, */
-/* ²¢·µ»ØTRUE£»·ñÔò·µ»ØFALSE¡£ */
-Status DeleteBST(BiTree *T,int key)
-{ 
-	if(!*T) /* ²»´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ */ 
-		return FALSE;
-	else
-	{
-		if (key==(*T)->data) /* ÕÒµ½¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ */ 
-			return Delete(T);
-		else if (key<(*T)->data)
-			return DeleteBST(&(*T)->lchild,key);
-		else
-			return DeleteBST(&(*T)->rchild,key);
-		 
-	}
+/* è‹¥äºŒå‰æ’åºæ ‘Tä¸­å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ æ—¶ï¼Œåˆ™åˆ é™¤è¯¥æ•°æ®å…ƒç´ ç»“ç‚¹, */
+/* å¹¶è¿”å›TRUEï¼›å¦åˆ™è¿”å›FALSEã€‚ */
+Status DeleteBST(BiTree *T, int key) {
+    if (!*T) /* ä¸å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´  */
+        return FALSE;
+    else {
+        if (key == (*T)->data) /* æ‰¾åˆ°å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´  */
+            return Delete(T);
+        else if (key < (*T)->data)
+            return DeleteBST(&(*T)->lchild, key);
+        else
+            return DeleteBST(&(*T)->rchild, key);
+
+    }
 }
 
-int main(void)
-{    
-	int i;
-	int a[10]={62,88,58,47,35,73,51,99,37,93};
-	BiTree T=NULL;
-	
-	for(i=0;i<10;i++)
-	{
-		InsertBST(&T, a[i]);
-	}
-	DeleteBST(&T,93);
-	DeleteBST(&T,47);
-    printf("±¾ÑùÀı½¨Òé¶Ïµã¸ú×Ù²é¿´¶ş²æÅÅĞòÊ÷½á¹¹");
-	return 0;
+int main(void) {
+    int i;
+    int a[10] = {62, 88, 58, 47, 35, 73, 51, 99, 37, 93};
+    BiTree T = NULL;
+
+    for (i = 0; i < 10; i++) {
+        InsertBST(&T, a[i]);
+    }
+    DeleteBST(&T, 93);
+    DeleteBST(&T, 47);
+    printf("æœ¬æ ·ä¾‹å»ºè®®æ–­ç‚¹è·Ÿè¸ªæŸ¥çœ‹äºŒå‰æ’åºæ ‘ç»“æ„");
+    return 0;
 }

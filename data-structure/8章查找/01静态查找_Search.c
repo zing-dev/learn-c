@@ -1,156 +1,133 @@
-#include "stdio.h"    
-#include "stdlib.h"   
-#include "io.h"  
-#include "math.h"  
-#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 #define OK 1
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXSIZE 100 /* ´æ´¢¿Õ¼ä³õÊ¼·ÖÅäÁ¿ */
+#define MAXSIZE 100 /* å­˜å‚¨ç©ºé—´åˆå§‹åˆ†é…é‡ */
 
-typedef int Status;	/* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */ 
+typedef int Status;    /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 
-int F[100]; /* ì³²¨ÄÇÆõÊıÁĞ */
+int F[100]; /* æ–æ³¢é‚£å¥‘æ•°åˆ— */
 
-/* ÎŞÉÚ±øË³Ğò²éÕÒ£¬aÎªÊı×é£¬nÎªÒª²éÕÒµÄÊı×é¸öÊı£¬keyÎªÒª²éÕÒµÄ¹Ø¼ü×Ö */
-int Sequential_Search(int *a,int n,int key)
-{
-	int i;
-	for(i=1;i<=n;i++)
-	{
-		if (a[i]==key)
-			return i;
-	}
-	return 0;
-}
-/* ÓĞÉÚ±øË³Ğò²éÕÒ */
-int Sequential_Search2(int *a,int n,int key)
-{
-	int i;
-	a[0]=key;
-	i=n;
-	while(a[i]!=key)
-	{
-		i--;
-	}
-	return i;
+/* æ— å“¨å…µé¡ºåºæŸ¥æ‰¾ï¼Œaä¸ºæ•°ç»„ï¼Œnä¸ºè¦æŸ¥æ‰¾çš„æ•°ç»„ä¸ªæ•°ï¼Œkeyä¸ºè¦æŸ¥æ‰¾çš„å…³é”®å­— */
+int Sequential_Search(int *a, int n, int key) {
+    int i;
+    for (i = 1; i <= n; i++) {
+        if (a[i] == key)
+            return i;
+    }
+    return 0;
 }
 
-/* ÕÛ°ë²éÕÒ */
-int Binary_Search(int *a,int n,int key)
-{
-	int low,high,mid;
-	low=1;	/* ¶¨Òå×îµÍÏÂ±êÎª¼ÇÂ¼Ê×Î» */
-	high=n;	/* ¶¨Òå×î¸ßÏÂ±êÎª¼ÇÂ¼Ä©Î» */
-	while(low<=high)
-	{
-		mid=(low+high)/2;	/* ÕÛ°ë */
-		if (key<a[mid])		/* Èô²éÕÒÖµ±ÈÖĞÖµĞ¡ */
-			high=mid-1;		/* ×î¸ßÏÂ±êµ÷Õûµ½ÖĞÎ»ÏÂ±êĞ¡Ò»Î» */
-		else if (key>a[mid])/* Èô²éÕÒÖµ±ÈÖĞÖµ´ó */
-			low=mid+1;		/* ×îµÍÏÂ±êµ÷Õûµ½ÖĞÎ»ÏÂ±ê´óÒ»Î» */
-		else
-		{
-			return mid;		/* ÈôÏàµÈÔòËµÃ÷mid¼´Îª²éÕÒµ½µÄÎ»ÖÃ */
-		}
-		
-	}
-	return 0;
+/* æœ‰å“¨å…µé¡ºåºæŸ¥æ‰¾ */
+int Sequential_Search2(int *a, int n, int key) {
+    int i;
+    a[0] = key;
+    i = n;
+    while (a[i] != key) {
+        i--;
+    }
+    return i;
 }
 
-/* ²åÖµ²éÕÒ */
-int Interpolation_Search(int *a,int n,int key)
-{
-	int low,high,mid;
-	low=1;	/* ¶¨Òå×îµÍÏÂ±êÎª¼ÇÂ¼Ê×Î» */
-	high=n;	/* ¶¨Òå×î¸ßÏÂ±êÎª¼ÇÂ¼Ä©Î» */
-	while(low<=high)
-	{
-		mid=low+ (high-low)*(key-a[low])/(a[high]-a[low]); /* ²åÖµ */
-		if (key<a[mid])		/* Èô²éÕÒÖµ±È²åÖµĞ¡ */
-			high=mid-1;		/* ×î¸ßÏÂ±êµ÷Õûµ½²åÖµÏÂ±êĞ¡Ò»Î» */
-		else if (key>a[mid])/* Èô²éÕÒÖµ±È²åÖµ´ó */
-			low=mid+1;		/* ×îµÍÏÂ±êµ÷Õûµ½²åÖµÏÂ±ê´óÒ»Î» */
-		else
-			return mid;		/* ÈôÏàµÈÔòËµÃ÷mid¼´Îª²éÕÒµ½µÄÎ»ÖÃ */
-	}
-	return 0;
+/* æŠ˜åŠæŸ¥æ‰¾ */
+int Binary_Search(int *a, int n, int key) {
+    int low, high, mid;
+    low = 1;    /* å®šä¹‰æœ€ä½ä¸‹æ ‡ä¸ºè®°å½•é¦–ä½ */
+    high = n;    /* å®šä¹‰æœ€é«˜ä¸‹æ ‡ä¸ºè®°å½•æœ«ä½ */
+    while (low <= high) {
+        mid = (low + high) / 2;    /* æŠ˜åŠ */
+        if (key < a[mid])        /* è‹¥æŸ¥æ‰¾å€¼æ¯”ä¸­å€¼å° */
+            high = mid - 1;        /* æœ€é«˜ä¸‹æ ‡è°ƒæ•´åˆ°ä¸­ä½ä¸‹æ ‡å°ä¸€ä½ */
+        else if (key > a[mid])/* è‹¥æŸ¥æ‰¾å€¼æ¯”ä¸­å€¼å¤§ */
+            low = mid + 1;        /* æœ€ä½ä¸‹æ ‡è°ƒæ•´åˆ°ä¸­ä½ä¸‹æ ‡å¤§ä¸€ä½ */
+        else {
+            return mid;        /* è‹¥ç›¸ç­‰åˆ™è¯´æ˜midå³ä¸ºæŸ¥æ‰¾åˆ°çš„ä½ç½® */
+        }
+
+    }
+    return 0;
 }
 
-/* ì³²¨ÄÇÆõ²éÕÒ */
-int Fibonacci_Search(int *a,int n,int key)
-{
-	int low,high,mid,i,k=0;
-	low=1;	/* ¶¨Òå×îµÍÏÂ±êÎª¼ÇÂ¼Ê×Î» */
-	high=n;	/* ¶¨Òå×î¸ßÏÂ±êÎª¼ÇÂ¼Ä©Î» */
-	while(n>F[k]-1)
-		k++;
-	for (i=n;i<F[k]-1;i++)
-		a[i]=a[n];
-	
-	while(low<=high)
-	{
-		mid=low+F[k-1]-1;
-		if (key<a[mid])
-		{
-			high=mid-1;		
-			k=k-1;
-		}
-		else if (key>a[mid])
-		{
-			low=mid+1;		
-			k=k-2;
-		}
-		else
-		{
-			if (mid<=n)
-				return mid;		/* ÈôÏàµÈÔòËµÃ÷mid¼´Îª²éÕÒµ½µÄÎ»ÖÃ */
-			else 
-				return n;
-		}
-		
-	}
-	return 0;
+/* æ’å€¼æŸ¥æ‰¾ */
+int Interpolation_Search(int *a, int n, int key) {
+    int low, high, mid;
+    low = 1;    /* å®šä¹‰æœ€ä½ä¸‹æ ‡ä¸ºè®°å½•é¦–ä½ */
+    high = n;    /* å®šä¹‰æœ€é«˜ä¸‹æ ‡ä¸ºè®°å½•æœ«ä½ */
+    while (low <= high) {
+        mid = low + (high - low) * (key - a[low]) / (a[high] - a[low]); /* æ’å€¼ */
+        if (key < a[mid])        /* è‹¥æŸ¥æ‰¾å€¼æ¯”æ’å€¼å° */
+            high = mid - 1;        /* æœ€é«˜ä¸‹æ ‡è°ƒæ•´åˆ°æ’å€¼ä¸‹æ ‡å°ä¸€ä½ */
+        else if (key > a[mid])/* è‹¥æŸ¥æ‰¾å€¼æ¯”æ’å€¼å¤§ */
+            low = mid + 1;        /* æœ€ä½ä¸‹æ ‡è°ƒæ•´åˆ°æ’å€¼ä¸‹æ ‡å¤§ä¸€ä½ */
+        else
+            return mid;        /* è‹¥ç›¸ç­‰åˆ™è¯´æ˜midå³ä¸ºæŸ¥æ‰¾åˆ°çš„ä½ç½® */
+    }
+    return 0;
+}
+
+/* æ–æ³¢é‚£å¥‘æŸ¥æ‰¾ */
+int Fibonacci_Search(int *a, int n, int key) {
+    int low, high, mid, i, k = 0;
+    low = 1;    /* å®šä¹‰æœ€ä½ä¸‹æ ‡ä¸ºè®°å½•é¦–ä½ */
+    high = n;    /* å®šä¹‰æœ€é«˜ä¸‹æ ‡ä¸ºè®°å½•æœ«ä½ */
+    while (n > F[k] - 1)
+        k++;
+    for (i = n; i < F[k] - 1; i++)
+        a[i] = a[n];
+
+    while (low <= high) {
+        mid = low + F[k - 1] - 1;
+        if (key < a[mid]) {
+            high = mid - 1;
+            k = k - 1;
+        } else if (key > a[mid]) {
+            low = mid + 1;
+            k = k - 2;
+        } else {
+            if (mid <= n)
+                return mid;        /* è‹¥ç›¸ç­‰åˆ™è¯´æ˜midå³ä¸ºæŸ¥æ‰¾åˆ°çš„ä½ç½® */
+            else
+                return n;
+        }
+
+    }
+    return 0;
 }
 
 
+int main(void) {
+
+    int a[MAXSIZE + 1], i, result;
+    int arr[MAXSIZE] = {0, 1, 16, 24, 35, 47, 59, 62, 73, 88, 99};
+
+    for (i = 0; i <= MAXSIZE; i++) {
+        a[i] = i;
+    }
+    result = Sequential_Search(a, MAXSIZE, MAXSIZE);
+    printf("Sequential_Search:%d \n", result);
+    result = Sequential_Search2(a, MAXSIZE, 1);
+    printf("Sequential_Search2:%d \n", result);
+
+    result = Binary_Search(arr, 10, 62);
+    printf("Binary_Search:%d \n", result);
 
 
-  
+    result = Interpolation_Search(arr, 10, 62);
+    printf("Interpolation_Search:%d \n", result);
 
-int main(void)
-{    
 
-	int a[MAXSIZE+1],i,result;
-	int arr[MAXSIZE]={0,1,16,24,35,47,59,62,73,88,99};
-		
-	for(i=0;i<=MAXSIZE;i++)
-	{
-		a[i]=i;
-	}
-	result=Sequential_Search(a,MAXSIZE,MAXSIZE);
-	printf("Sequential_Search:%d \n",result);
-	result=Sequential_Search2(a,MAXSIZE,1);
-	printf("Sequential_Search2:%d \n",result);
+    F[0] = 0;
+    F[1] = 1;
+    for (i = 2; i < 100; i++) {
+        F[i] = F[i - 1] + F[i - 2];
+    }
+    result = Fibonacci_Search(arr, 10, 62);
+    printf("Fibonacci_Search:%d \n", result);
 
-	result=Binary_Search(arr,10,62);
-	printf("Binary_Search:%d \n",result);
-
-	
-	result=Interpolation_Search(arr,10,62);
-	printf("Interpolation_Search:%d \n",result);
-
-	
-	F[0]=0;
-	F[1]=1;
-	for(i = 2;i < 100;i++)  
-	{ 
-		F[i] = F[i-1] + F[i-2];  
-	} 
-	result=Fibonacci_Search(arr,10,62);
-	printf("Fibonacci_Search:%d \n",result);
-	
-	return 0;
+    return 0;
 }

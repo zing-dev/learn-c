@@ -1,51 +1,49 @@
-#include "stdio.h"    
-#include "stdlib.h"   
-#include "io.h"  
-#include "math.h"  
-#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 #define OK 1
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXVEX 100 /* ×î´ó¶¥µãÊı£¬Ó¦ÓÉÓÃ»§¶¨Òå */
+#define MAXVEX 100 /* æœ€å¤§é¡¶ç‚¹æ•°ï¼Œåº”ç”±ç”¨æˆ·å®šä¹‰ */
+#ifndef INFINITY
 #define INFINITY 65535
+#endif
 
-typedef int Status;	/* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-typedef char VertexType; /* ¶¥µãÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå  */
-typedef int EdgeType; /* ±ßÉÏµÄÈ¨ÖµÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå */
-typedef struct
-{
-	VertexType vexs[MAXVEX]; /* ¶¥µã±í */
-	EdgeType arc[MAXVEX][MAXVEX];/* ÁÚ½Ó¾ØÕó£¬¿É¿´×÷±ß±í */
-	int numNodes, numEdges; /* Í¼ÖĞµ±Ç°µÄ¶¥µãÊıºÍ±ßÊı  */
-}MGraph;
+typedef int Status;    /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+typedef char VertexType; /* é¡¶ç‚¹ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰  */
+typedef int EdgeType; /* è¾¹ä¸Šçš„æƒå€¼ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰ */
+typedef struct {
+    VertexType vexs[MAXVEX]; /* é¡¶ç‚¹è¡¨ */
+    EdgeType arc[MAXVEX][MAXVEX];/* é‚»æ¥çŸ©é˜µï¼Œå¯çœ‹ä½œè¾¹è¡¨ */
+    int numNodes, numEdges; /* å›¾ä¸­å½“å‰çš„é¡¶ç‚¹æ•°å’Œè¾¹æ•°  */
+} MGraph;
 
-/* ½¨Á¢ÎŞÏòÍøÍ¼µÄÁÚ½Ó¾ØÕó±íÊ¾ */
-void CreateMGraph(MGraph *G)
-{
-	int i,j,k,w;
-	printf("ÊäÈë¶¥µãÊıºÍ±ßÊı:\n");
-	scanf("%d,%d",&G->numNodes,&G->numEdges); /* ÊäÈë¶¥µãÊıºÍ±ßÊı */
-	for(i = 0;i <G->numNodes;i++) /* ¶ÁÈë¶¥µãĞÅÏ¢,½¨Á¢¶¥µã±í */
-		scanf(&G->vexs[i]);
-	for(i = 0;i <G->numNodes;i++)
-		for(j = 0;j <G->numNodes;j++)
-			G->arc[i][j]=INFINITY;	/* ÁÚ½Ó¾ØÕó³õÊ¼»¯ */
-	for(k = 0;k <G->numEdges;k++) /* ¶ÁÈënumEdgesÌõ±ß£¬½¨Á¢ÁÚ½Ó¾ØÕó */
-	{
-		printf("ÊäÈë±ß(vi,vj)ÉÏµÄÏÂ±êi£¬ÏÂ±êjºÍÈ¨w:\n");
-		scanf("%d,%d,%d",&i,&j,&w); /* ÊäÈë±ß(vi,vj)ÉÏµÄÈ¨w */
-		G->arc[i][j]=w; 
-		G->arc[j][i]= G->arc[i][j]; /* ÒòÎªÊÇÎŞÏòÍ¼£¬¾ØÕó¶Ô³Æ */
-	}
+/* å»ºç«‹æ— å‘ç½‘å›¾çš„é‚»æ¥çŸ©é˜µè¡¨ç¤º */
+void CreateMGraph(MGraph *G) {
+    int i, j, k, w;
+    printf("è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•°:\n");
+    scanf("%d,%d", &G->numNodes, &G->numEdges); /* è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•° */
+    for (i = 0; i < G->numNodes; i++) /* è¯»å…¥é¡¶ç‚¹ä¿¡æ¯,å»ºç«‹é¡¶ç‚¹è¡¨ */
+        scanf(&G->vexs[i]);
+    for (i = 0; i < G->numNodes; i++)
+        for (j = 0; j < G->numNodes; j++)
+            G->arc[i][j] = INFINITY;    /* é‚»æ¥çŸ©é˜µåˆå§‹åŒ– */
+    for (k = 0; k < G->numEdges; k++) /* è¯»å…¥numEdgesæ¡è¾¹ï¼Œå»ºç«‹é‚»æ¥çŸ©é˜µ */
+    {
+        printf("è¾“å…¥è¾¹(vi,vj)ä¸Šçš„ä¸‹æ ‡iï¼Œä¸‹æ ‡jå’Œæƒw:\n");
+        scanf("%d,%d,%d", &i, &j, &w); /* è¾“å…¥è¾¹(vi,vj)ä¸Šçš„æƒw */
+        G->arc[i][j] = w;
+        G->arc[j][i] = G->arc[i][j]; /* å› ä¸ºæ˜¯æ— å‘å›¾ï¼ŒçŸ©é˜µå¯¹ç§° */
+    }
 }
 
-int main(void)
-{    
-	MGraph G;    
-	CreateMGraph(&G);
-	
-	return 0;
+int main(void) {
+    MGraph G;
+    CreateMGraph(&G);
+
+    return 0;
 }
 
