@@ -9,26 +9,24 @@
 
 static int w = sizeof(int) << 3;
 
-int sra(int x, int k)
-{
-        /* Perform shift logically */
-        int xsrl = (unsigned) x >> k;
+int sra(int x, int k) {
+    /* Perform shift logically */
+    int xsrl = (unsigned) x >> k;
 
-        int sign = ((1 << (w - 1 - k)) & xsrl) << 1;
-        int t = ~((1 << (w - k)) - 1); /* t=[11...1100...00], w-1...w-k 位全 1 */
+    int sign = ((1 << (w - 1 - k)) & xsrl) << 1;
+    int t = ~((1 << (w - k)) - 1); /* t=[11...1100...00], w-1...w-k 位全 1 */
 
-        /*
-         * sign = 0, n = 0
-         * sign = [0...010...0], n = t
-         */
-        int n = t + (sign ^ (1 << (w - k)));
+    /*
+     * sign = 0, n = 0
+     * sign = [0...010...0], n = t
+     */
+    int n = t + (sign ^ (1 << (w - k)));
 
-        return n + xsrl;
+    return n + xsrl;
 }
 
-unsigned srl(unsigned x, int k)
-{
-        /* Perform shift arithmetically */
-        unsigned xsra = (int) x >> k;
-        return xsra & ((1 << (w-k)) - 1);
+unsigned srl(unsigned x, int k) {
+    /* Perform shift arithmetically */
+    unsigned xsra = (int) x >> k;
+    return xsra & ((1 << (w - k)) - 1);
 }

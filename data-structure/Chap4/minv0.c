@@ -6,57 +6,59 @@
 #include "c_minv.c"
 #include "sdminv.c"
 
-void main()
-{
+void main() {
     struct c_comp c_mat[2][2], c_mat1[2][2], c_mat2[2][2];
-    double r_mat[2][2] = {{3,2},{2,5}};
+    double r_mat[2][2] = {{3, 2},
+                          {2, 5}};
     double r_mat1[2][2], r_mat2[2][2];
-    int i,j,m,n;
+    int i, j, m, n;
 
-    m = 2; n = 2;
-    
-    c_mat[0][0].rmz = 2; c_mat[0][0].imz = 3;
-    c_mat[0][1].rmz = 0; c_mat[0][1].imz = 2;
-    c_mat[1][0].rmz = 2; c_mat[1][0].imz = 1;
-    c_mat[1][1].rmz = 1; c_mat[1][1].imz = 0.5;
+    m = 2;
+    n = 2;
 
-    for(i=0; i<n; i++)                     /* ÇóÄæºó»áÆÆ»µÔ­¾ØÕóÊý¾Ý£¬Òò´ËÏÈ±¸·Ý*/
-      for(j=0; j<n; j++)
-        c_mat1[i][j] = c_mat[i][j];    
-    c_minv(c_mat,n);                        /* µ÷ÓÃº¯ÊýÇóÄæ*/
-    printf("inv(C):\n");                    /* ´òÓ¡ÇóµÃµÄÄæ¾ØÕó*/
-    for(i=0; i<m; i++)
-    {
-        for(j=0; j<n; j++)
+    c_mat[0][0].rmz = 2;
+    c_mat[0][0].imz = 3;
+    c_mat[0][1].rmz = 0;
+    c_mat[0][1].imz = 2;
+    c_mat[1][0].rmz = 2;
+    c_mat[1][0].imz = 1;
+    c_mat[1][1].rmz = 1;
+    c_mat[1][1].imz = 0.5;
+
+    for (i = 0; i < n; i++)                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ»ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½È±ï¿½ï¿½ï¿½*/
+        for (j = 0; j < n; j++)
+            c_mat1[i][j] = c_mat[i][j];
+    c_minv(c_mat, n);                        /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    printf("inv(C):\n");                    /* ï¿½ï¿½Ó¡ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++)
             printf("%2.5f + (%2.5f)*i ", c_mat[i][j].rmz, c_mat[i][j].imz);
         printf("\n");
     }
-    c_matmul(c_mat,c_mat1,n,n,n,c_mat2);    /* Äæ¾ØÕóºÍÔ­¾ØÕóÏà³Ë*/
-    printf("C*inv(C):\n");                  /* ´òÓ¡Ïà³ËºóµÄ½á¹û£¬ÒÔÑéÖ¤ÕýÈ·ÐÔ*/
-    for(i=0; i<m; i++)
-    {
-        for(j=0; j<n; j++)
+    c_matmul(c_mat, c_mat1, n, n, n, c_mat2);    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    printf("C*inv(C):\n");                  /* ï¿½ï¿½Ó¡ï¿½ï¿½Ëºï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½È·ï¿½ï¿½*/
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++)
             printf("%2.5f + (%2.5f)*i ", c_mat2[i][j].rmz, c_mat2[i][j].imz);
         printf("\n");
     }
-    for(i=0; i<n; i++)                     /* ÇóÄæºó»áÆÆ»µÔ­¾ØÕóÊý¾Ý£¬Òò´ËÏÈ±¸·Ý*/
-      for(j=0; j<n; j++)
-        r_mat1[i][j] = r_mat[i][j];
+    for (i = 0; i < n; i++)                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ»ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½È±ï¿½ï¿½ï¿½*/
+        for (j = 0; j < n; j++)
+            r_mat1[i][j] = r_mat[i][j];
 
     printf("\n");
-    sdminv(r_mat,n);                         /* Õý¶¨¾ØÕóÇóÄæ*/
-    printf("inv(SD):\n");                    /* ´òÓ¡ÇóµÃµÄÄæ¾ØÕó*/
-    for(i=0; i<n; i++)
-    {
-        for(j=0; j<n; j++)
+    sdminv(r_mat, n);                         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    printf("inv(SD):\n");                    /* ï¿½ï¿½Ó¡ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++)
             printf("%2.5f ", r_mat[i][j]);
         printf("\n");
     }
     printf("SD*inv(SD):\n");
-    r_matmul(r_mat,r_mat1,n,n,n,r_mat2);     /* ¾ØÕóºÍÆäÄæ¾ØÕóÏà³Ë*/
-    for(i=0; i<n; i++)                       /* ´òÓ¡Ïà³ËµÄ½á¹û*/
+    r_matmul(r_mat, r_mat1, n, n, n, r_mat2);     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    for (i = 0; i < n; i++)                       /* ï¿½ï¿½Ó¡ï¿½ï¿½ËµÄ½ï¿½ï¿½*/
     {
-        for(j=0; j<n; j++)
+        for (j = 0; j < n; j++)
             printf("%2.5f ", r_mat2[i][j]);
         printf("\n");
     }

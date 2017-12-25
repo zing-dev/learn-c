@@ -16,25 +16,24 @@
 #undef  MAXLINE
 #define MAXLINE 10
 
-int main(int argc, char **argv)
-{
-        int n;
-        rio_t rio;
-        char buf[MAXLINE];
-        int count = 0;          /* 记录 buf 中已经读入的字符数 */
+int main(int argc, char **argv) {
+    int n;
+    rio_t rio;
+    char buf[MAXLINE];
+    int count = 0;          /* 记录 buf 中已经读入的字符数 */
 
-        Rio_readinitb(&rio, STDIN_FILENO);
-        n = Rio_readnb(&rio, buf, MAXLINE);
-        while (n > 0) {
-                count += n;
-                if (count >= MAXBUF) {
-                        Rio_writen(STDOUT_FILENO, buf, MAXBUF);
-                        count -= MAXBUF;
-                        if (count > 0)
-                                memmove(buf, buf+MAXBUF, count);
-                }
-                n = Rio_readnb(&rio, buf+count, MAXLINE-count);
+    Rio_readinitb(&rio, STDIN_FILENO);
+    n = Rio_readnb(&rio, buf, MAXLINE);
+    while (n > 0) {
+        count += n;
+        if (count >= MAXBUF) {
+            Rio_writen(STDOUT_FILENO, buf, MAXBUF);
+            count -= MAXBUF;
+            if (count > 0)
+                memmove(buf, buf + MAXBUF, count);
         }
+        n = Rio_readnb(&rio, buf + count, MAXLINE - count);
+    }
 
-        return 0;
+    return 0;
 }

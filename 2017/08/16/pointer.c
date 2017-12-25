@@ -4,8 +4,8 @@
 //
 
 #include<stdio.h>
-void one()
-{
+
+void one() {
     char a[20] = "You_are_a_girl";
     char *p = a;
     char **ptr = &p;
@@ -21,12 +21,11 @@ void one()
     printf("**ptr=%c\n", **ptr);
 }
 
-void two()
-{
+void two() {
     char str[3][10] = {
-        {'a', 'b', 'c', 'd'},
-        {'A', 'B', 'C', 'D'},
-        {'\\', '\'', '\n', '\a'}
+            {'a',  'b',  'c',  'd'},
+            {'A',  'B',  'C',  'D'},
+            {'\\', '\'', '\n', '\a'}
     };
     char *p1 = (char *) str;
     char *p2 = (char *) str[1];
@@ -58,13 +57,12 @@ void two()
 
 }
 
-void three()
-{
+void three() {
     char str[4][20] = {
-        "zhangrongxiang",
-        "zhangrxiang",
-        "zing",
-        "zrx"
+            "zhangrongxiang",
+            "zhangrxiang",
+            "zing",
+            "zrx"
     };
     printf("str[0]  -->  %s\n", str[0]);
     printf("str[0][0]  --> %c\n", str[0][0]);
@@ -87,22 +85,21 @@ void three()
 
 
 }
-void four()
-{
+
+void four() {
     char *str[4] = {
-        "asd",
-        "bsd",
-        "zhangrongxiang"
+            "asd",
+            "bsd",
+            "zhangrongxiang"
     };
     printf("%s\n", *str);
     printf("%s\n", *(str + 1));
     printf("%s\n", *(str + 2));
 }
 
-void five()
-{
+void five() {
     char str[12] = {
-        'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'
+            'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'
     };
 
     //str --> zhangrxiang
@@ -119,12 +116,12 @@ void five()
     printf("++p  --> %s\n", ++p);
 
 }
-void six()
-{
+
+void six() {
     char str[3][13] = {
-        {'1', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
-        {'2', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
-        {'3', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
+            {'1', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
+            {'2', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
+            {'3', 'z', 'h', 'a', 'n', 'g', 'r', 'x', 'i', 'a', 'n', 'g'},
     };
 
     for (int i = 0; i < 3; ++i) {
@@ -155,17 +152,17 @@ void six()
         }
 
     }
-    while (*p3 != '\0'){
-        printf(" %c ",*(p3++));
+    while (*p3 != '\0') {
+        printf(" %c ", *(p3++));
     }
     printf("\n");
 
     char *p4 = (char *) str[1];
-    printf("%s\n",p4);
+    printf("%s\n", p4);
 
 }
-int main()
-{
+
+int main() {
 //    one();
 //    two();
 //    three();

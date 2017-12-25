@@ -3,77 +3,68 @@
 #include "wolt.c"
 #include "hadma.c"
 
-void main()
-{
-  int i,n=8;
-  double a[8],b[8],y[8];
-  for(i=0; i<n; i++)                                 /* ¸ø¶¨aºÍb*/
-  {
-	  a[i] = i+1;
-	  b[i] = 2*i;
-  }
-  printf(" a sequence\n");
-  for(i=0; i<n; i++)
-	  printf("%5.4f ",a[i]);
-  printf("\n b sequence\n");
-  for(i=0; i<n; i++)
-	  printf("%5.4f ",b[i]);
-  i = wolt(a,n,y); 	                                 /*ÇóaµÄwolt±ä»»*/
-  if(i)
-  {
-    printf("\n\nwolt of a:\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",y[i]);
-  }
-  i = wolt(y,n,a); 	                                 /* woltÄæ±ä»»*/
-  if(i)
-  {
-    printf("\nwolt of wolt(a):\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",a[i]);
-  }
-  i = wolt(b,n,y); 	                                /* ÇóbµÄwolt±ä»»*/                         
-  if(i)
-  {
-    printf("\nwolt of b:\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",y[i]);
-  }
-  i = wolt(y,n,b); 	                                 /*woltÄæ±ä»»*/
-  if(i)
-  {
-    printf("\nwolt of wolt(b):\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",b[i]);
-  }
-  i = hadma(a,n,y); 	                                 /*ÇóaµÄ¹þ´ïÂê±ä»»*/
-  if(i)
-  {
-    printf("\n\nhadma of a:\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",y[i]);
-  }
-  i = hadma(y,n,a); 	                                /*¹þ´ïÂêÄæ±ä»»*/                         
-  if(i)
-  {
-    printf("\nhadma of hadma(a):\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",a[i]);
-  }
-  i = hadma(b,n,y); 	                                /*ÇóbµÄ¹þ´ïÂê±ä»»*/                         
-  if(i)
-  {
-    printf("\nhadma of b:\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",y[i]);
-  }
-  i = hadma(y,n,b); 	                                /*¹þ´ïÂêÄæ±ä»»*/                         
-  if(i)
-  {
-    printf("\nhadma of hadma(b):\n");
-    for(i=0; i<n; i++)
-      printf("%5.4f ",b[i]);
-  }
-  printf("\n");
+void main() {
+    int i, n = 8;
+    double a[8], b[8], y[8];
+    for (i = 0; i < n; i++)                                 /* ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½b*/
+    {
+        a[i] = i + 1;
+        b[i] = 2 * i;
+    }
+    printf(" a sequence\n");
+    for (i = 0; i < n; i++)
+        printf("%5.4f ", a[i]);
+    printf("\n b sequence\n");
+    for (i = 0; i < n; i++)
+        printf("%5.4f ", b[i]);
+    i = wolt(a, n, y);                                     /*ï¿½ï¿½aï¿½ï¿½woltï¿½ä»»*/
+    if (i) {
+        printf("\n\nwolt of a:\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", y[i]);
+    }
+    i = wolt(y, n, a);                                     /* woltï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\nwolt of wolt(a):\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", a[i]);
+    }
+    i = wolt(b, n, y);                                    /* ï¿½ï¿½bï¿½ï¿½woltï¿½ä»»*/
+    if (i) {
+        printf("\nwolt of b:\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", y[i]);
+    }
+    i = wolt(y, n, b);                                     /*woltï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\nwolt of wolt(b):\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", b[i]);
+    }
+    i = hadma(a, n, y);                                     /*ï¿½ï¿½aï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\n\nhadma of a:\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", y[i]);
+    }
+    i = hadma(y, n, a);                                    /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\nhadma of hadma(a):\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", a[i]);
+    }
+    i = hadma(b, n, y);                                    /*ï¿½ï¿½bï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\nhadma of b:\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", y[i]);
+    }
+    i = hadma(y, n, b);                                    /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä»»*/
+    if (i) {
+        printf("\nhadma of hadma(b):\n");
+        for (i = 0; i < n; i++)
+            printf("%5.4f ", b[i]);
+    }
+    printf("\n");
 }
 

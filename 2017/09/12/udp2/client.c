@@ -66,18 +66,18 @@ int main() {
         }
     }
      */
-    while (1){
+    while (1) {
         memset(buf, 0, MAXBUF);
         fgets(buf, MAXBUF, stdin);
         int send = sendto(socketfd, buf, strlen(buf), 0,
-               (struct sockaddr *) &server,
-               sizeof(struct sockaddr)
+                          (struct sockaddr *) &server,
+                          sizeof(struct sockaddr)
         );
 
-        if(send < 0){
+        if (send < 0) {
             perror("sendto error ....");
             break;
-        } else{
+        } else {
             printf("send to %s(port=%d) len %d:%s\n",
                    addr, PORT, send, buf);
         }

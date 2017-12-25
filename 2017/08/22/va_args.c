@@ -3,6 +3,7 @@
 // Copyright (c) 2017 ZRX . All rights reserved.
 //
 #include<stdio.h>
+
 #define PRINT_DBG(debug, ...)\
 {\
     if(debug) {\
@@ -16,12 +17,12 @@
     }\
 }
 #define MACRO(s, ...) printf(s, ##__VA_ARGS__)
-int main()
-{
+
+int main() {
     int i = 100;
     PRINT_DBG(1, "hello\n");
     PRINT_DBG(1, "world, %d\n", i);
     MACRO("hello, world\n"); //这里没有可变参数， 所以要用##__VA_ARGS__
-    MACRO("hello, %s\n%s\n", "zhangrongxiang","WTF");
+    MACRO("hello, %s\n%s\n", "zhangrongxiang", "WTF");
     return 0;
 }

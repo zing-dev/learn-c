@@ -1,16 +1,15 @@
 #include "stdio.h"
 #include "math.h"
-#include "gammln.c"                               /* ÐèÒªÙ¤Âíº¯ÊýµÄÖ§³Ö*/
+#include "gammln.c"                               /* ï¿½ï¿½ÒªÙ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½*/
 #include "factrl.c"
-void main()
-{
-  int n;
-  double x;
-  printf("factorial(x): \n");
-  for(n=18; n<25; n++)
-  {
-    x = factrl(n);                                /* µ÷ÓÃº¯ÊýÇó½â£¬²¢´òÓ¡½á¹û*/
-    printf("n=%d, factorial(n)=%e\n",n,x);
-  }
-  getchar();
+
+void main() {
+    int n;
+    double x;
+    printf("factorial(x): \n");
+    for (n = 18; n < 25; n++) {
+        x = factrl(n);                                /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+        printf("n=%d, factorial(n)=%e\n", n, x);
+    }
+    getchar();
 }

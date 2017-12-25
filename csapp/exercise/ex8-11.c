@@ -25,12 +25,11 @@
  *   fork        fork
  *   i=0         i=1
  */
-int main()
-{
-        int i;
+int main() {
+    int i;
 
-        for (i = 0; i < 2; i++)
-                Fork();
-        printf("hello\n");
-        exit(0);
+    for (i = 0; i < 2; i++)
+        Fork();
+    printf("hello\n");
+    exit(0);
 }

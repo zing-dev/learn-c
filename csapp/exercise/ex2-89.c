@@ -17,48 +17,51 @@
  * [?*** **** *??? ???? ???? ???? ???? ????] 规格化数（阶码域不是全 0 并且不是全 1）
  */
 
-unsigned f2u(float f)
-{
-        union { float f; unsigned u; } a;
-        a.f = f;
-        return a.u;
-}
-
-float u2f(unsigned x)
-{
-        /* 这里假设无符号整数和单精度浮点数的位表示相同 */
-        union { unsigned u; float f; } a;
-        a.u = x;
-        return a.f;
-}
-
-float fpwr2(int x)
-{
-        /* Result exponent and fraction */
-        unsigned exp, frac;
+unsigned f2u(float f) {
+    union {
+        float f;
         unsigned u;
+    } a;
+    a.f = f;
+    return a.u;
+}
 
-        if (x < -149) {
-                /* Too small.  Return 0.0 */
-                exp = 0;
-                frac = 0;
-        } else if (x < -126) {
-                /* Denormalized result */
-                exp = 0;
-                frac = 1 << (x + 149);
-        } else if (x < 129) {
-                /* Normalized result */
-                exp = x + 127;
-                frac = 0;
-        } else {
-                /* Too big.  Return +oo */
-                exp = 0xFF;
-                frac = 0;
-        }
+float u2f(unsigned x) {
+    /* 这里假设无符号整数和单精度浮点数的位表示相同 */
+    union {
+        unsigned u;
+        float f;
+    } a;
+    a.u = x;
+    return a.f;
+}
 
-        /* Pack exp and frac into 32 bits */
-        u = exp << 23 | frac;
+float fpwr2(int x) {
+    /* Result exponent and fraction */
+    unsigned exp, frac;
+    unsigned u;
 
-        /* Return as float */
-        return u2f(u);
+    if (x < -149) {
+        /* Too small.  Return 0.0 */
+        exp = 0;
+        frac = 0;
+    } else if (x < -126) {
+        /* Denormalized result */
+        exp = 0;
+        frac = 1 << (x + 149);
+    } else if (x < 129) {
+        /* Normalized result */
+        exp = x + 127;
+        frac = 0;
+    } else {
+        /* Too big.  Return +oo */
+        exp = 0xFF;
+        frac = 0;
+    }
+
+    /* Pack exp and frac into 32 bits */
+    u = exp << 23 | frac;
+
+    /* Return as float */
+    return u2f(u);
 }

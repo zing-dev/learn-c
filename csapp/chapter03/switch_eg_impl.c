@@ -1,40 +1,41 @@
-int switch_eg_impl(int x, int n){
-	// table of code pointers
-	static void *jt[7] = {
-		&&loc_A, &&loc_def, &&loc_B, &&loc_C, &&loc_D, &&loc_def, &&loc_D
-	};
-	
-	unsigned index = n - 100;
-	int result;
+int switch_eg_impl(int x, int n) {
+    // table of code pointers
+    static void *jt[7] = {
+            &&loc_A, &&loc_def, &&loc_B, &&loc_C, &&loc_D, &&loc_def, &&loc_D
+    };
 
-	if(index > 6)
-		goto loc_def;
+    unsigned index = n - 100;
+    int result;
 
-	goto *jt[index];  // computed index 
+    if (index > 6)
+        goto loc_def;
 
-	loc_def:
-		result = 0;
-		return ;
+    goto
+    *jt[index];  // computed index
 
-	loc_C: // 103
-		result = 0;
-		goto rest;
+    loc_def:
+    result = 0;
+    return;
 
-	loc_A: // case 100
-		result = x * 13;
-		goto done;
+    loc_C: // 103
+    result = 0;
+    goto rest;
 
-	loc_B: // case 102
-		result = x + 10;
-		// fall through
+    loc_A: // case 100
+    result = x * 13;
+    goto done;
 
-	rest:
-		result += 11;
-		goto done;
+    loc_B: // case 102
+    result = x + 10;
+    // fall through
 
-	loc_D:
-		result = x * x;
-		// fall through
-	done:
-		return result;
+    rest:
+    result += 11;
+    goto done;
+
+    loc_D:
+    result = x * x;
+    // fall through
+    done:
+    return result;
 }

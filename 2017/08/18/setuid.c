@@ -10,12 +10,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-int main()
-{
+
+int main() {
     if (!setuid(1234)) {
         printf("setuid successfully!\n");
-    }
-    else {
+    } else {
         printf("setuid error!\n");
         perror("setuid\n");
     }

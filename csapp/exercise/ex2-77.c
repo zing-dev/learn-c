@@ -18,10 +18,9 @@
  * 况，因为结果是向下舍入的，而我们需要的是向上舍入的结果。这样子，当 x < 0 时，
  * 我们为 x 加上一个偏置值 (1<<k)-1 就可以使右移的结果向上舍入了。
  */
-int divide_power2(int x, int k)
-{
-        int sign = (x & INT_MIN) == INT_MIN;
-        int mask = (1 << k) - 1;
-        int bias = (mask + !sign) & mask;
-        return (x + bias) >> k;
+int divide_power2(int x, int k) {
+    int sign = (x & INT_MIN) == INT_MIN;
+    int mask = (1 << k) - 1;
+    int bias = (mask + !sign) & mask;
+    return (x + bias) >> k;
 }

@@ -31,8 +31,7 @@
 /*
  * B. 修改的代码如下
  */
-void copy_int(int val, void *buf, int maxbytes)
-{
-        if (maxbytes > 0 && maxbytes >= sizeof(int))
-                memcpy(buf, (void *)&val, sizeof(val));
+void copy_int(int val, void *buf, int maxbytes) {
+    if (maxbytes > 0 && maxbytes >= sizeof(int))
+        memcpy(buf, (void *) &val, sizeof(val));
 }

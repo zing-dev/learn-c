@@ -44,10 +44,12 @@
 #undef FALSE
 #endif
 
-typedef enum { FALSE, TRUE } Boolean;
+typedef enum {
+    FALSE, TRUE
+} Boolean;
 
-#define min(m,n) ((m) < (n) ? (m) : (n))
-#define max(m,n) ((m) > (n) ? (m) : (n))
+#define min(m, n) ((m) < (n) ? (m) : (n))
+#define max(m, n) ((m) > (n) ? (m) : (n))
 
 /* Some systems don't define 'socklen_t' */
 
@@ -59,18 +61,18 @@ typedef int socklen_t;
 #include <sys/file.h>           /* Has definition of FASYNC */
 #endif
 
-#if ! defined(O_ASYNC) && defined(FASYNC)
+#if !defined(O_ASYNC) && defined(FASYNC)
 /* Some systems define FASYNC instead of O_ASYNC */
 #define O_ASYNC FASYNC
 #endif
 
-#if defined(MAP_ANON) && ! defined(MAP_ANONYMOUS)
+#if defined(MAP_ANON) && !defined(MAP_ANONYMOUS)
 /* BSD derivatives usually have MAP_ANON, not MAP_ANONYMOUS */
 #define MAP_ANONYMOUS MAP_ANON
 
 #endif
 
-#if ! defined(O_SYNC) && defined(O_FSYNC)
+#if !defined(O_SYNC) && defined(O_FSYNC)
 /* Some implementations have O_FSYNC instead of O_SYNC */
 #define O_SYNC O_FSYNC
 #endif

@@ -4,12 +4,12 @@
 //
 
 #include<stdio.h>
+
 int *max(int *, int *);
 
 //·指针函数即返回值为指针的函数；
 
-int main(void)
-{
+int main(void) {
     int a, b;
     int *pa, *pb, *pmax;
     int *(*p)(int *, int *);
@@ -27,8 +27,7 @@ int main(void)
     return 0;
 }
 
-int *max(int *pa, int *pb)
-{
+int *max(int *pa, int *pb) {
     if (*pa >= *pb)
         return pa;
     else

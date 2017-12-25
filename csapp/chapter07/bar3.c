@@ -1,6 +1,6 @@
 
-int x ;//weak;
+int x;//weak;
 
-int f(){
-	x = 15212;
+int f() {
+    x = 15212;
 }

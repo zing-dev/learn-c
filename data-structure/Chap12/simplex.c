@@ -1,272 +1,455 @@
 /*======================================================
-// º¯ÊýÃû£ºsimplex
-// ¹¦ÄÜÃèÊö£º ÇóÏßÐÔ¹æ»®ÎÊÌâµÄµ¥´¿ÐÎ·¨
-// ÊäÈë²ÎÊý£ºn   ÎÊÌâµÄÎ¬Êý
-//           m1  µÚÒ»ÀàÔ¼ÊøÌõ¼þµÄ¸öÊý
-//           m2  µÚ¶þÀàÔ¼ÊøÌõ¼þµÄ¸öÊý
-//           m3  µÈÊ½Ô¼ÊøÌõ¼þµÄ¸öÊý
-//           a[(m+2)*(n+1)] µ¥´¿ÐÎ±íµÄ´æ·Å¿Õ¼ä£¬Ç°m+1ÐÐÊÇÊäÈë²ÎÊý¡£
-//                          º¯Êý½áÊøÊ±£¬·µ»Øµ¥´¿ÐÎ±íµÄ×îÖÕ½á¹û
-//           ixr[n] µ¥´¿ÐÎ±íµÚÒ»ÐÐµÄx±êºÅ
-//           ixc[m] µ¥´¿ÐÎ±íµÚÒ»ÁÐµÄx±êºÅ
-//           eps  ¾«¶ÈÒªÇó£¬Ò»°ãÎª1.0e-6
-// ·µ»ØÖµ£º  ÈôÇó½â³É¹¦£¬Ôò·µ»Ø0¡£ÈôÎÞÓÐÏÞ½â£¬Ôò·µ»Ø1¡£ÈôÎÞ¿ÉÐÐ½â£¬Ôò·µ»Ø-1
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½simplex
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¹æ»®ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Î·ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½n   ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½
+//           m1  ï¿½ï¿½Ò»ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
+//           m2  ï¿½Ú¶ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
+//           m3  ï¿½ï¿½Ê½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
+//           a[(m+2)*(n+1)] ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½Ä´ï¿½Å¿Õ¼ä£¬Ç°m+1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//                          ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½
+//           ixr[n] ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½ï¿½Ò»ï¿½Ðµï¿½xï¿½ï¿½ï¿½
+//           ixc[m] ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½ï¿½Ò»ï¿½Ðµï¿½xï¿½ï¿½ï¿½
+//           eps  ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½ï¿½Îª1.0e-6
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ½â£¬ï¿½ò·µ»ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½Þ¿ï¿½ï¿½Ð½â£¬ï¿½ò·µ»ï¿½-1
 =========================================================*/
 
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
+
 #define TINY 1.0e-7
 
-int simplex(a,n,m1,m2,m3,ixr,ixc,eps)
-int n,m1,m2,m3,*ixr,*ixc;
-double *a,eps;     
+int simplex(a, n, m1, m2, m3, ixr, ixc, eps)
+
+int n, m1, m2, m3, *ixr, *ixc;
+double *a, eps;
 {
-	int i,j,k,m,mp,np,ip,jp,flag;
-	int lisx[101],lism2[101],nl1;
-	int cmax1(), cmax2(), pivot();
-	void mswap();
-	double tmp,cmax;
-	
-	m = m1+m2+m3;
-	if(n > 100)
-	{
-		printf("n should less than 100\n");
-		return(-1);
-	}
-	mp = m+2;
-	np = n+1;                                    /* µ¥´¿±íµÄ¹æÄ£*/
-	for(i=0; i<=m; i++)
-	{
-		if(a[i*np] < 0.0)                        /* µÚÒ»ÁÐÒªÇóÈ«²¿·Ç¸º*/
-		{
-			printf("negative B%d found\n",i);
-			return(-1);
-		}
-		ixc[i] = n+i;                                    /* ×óÊÖ±äÁ¿±àºÅn+1~n+m*/
-	}
-	for(k=0; k<=n; k++)                                      /* ÓÒÊÖ±äÁ¿±àºÅ1~n*/
-	{
-		lisx[k] = k;
-		ixr[k] = k;
-	}
-	nl1 = n;
-	if(m2+m3>0)                                               /* ÐèÒª½â¸¨ÖúÎÊÌâ*/
-	{
-		for(i=0; i<=m2; i++)
-			lism2[i] = 1;                                     /* m2ÀàÐÍµÄÒÆ¶¯¼ÇÂ¼*/
-		for(j=0; j<np; j++)                                   /* ¼ÆËã¸¨ÖúÎÊÌâ£¬¸÷ÁÐÇóºÍ*/
-		{
-			tmp = 0.0;
-			for(i=m1+1; i<=m; i++)
-				tmp = tmp+a[i*np+j];
-			a[(m+1)*np+j] = -tmp;                             /* ÇóºÍ½á¹û´æ·ÅÔÚ×îºóÒ»ÐÐ*/
-		}
-		flag = 1;
-		while(flag == 1)
-		{
-			jp = cmax1(a,mp,np,m+1,lisx,nl1,&cmax);            /* ÕÒ×îºóÒ»ÐÐÖÐµÄÏµÊý×î´óÖµ*/
-			if(cmax <= eps && a[(m+1)*np] < -eps)             
-			{                                     /* ÏµÊý¶¼ÊÇÕýµÄ£¬¶øÇÒ´ËÊ±µÄ¼«Ð¡ÖµÒ²Ð¡ÓÚ0*/ 
-				printf("no feasible solution.\n");             /* ÎÞ¿ÉÐÐ½â*/
-				return(-1);
-			}
-			else if(cmax <= eps && a[(m+1)*np]<=eps)         
-			{                                    /* ÒÑ¾­ÕÒµ½¸¨ÖúÎÊÌâµÄ×îÓÅ½â£¬Òª½»»»²ÎÊýz*/
-				for(ip=m1+m2+1; ip<=m; ip++)
-				{
-					if(ixc[ip] == ip+n)                        /* ÕÒµ½Ò»¸ö²ÎÊýz*/
-					{                            /* ÔÚ±¾ÐÐÕÒÒ»¸öÏµÊý¾ø¶ÔÖµ×î´óµÄ£¬½øÐÐ»»Ôª*/
-						jp = cmax2(a,mp,np,ip,lisx,nl1,&cmax); 
-						if(fabs(cmax) > eps)
-						{
-							mswap(a,mp,np,ip,jp);
-							for(j=1; j<=nl1; j++)
-								if(lisx[j] == jp)
-									break;
-								nl1--;                           /* ÕâÒ»ÁÐÒÔºó²»ÔÙ¹ØÐÄ*/	
-								for(k=j; k<=nl1; k++)
-									lisx[k] = lisx[k+1];
-								i = ixr[jp];              /* ¸üÐÂ×óÊÖ±äÁ¿ºÍÓÒÊÖ±äÁ¿ÐòÁÐ*/
-								ixr[jp] = ixc[ip];
-								ixc[ip] = i;								
-						}
-					}
-				}
-				for(i=1; i<=m2; i++)      /* ½«m2ÐÎ±äÁ¿½»»»µ½Ç°Ãæ£¬´úÌæz£¬Í¬Ê±±¾ÐÐÒªÈ¡¸ººÅ*/
-				{
-					if(lism2[i] == 1)
-					{
-						k = (i+m1)*np;
-						for(j=0; j<np; j++)                   /* ¸÷¸öÏµÊýÈ¡¸ººÅ*/
-							a[k+j] = -a[k+j];
-						a[k] = 0;
-					}
-				}
-				flag = 0;                                      /* ¿ªÊ¼µÚ¶þ½×¶Î*/
-			}
-			else
-			{
-				ip = pivot(a,mp,np,m,n,jp);                        /* Ñ¡Ö÷Ôª*/
-				if(ip==0)                                          /* ÎÞ¿ÉÐÐ½â*/
-				{
-					printf("no feasible solution.\n");
-					return(-1);
-				}
-				mswap(a,mp,np,ip,jp);                 /* ½»»»µÚipÐÐºÍµÚjpÁÐ¶ÔÓ¦µÄ±äÁ¿*/
-				if(ixc[ip] > n+m1+m2)                /* ½»»»µ½Ò»¸öz£¬ÇÒ²»ÊÇm2ÐÍµÄÌõ¼þ*/
-				{
-					for(j=1; j<=nl1; j++)
-						if(lisx[j] == jp)
-							break;
-						nl1--;                           /* ÕâÒ»ÁÐÒÔºó²»ÔÙ¹ØÐÄ*/	
-						for(k=j; k<=nl1; k++)
-							lisx[k] = lisx[k+1];
-				}
-				else if(ixc[ip] > n+m1)                  /* ½»»»µ½Ò»¸öz£¬µ«ÊÇÊÇm2ÐÍµÄÌõ¼þ*/
-				{
-					i = ixc[ip]-n-m1;
-					if(lism2[i] == 1)          /* ÆäÊµÉÏÊÇ½«x(n+m1+i)¶ÔÓ¦µÄÁÐ½»»»µ½µÚjpÁÐ*/
-					{	                                   /* Ò²¾ÍÊÇÓÃÕâ¸öxÌæ»»z*/
-						lism2[i] = 0;
-						a[(m+1)*np+jp]++;
-						for(i=0; i<mp; i++)
-							a[i*np+jp] = -a[i*np+jp];
-					}
-				}
-				i = ixr[jp];                             /* ¸üÐÂ×óÊÖ±äÁ¿ºÍÓÒÊÖ±äÁ¿ÐòÁÐ*/
-				ixr[jp] = ixc[ip];
-				ixc[ip] = i;
-			}
-		} 
-	}
-	while(1)
-	{
-		jp = cmax1(a,mp,np,0,lisx, nl1, &cmax);        /* ²éÕÒ×î´óÖµ*/
-		if(cmax < eps)
-			return(0);                                 /* ÒÑ¾­ÕÒµ½×îÓÅ½â*/
-		ip = pivot(a,mp,np,m,n,jp);                    /* Ñ¡Ö÷Ôª*/
-		if(ip ==0)
-			return(1);                                 /* Ã»ÓÐÓÐÏÞ½â*/
-		mswap(a,mp,np,ip,jp);                          /* ½»»»*/
-		i = ixr[jp];                             /* ¸üÐÂ×óÊÖ±äÁ¿ºÍÓÒÊÖ±äÁ¿ÐòÁÐ*/
-		ixr[jp] = ixc[ip];
-		ixc[ip] = i;
-	}
+int i, j, k, m, mp, np, ip, jp, flag;
+int lisx[101], lism2[101], nl1;
+
+int cmax1(), cmax2(), pivot();
+
+void mswap();
+
+double tmp, cmax;
+
+m = m1 + m2 + m3;
+if(n > 100)
+{
+printf("n should less than 100\n");
+return(-1);
+}
+mp = m + 2;
+np = n + 1;                                    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ä£*/
+for(
+i = 0;
+i<=
+m;
+i++)
+{
+if(a[
+i *np
+] < 0.0)                        /* ï¿½ï¿½Ò»ï¿½ï¿½Òªï¿½ï¿½È«ï¿½ï¿½ï¿½Ç¸ï¿½*/
+{
+printf("negative B%d found\n",i);
+return(-1);
+}
+ixc[i] = n+
+i;                                    /* ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½n+1~n+m*/
+}
+for(
+k = 0;
+k<=
+n;
+k++)                                      /* ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1~n*/
+{
+lisx[k] =
+k;
+ixr[k] =
+k;
+}
+nl1 = n;
+if(m2+m3>0)                                               /* ï¿½ï¿½Òªï¿½â¸¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+for(
+i = 0;
+i<=
+m2;
+i++)
+lism2[i] = 1;                                     /* m2ï¿½ï¿½ï¿½Íµï¿½ï¿½Æ¶ï¿½ï¿½ï¿½Â¼*/
+for(
+j = 0;
+j<np;
+j++)                                   /* ï¿½ï¿½ï¿½ã¸¨ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+tmp = 0.0;
+for(
+i = m1 + 1;
+i<=
+m;
+i++)
+tmp = tmp + a[i * np + j];
+a[(m+1)*np+j] = -
+tmp;                             /* ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½*/
+}
+flag = 1;
+while(flag == 1)
+{
+jp = cmax1(a, mp, np, m + 1, lisx, nl1, &cmax);            /* ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ðµï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Öµ*/
+if(cmax <=
+eps &&a[(m + 1) * np]
+< -eps)
+{                                     /* Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ò´ï¿½Ê±ï¿½Ä¼ï¿½Ð¡ÖµÒ²Ð¡ï¿½ï¿½0*/
+printf("no feasible solution.\n");             /* ï¿½Þ¿ï¿½ï¿½Ð½ï¿½*/
+return(-1);
+}
+else if(cmax <=
+eps &&a[(m + 1) * np]
+<=eps)
+{                                    /* ï¿½Ñ¾ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å½â£¬Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½z*/
+for(
+ip = m1 + m2 + 1;
+ip<=
+m;
+ip++)
+{
+if(ixc[ip] == ip+n)                        /* ï¿½Òµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½z*/
+{                            /* ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ôª*/
+jp = cmax2(a, mp, np, ip, lisx, nl1, &cmax);
+if(
+fabs(cmax)
+> eps)
+{
+mswap(a, mp, np, ip, jp
+);
+for(
+j = 1;
+j<=
+nl1;
+j++)
+if(lisx[j] == jp)
+break;
+nl1--;                           /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ôºï¿½ï¿½Ù¹ï¿½ï¿½ï¿½*/
+for(
+k = j;
+k<=
+nl1;
+k++)
+lisx[k] = lisx[k+1];
+i = ixr[jp];              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+ixr[jp] = ixc[ip];
+ixc[ip] =
+i;
+}
+}
+}
+for(
+i = 1;
+i<=
+m2;
+i++)      /* ï¿½ï¿½m2ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ï¿½ï¿½ï¿½*/
+{
+if(lism2[i] == 1)
+{
+k = (i + m1) * np;
+for(
+j = 0;
+j<np;
+j++)                   /* ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½*/
+a[k+j] = -a[k+j];
+a[k] = 0;
+}
+}
+flag = 0;                                      /* ï¿½ï¿½Ê¼ï¿½Ú¶ï¿½ï¿½×¶ï¿½*/
+}
+else
+{
+ip = pivot(a, mp, np, m, n, jp);                        /* Ñ¡ï¿½ï¿½Ôª*/
+if(ip==0)                                          /* ï¿½Þ¿ï¿½ï¿½Ð½ï¿½*/
+{
+printf("no feasible solution.\n");
+return(-1);
+}
+mswap(a, mp, np, ip, jp
+);                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ipï¿½ÐºÍµï¿½jpï¿½Ð¶ï¿½Ó¦ï¿½Ä±ï¿½ï¿½ï¿½*/
+if(ixc[ip] > n+m1+m2)                /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½zï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½m2ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+for(
+j = 1;
+j<=
+nl1;
+j++)
+if(lisx[j] == jp)
+break;
+nl1--;                           /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ôºï¿½ï¿½Ù¹ï¿½ï¿½ï¿½*/
+for(
+k = j;
+k<=
+nl1;
+k++)
+lisx[k] = lisx[k+1];
+}
+else if(ixc[ip] > n+m1)                  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½m2ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+i = ixc[ip] - n - m1;
+if(lism2[i] == 1)          /* ï¿½ï¿½Êµï¿½ï¿½ï¿½Ç½ï¿½x(n+m1+i)ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jpï¿½ï¿½*/
+{                                       /* Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½æ»»z*/
+lism2[i] = 0;
+a[(m+1)*np+jp]++;
+for(
+i = 0;
+i<mp;
+i++)
+a[
+i *np
++jp] = -a[
+i *np
++jp];
+}
+}
+i = ixr[jp];                             /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+ixr[jp] = ixc[ip];
+ixc[ip] =
+i;
+}
+}
+}
+while(1)
+{
+jp = cmax1(a, mp, np, 0, lisx, nl1, &cmax);        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ*/
+if(cmax<eps)
+return(0);                                 /* ï¿½Ñ¾ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½Å½ï¿½*/
+ip = pivot(a, mp, np, m, n, jp);                    /* Ñ¡ï¿½ï¿½Ôª*/
+if(ip ==0)
+return(1);                                 /* Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Þ½ï¿½*/
+mswap(a, mp, np, ip, jp
+);                          /* ï¿½ï¿½ï¿½ï¿½*/
+i = ixr[jp];                             /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+ixr[jp] = ixc[ip];
+ixc[ip] =
+i;
+}
 }
 
-int cmax1(a, mp, np, mm, ll, nll, cmax) /* ¼ÆËãÊý×éaÖÐµÚmmÐÐÊý×éllÖÐ¸÷ÁÐÖÐµÄ×î´óÔªËØcmax*/
-double *a, *cmax;                                 /* ·µ»Ø´Ë×î´óÔªËØµÄÁÐºÅ*/
-int mp, np, mm, *ll, nll;                         /* mp,npÊÇ¶þÎ¬Êý×éaµÄ¹æÄ£*/
+int cmax1(a, mp, np, mm, ll, nll, cmax) /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½Ðµï¿½mmï¿½ï¿½ï¿½ï¿½ï¿½ï¿½llï¿½Ð¸ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½cmax*/
+double *a, *cmax;                                 /* ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½Ðºï¿½*/
+int mp, np, mm, *ll, nll;                         /* mp,npï¿½Ç¶ï¿½Î¬ï¿½ï¿½ï¿½ï¿½aï¿½Ä¹ï¿½Ä£*/
 {
-	int kp,k;
-	double tmp;
-	kp = ll[1];
-	*cmax = a[mm*np+kp];
-	for(k=2; k<=nll; k++)                         /* ±È½Ï*/
-	{
-		tmp = a[mm*np+ll[k]];
-		if(tmp > *cmax)
-		{
-			*cmax = tmp;
-			kp = ll[k];
-		}
-	}
-	return(kp);
+int kp, k;
+double tmp;
+kp = ll[1];
+*
+cmax = a[mm * np + kp];
+for(
+k = 2;
+k<=
+nll;
+k++)                         /* ï¿½È½ï¿½*/
+{
+tmp = a[mm * np + ll[k]];
+if(tmp > *cmax)
+{
+*
+cmax = tmp;
+kp = ll[k];
+}
+}
+return(kp);
 }
 
-#include "math.h"                 /* ¼ÆËãÊý×éaÖÐµÚmmÐÐÊý×éllÖÐ¸÷ÁÐÖÐµÄ¾ø¶ÔÖµ×î´óµÄÔªËØcmax*/
-int cmax2(a, mp, np, mm, ll, nll, cmax) 
-double *a, *cmax;                                 /* ·µ»Ø´Ë×î´óÔªËØµÄÁÐºÅ*/
-int mp, np, mm, *ll, nll;                         /* mp,npÊÇ¶þÎ¬Êý×éaµÄ¹æÄ£*/
+#include "math.h"                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½Ðµï¿½mmï¿½ï¿½ï¿½ï¿½ï¿½ï¿½llï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ÐµÄ¾ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½cmax*/
+
+int cmax2(a, mp, np, mm, ll, nll, cmax)
+double *a, *cmax;                                 /* ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½Ðºï¿½*/
+int mp, np, mm, *ll, nll;                         /* mp,npï¿½Ç¶ï¿½Î¬ï¿½ï¿½ï¿½ï¿½aï¿½Ä¹ï¿½Ä£*/
 {
-	int kp,k;
-	double tmp;
-	kp = ll[1];
-	*cmax = fabs(a[mm*np+kp]);
-	for(k=2; k<=nll; k++)                        /* ±È½Ï¾ø¶ÔÖµ*/
-	{
-		tmp = fabs(a[mm*np+ll[k]]);
-		if(tmp > *cmax)
-		{
-			*cmax = tmp;
-			kp = ll[k];
-		}
-	}
-	*cmax = a[mm*np+kp];
-	return(kp);
+int kp, k;
+double tmp;
+kp = ll[1];
+*
+cmax = fabs(a[mm * np + kp]);
+for(
+k = 2;
+k<=
+nll;
+k++)                        /* ï¿½È½Ï¾ï¿½ï¿½ï¿½Öµ*/
+{
+tmp = fabs(a[mm * np + ll[k]]);
+if(tmp > *cmax)
+{
+*
+cmax = tmp;
+kp = ll[k];
+}
+}
+*
+cmax = a[mm * np + kp];
+return(kp);
 }
 
-int pivot(a, mp, np, m, n, kp)                  /* Ñ¡Ö÷Ôª£¬¿¼ÂÇµ½±íÍË»¯µÄÇé¿ö*/
+int pivot(a, mp, np, m, n, kp)                  /* Ñ¡ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 double *a;
-int mp,np,m,n,kp;
+int mp, np, m, n, kp;
 {
-	int ip,i,k;
-	double p0,p1,p2,p3,tmp1,tmp2;
-	ip = 0;
-	for(i=1; i<=m; i++)                         /* ²éÕÒÊÇ·ñÓÐ¸ºÔªËØ*/
-		if(a[i*np+kp] < -TINY)
-			break;
-		if(i>m)
-			return(ip);
-		p0 = -a[i*np]/a[i*np+kp];                   /* µÚÒ»¸ö¸ºÔªËØ*/
-		ip = i;
-		for(i=ip+1; i<=m; i++)
-		{
-			if(a[i*np+kp] < -TINY)                  /* ÓÖÒ»¸ö¸ºÔªËØ*/
-			{
-				p1 =  -a[i*np]/a[i*np+kp]; 
-				if(p1 < p0)
-				{
-					ip = i;
-					p0 = p1;
-				}
-				else if(p1 == p0)                   /* ÍË»¯ÁË*/
-				{
-					tmp1 = 1.0/(a[ip*np+kp]);
-					tmp2 = 1.0/(a[i*np+kp]);
-					for(k=1; k<=n; k++)
-					{
-						p2 = -a[ip*np+k]*tmp1;
-						p3 = -a[i*np+k]*tmp2;
-						if(p2 != p3)
-							break;
-					}
-					if(p3 < p2)                      /* Ñ¡Ôñ½ÏÐ¡µÄÒ»¸ö*/
-						ip = i;
-				}
-			}
-		}
-		return(ip);
+int ip, i, k;
+double p0, p1, p2, p3, tmp1, tmp2;
+ip = 0;
+for(
+i = 1;
+i<=
+m;
+i++)                         /* ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð¸ï¿½Ôªï¿½ï¿½*/
+if(a[
+i *np
++kp] < -TINY)
+break;
+if(i>m)
+return(ip);
+p0 = -a[i * np] / a[i * np + kp];                   /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
+ip = i;
+for(
+i = ip + 1;
+i<=
+m;
+i++)
+{
+if(a[
+i *np
++kp] < -TINY)                  /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
+{
+p1 = -a[i * np] / a[i * np + kp];
+if(p1<p0)
+{
+ip = i;
+p0 = p1;
+}
+else if(p1 == p0)                   /* ï¿½Ë»ï¿½ï¿½ï¿½*/
+{
+tmp1 = 1.0 / (a[ip * np + kp]);
+tmp2 = 1.0 / (a[i * np + kp]);
+for(
+k = 1;
+k<=
+n;
+k++)
+{
+p2 = -a[ip * np + k] * tmp1;
+p3 = -a[i * np + k] * tmp2;
+if(p2 != p3)
+break;
+}
+if(p3<p2)                      /* Ñ¡ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ò»ï¿½ï¿½*/
+ip = i;
+}
+}
+}
+return(ip);
 }
 
-void mswap(a, mp, np, ip, kp)                        /* »»Ôª£¬ipÖ¸¶¨µÄÐÐºÍkpÖ¸¶¨ÁÐ*/
+void mswap(a, mp, np, ip, kp)                        /* ï¿½ï¿½Ôªï¿½ï¿½ipÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½kpÖ¸ï¿½ï¿½ï¿½ï¿½*/
 double *a;
-int mp,np,ip,kp;
+int mp, np, ip, kp;
 {
-	int i,k;
-	double tmp;
-	tmp = 1.0/a[ip*np+kp];
-	for(i=0; i<ip; i++)                               /* ÏÈ±ä»»µÚipÐÐÖ®ÍâµÄÐÐ*/
-	{
-		a[i*np+kp] = a[i*np+kp]*tmp;
-		for(k=0; k<kp; k++)
-			a[i*np+k] = a[i*np+k]-a[ip*np+k]*a[i*np+kp];
-		for(k=kp+1; k<np; k++)
-			a[i*np+k] = a[i*np+k]-a[ip*np+k]*a[i*np+kp];
-	}
-	for(i=ip+1; i<mp; i++)
-	{
-		a[i*np+kp] = a[i*np+kp]*tmp;
-		for(k=0; k<kp; k++)
-			a[i*np+k] = a[i*np+k]-a[ip*np+k]*a[i*np+kp];
-		for(k=kp+1; k<np; k++)
-			a[i*np+k] = a[i*np+k]-a[ip*np+k]*a[i*np+kp];
-	}
-	a[ip*np+kp] = a[ip*np+kp]*tmp;                       /* ±ä»»µÚipÐÐ*/                           
-	tmp = -tmp;
-	for(k=0; k<kp; k++)
-		a[ip*np+k] *= tmp;
-	for(k=kp+1; k<np; k++)
-		a[ip*np+k] *= tmp;
+int i, k;
+double tmp;
+tmp = 1.0 / a[ip * np + kp];
+for(
+i = 0;
+i<ip;
+i++)                               /* ï¿½È±ä»»ï¿½ï¿½ipï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+a[
+i *np
++kp] = a[
+i *np
++kp]*
+tmp;
+for(
+k = 0;
+k<kp;
+k++)
+a[
+i *np
++k] = a[
+i *np
++k]-a[
+ip *np
++k]*a[
+i *np
++kp];
+for(
+k = kp + 1;
+k<np;
+k++)
+a[
+i *np
++k] = a[
+i *np
++k]-a[
+ip *np
++k]*a[
+i *np
++kp];
+}
+for(
+i = ip + 1;
+i<mp;
+i++)
+{
+a[
+i *np
++kp] = a[
+i *np
++kp]*
+tmp;
+for(
+k = 0;
+k<kp;
+k++)
+a[
+i *np
++k] = a[
+i *np
++k]-a[
+ip *np
++k]*a[
+i *np
++kp];
+for(
+k = kp + 1;
+k<np;
+k++)
+a[
+i *np
++k] = a[
+i *np
++k]-a[
+ip *np
++k]*a[
+i *np
++kp];
+}
+a[
+ip *np
++kp] = a[
+ip *np
++kp]*
+tmp;                       /* ï¿½ä»»ï¿½ï¿½ipï¿½ï¿½*/
+tmp = -tmp;
+for(
+k = 0;
+k<kp;
+k++)
+a[
+ip *np
++k] *=
+tmp;
+for(
+k = kp + 1;
+k<np;
+k++)
+a[
+ip *np
++k] *=
+tmp;
 }

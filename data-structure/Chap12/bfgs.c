@@ -1,101 +1,154 @@
 /*======================================================
-// º¯ÊýÃû£ºbfgs
-// ¹¦ÄÜÃèÊö£ºBFGS×¼Å£¶Ù·¨
-// ÊäÈë²ÎÊý£ºx[n] ÊäÈëËÑË÷µÄ³ö·¢µã
-//           xmin[n] ·µ»ØÕÒµ½µÄ×îÓÅµã
-//           y0      ÇóµÃµÄ¼«Ð¡Öµ
-//           n ³õÊ¼Çø¼äµÄÁíÒ»¸ö¶Ëµã
-//           f ¶àÔªº¯ÊýÖ¸Õë
-//           df ¶àÔªº¯ÊýµÄµ¼º¯ÊýµÄÖ¸Õë
-//           eps ¾«¶ÈÏÞ¶È
-//           itmax ×î´óµü´ú´ÎÊý
-// ·µ»ØÖµ£º  µü´ú´ÎÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bfgs
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½BFGS×¼Å£ï¿½Ù·ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x[n] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½
+//           xmin[n] ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½
+//           y0      ï¿½ï¿½ÃµÄ¼ï¿½Ð¡Öµ
+//           n ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ëµï¿½
+//           f ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//           df ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//           eps ï¿½ï¿½ï¿½ï¿½ï¿½Þ¶ï¿½
+//           itmax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 =========================================================*/
 #include "stdlib.h"
 #include "math.h"
 #include "dirmin.c"
 
 int bfgs(x, xmin, n, y0, f, df, eps, itmax)
-double *x,*xmin,*y0,eps;
+double *x, *xmin, *y0, eps;
+
 double (*f)();
+
 void (*df)();
+
 int n, itmax;
 {
-	int i,j,it,flag;
-	double H[41][41],g0[41],dg[41],dx[41],hdg[41];
-	double y1, tiny, pq1, uij,  pq, qhq, qhq1;
-	if(n>40)                                          /* ÎÒÃÇ´¦Àín<£½20µÄÇé¿ö*/
-	{
-		printf("you'd better simplify the problem\n");
-		return(0);
-	}
-	for(i=0; i<n; i++)
-		xmin[i] = x[i];
-	*y0 = (*f)(xmin, n);                              /* ¼ÆËãº¯ÊýÖµ*/
-	(*df)(xmin, g0, n);                               /* ¼ÆËãÌÝ¶È*/
-	for(i=0; i<n; i++)
-	{
-		dx[i] = -g0[i];                               /* ³õÊ¼µÄËÑË÷·½Ïò*/
-		for(j=0; j<n; j++)                            /* HµÄ³õÖµÉèÎªn½×µ¥Î»Õó*/
-			H[i][j] = 0.0;
-		H[i][i] = 1.0;
-	}
-	it = 0;
-	flag = 0;
-	tiny = n*1.0e-20;
-	while(it++<itmax)
-	{
-		y1 = dirmin(xmin,dx,xmin,n,f,eps,itmax);          /* ´Óx³ö·¢£¬µ½¸üºÃµÄx. p=dx*/
-		if(2.0*(*y0 - y1) <= eps*(fabs(*y0) + fabs(y1) + tiny))
-		{
-			*y0 = y1;                            
-			flag++;
-			if(flag == 3)                                 /* Á¬ÐøÈý´Îº¯ÊýÖµÎÞ±ä»¯£¬ÍË³ö*/
-				return(it);
-		}
-		else
-			flag = 0;                                    /* flagÖÃÎª0*/
-		*y0 = y1;
-		for(i=0; i<n; i++)
-			dg[i] = g0[i];                               /* g0ÔÝ´æÔÚdgÖÐ*/
-		(*df)(xmin, g0, n);                              /* ¼ÆËãÐÂµãÉÏµÄÆ«µ¼*/
-		for(i=0; i<n; i++)
-			dg[i] = g0[i] - dg[i];                       /* q = g1-g0*/
-		for(i=0; i<n; i++)
-		{
-			hdg[i] = 0.0;
-			for(j=0; j<n; j++)
-				hdg[i] = hdg[i]+H[i][j]*dg[i];           /* H*q */
-		}
-		pq = 0.0;
-		qhq = 0.0;                                       /* ÇópT*q ºÍqT*H*q */
-		for(i=0; i<n; i++)
-		{
-			pq = pq + dx[i]*dg[i];
-			qhq = qhq + dg[i]*hdg[i];                    /* qT*H*q */
-		}
-		if(pq<tiny || qhq<tiny)                          /* ÒÑÊÕÁ²*/
-		{
-			return(it);
-		}
-		pq = 1.0/pq;
-		qhq1 = 1.0/qhq;
-		for(i=0; i<n; i++)
-			dg[i] = pq*dx[i] - qhq1*hdg[i];               /* u */
-		for(i=0; i<n; i++)
-		for(j=0; j<n; j++)                                 /* ¸üÐÂH¾ØÕó*/
-		{
-			pq1 = pq*dx[i]*dx[j] - qhq1*hdg[i]*hdg[j];
-			uij = qhq*dg[i]*dg[j];
-			H[i][j] = H[i][j] + pq1+uij;
-		}
-		for(i=0; i<n; i++)                                /* ÇóÏÂ´ÎµÄËÑË÷·½Ïò*/
-		{
-			dx[i] = 0.0;
-			for(j=0; j<n; j++)
-				dx[i] = dx[i] - H[i][j]*g0[j];
-		}
-	}	
-	printf("exceeding maximum iterations\n");
-	return(it);
+int i, j, it, flag;
+double H[41][41], g0[41], dg[41], dx[41], hdg[41];
+double y1, tiny, pq1, uij, pq, qhq, qhq1;
+if(n>40)                                          /* ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½n<ï¿½ï¿½20ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+printf("you'd better simplify the problem\n");
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)
+xmin[i] = x[i];
+*
+y0 = (*f)(xmin, n);                              /* ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Öµ*/
+(*df)(xmin, g0, n);                               /* ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+{
+dx[i] = -g0[i];                               /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+j = 0;
+j<n;
+j++)                            /* Hï¿½Ä³ï¿½Öµï¿½ï¿½Îªnï¿½×µï¿½Î»ï¿½ï¿½*/
+H[i][j] = 0.0;
+H[i][i] = 1.0;
+}
+it = 0;
+flag = 0;
+tiny = n * 1.0e-20;
+while(it++<itmax)
+{
+y1 = dirmin(xmin, dx, xmin, n, f, eps, itmax);          /* ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½x. p=dx*/
+if(2.0*(*y0 - y1) <=
+eps *(fabs(*y0)
++
+fabs(y1)
++ tiny))
+{
+*
+y0 = y1;
+flag++;
+if(flag == 3)                                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½Öµï¿½Þ±ä»¯ï¿½ï¿½ï¿½Ë³ï¿½*/
+return(it);
+}
+else
+flag = 0;                                    /* flagï¿½ï¿½Îª0*/
+*
+y0 = y1;
+for(
+i = 0;
+i<n;
+i++)
+dg[i] = g0[i];                               /* g0ï¿½Ý´ï¿½ï¿½ï¿½dgï¿½ï¿½*/
+(*df)(xmin, g0, n);                              /* ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½Ïµï¿½Æ«ï¿½ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+dg[i] = g0[i] - dg[i];                       /* q = g1-g0*/
+for(
+i = 0;
+i<n;
+i++)
+{
+hdg[i] = 0.0;
+for(
+j = 0;
+j<n;
+j++)
+hdg[i] = hdg[i]+H[i][j]*dg[i];           /* H*q */
+}
+pq = 0.0;
+qhq = 0.0;                                       /* ï¿½ï¿½pT*q ï¿½ï¿½qT*H*q */
+for(
+i = 0;
+i<n;
+i++)
+{
+pq = pq + dx[i] * dg[i];
+qhq = qhq + dg[i] * hdg[i];                    /* qT*H*q */
+}
+if(pq<tiny || qhq<tiny)                          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+return(it);
+}
+pq = 1.0 / pq;
+qhq1 = 1.0 / qhq;
+for(
+i = 0;
+i<n;
+i++)
+dg[i] =
+pq *dx[i]
+-
+qhq1 *hdg[i];               /* u */
+for(
+i = 0;
+i<n;
+i++)
+for(
+j = 0;
+j<n;
+j++)                                 /* ï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½*/
+{
+pq1 = pq * dx[i] * dx[j] - qhq1 * hdg[i] * hdg[j];
+uij = qhq * dg[i] * dg[j];
+H[i][j] = H[i][j] + pq1+
+uij;
+}
+for(
+i = 0;
+i<n;
+i++)                                /* ï¿½ï¿½ï¿½Â´Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+dx[i] = 0.0;
+for(
+j = 0;
+j<n;
+j++)
+dx[i] = dx[i] - H[i][j]*g0[j];
+}
+}
+printf("exceeding maximum iterations\n");
+return(it);
 }

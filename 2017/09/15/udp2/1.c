@@ -3,8 +3,8 @@
 //
 #include <stdio.h>
 #include <string.h>
-int main()
-{
+
+int main() {
     long long a = 128782101083494l;
 //    a = 140728790530240;
     a = 128782101083494;

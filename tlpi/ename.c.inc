@@ -1,6 +1,6 @@
 /* ename.c.inc
 
-   Built on GNU/Linux x86_64 with glibc 2.25
+Built on GNU/Linux x86_64 with glibc 2.25
 */
 static char *ename[] = {
     /*   0 */ "",

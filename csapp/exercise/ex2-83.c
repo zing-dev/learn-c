@@ -47,44 +47,42 @@
  * 但是，对于有符号数来说，它和浮点数呈正相关的关系。
  */
 
-int float_ge(float x, float y)
-{
-        unsigned ux = f2u(x);
-        unsigned uy = f2u(y);
+int float_ge(float x, float y) {
+    unsigned ux = f2u(x);
+    unsigned uy = f2u(y);
 
-        /* Get the sign bits */
-        unsigned sx = ux >> 31;
-        unsigned sy = uy >> 31;
+    /* Get the sign bits */
+    unsigned sx = ux >> 31;
+    unsigned sy = uy >> 31;
 
-        /*
-         * Give an expression using only ux, uy, sx, and sy
-         *
-         * The following code should be work, but I'm afraid it doesn't conform
-         * to the request.
-         *
-         * ux+uy==ux-uy && ux+uy==uy-ux ? ux+uy : (int)ux>=(int)uy
-         *
-         * If ux,uy=[0,INT_MIN], ux+uy==ux-uy && ux+uy==uy-ux should be
-         * 1. Otherwise, 0.
-         */
+    /*
+     * Give an expression using only ux, uy, sx, and sy
+     *
+     * The following code should be work, but I'm afraid it doesn't conform
+     * to the request.
+     *
+     * ux+uy==ux-uy && ux+uy==uy-ux ? ux+uy : (int)ux>=(int)uy
+     *
+     * If ux,uy=[0,INT_MIN], ux+uy==ux-uy && ux+uy==uy-ux should be
+     * 1. Otherwise, 0.
+     */
 
-        return ux + uy == ux - uy && ux + uy == uy - ux
-                ? ux + uy
-                : sx ^ sy ? !sx
-                          : !sx ? ux >= uy
-                                : ux <= uy;
+    return ux + uy == ux - uy && ux + uy == uy - ux
+           ? ux + uy
+           : sx ^ sy ? !sx
+                     : !sx ? ux >= uy
+                           : ux <= uy;
 }
 
 /* ftp://202.120.40.101/Courses/Computer_Architecture/csapp.cs.cmu.edu/im/code/data/floatge-ans.c */
-int float_ge_ans(float x, float y)
-{
-        unsigned ux = f2u(x);
-        unsigned uy = f2u(y);
-        unsigned sx = ux >> 31;
-        unsigned sy = uy >> 31;
+int float_ge_ans(float x, float y) {
+    unsigned ux = f2u(x);
+    unsigned uy = f2u(y);
+    unsigned sx = ux >> 31;
+    unsigned sy = uy >> 31;
 
-        return (ux << 1 == 0 && uy << 1 == 0) || /* ux = uy = 0 */
-                (!sx && sy) ||                   /* x >= 0, y < 0 */
-                (!sx && !sy && ux >= uy) ||      /* x >= 0, y >= 0 */
-                (sx && sy && ux <= uy);          /* x < 0, y < 0 */
+    return (ux << 1 == 0 && uy << 1 == 0) || /* ux = uy = 0 */
+           (!sx && sy) ||                   /* x >= 0, y < 0 */
+           (!sx && !sy && ux >= uy) ||      /* x >= 0, y >= 0 */
+           (sx && sy && ux <= uy);          /* x < 0, y < 0 */
 }

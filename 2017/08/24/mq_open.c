@@ -9,10 +9,10 @@
 #include <fcntl.h>
 #include <errno.h>
 #include<sys/stat.h>
+
 #define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int c, flags;
     mqd_t mqd;
     struct mq_attr attr;

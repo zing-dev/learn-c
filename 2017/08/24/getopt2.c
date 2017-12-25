@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     int oc;                     /*选项字符 */
     char *b_opt_arg;            /*选项参数字串 */
 
@@ -17,7 +16,7 @@ int main(int argc, char **argv)
                 break;
             case 'g':
                 printf("Her name is null.\n");
-                printf("Her name is %s.\n",optarg);
+                printf("Her name is %s.\n", optarg);
                 break;
             case 'l':
                 b_opt_arg = optarg;

@@ -8,8 +8,7 @@
 #include <string.h>
 #include <fcntl.h>
 
-int main(void)
-{
+int main(void) {
     char buf[1024];
     int n;
     n = read(STDIN_FILENO, buf, 10);

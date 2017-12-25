@@ -30,9 +30,8 @@
  *
  * @return
  */
-int cc_common_cmp_str(const void *str1, const void *str2)
-{
-    return strcmp((const char*) str1, (const char*) str2);
+int cc_common_cmp_str(const void *str1, const void *str2) {
+    return strcmp((const char *) str1, (const char *) str2);
 }
 
 /**
@@ -43,8 +42,7 @@ int cc_common_cmp_str(const void *str1, const void *str2)
  *
  * @return
  */
-int cc_common_cmp_ptr(const void *ptr1, const void *ptr2)
-{
+int cc_common_cmp_ptr(const void *ptr1, const void *ptr2) {
     if (ptr1 < ptr2)
         return -1;
     else if (ptr1 > ptr2)

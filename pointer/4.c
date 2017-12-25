@@ -4,9 +4,10 @@
 //
 
 #include<stdio.h>
+
 int max(int *, int *);
-int main(void)
-{
+
+int main(void) {
     int a, b, max_num;
     int *pa, *pb;
     int (*p)(int *, int *);
@@ -24,8 +25,7 @@ int main(void)
     return 0;
 }
 
-int max(int *pa, int *pb)
-{
+int max(int *pa, int *pb) {
     if (*pa >= *pb)
         return *pa;
     else

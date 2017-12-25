@@ -74,7 +74,7 @@ int main() {
         //addr_len是一个传入-传出参数，传入的是调用者提供的缓冲区的clientAddr的长度，以避免缓冲区溢出。
         //传出的是客户端地址结构体的实际长度。
         //出错返回-1
-        client = accept(serverSocket, (struct sockaddr *) &clientAddr, (socklen_t *)&addr_len);
+        client = accept(serverSocket, (struct sockaddr *) &clientAddr, (socklen_t * ) & addr_len);
         if (client < 0) {
             perror("accept");
             break;

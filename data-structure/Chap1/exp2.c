@@ -14,6 +14,6 @@ void main() {
 //    b = pow(10, 18) + 1;
 //    c = pow(10, 18);
 //    x = (-b +- sqrt(b * b -4ac)) / (2 * a)
-    printf("%.10f",pow(10, 18));
+    printf("%.10f", pow(10, 18));
 
 } 

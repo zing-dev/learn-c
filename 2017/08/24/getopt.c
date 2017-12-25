@@ -6,16 +6,15 @@
 #include<unistd.h>
 #include<stdlib.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int ch;
-    if(opterr){
+    if (opterr) {
         printf("err.........................\n");
     }
     opterr = 0;
     while ((
-        ch = getopt(argc, argv, "a:bcde")
-    ) != -1) {
+                   ch = getopt(argc, argv, "a:bcde")
+           ) != -1) {
         switch (ch) {
             case 'c':
                 printf("xxxtest");
@@ -30,7 +29,7 @@ int main(int argc, char *argv[])
         }
         printf("optopt +%c\n", optopt);
     }
-    if(argc != 2){
+    if (argc != 2) {
         printf("input a argv!!!\n");
         exit(1);
     }

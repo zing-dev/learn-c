@@ -1,38 +1,40 @@
 #include "math.h"
 #include "stdio.h"
 #include "frac.c"
-main()
-{
-  int nmax;
-  double f,e0,e1;
-  void fab();
-  nmax = 100;
-  e1 = 1.0e-7;
-  e0 = 1.0e-30;
-  f=frac(fab,nmax,e1,e0);
-  printf("f=%e\n",f);         /* ´òÓ¡½á¹û*/
-  getchar();
+
+main() {
+    int nmax;
+    double f, e0, e1;
+    void fab();
+    nmax = 100;
+    e1 = 1.0e-7;
+    e0 = 1.0e-30;
+    f = frac(fab, nmax, e1, e0);
+    printf("f=%e\n", f);         /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+    getchar();
 }
 
-void fab(j,ab)                /* ¼ÆËãÏµÊýµÄº¯Êý*/
+void fab(j, ab)                /* ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½*/
 int j;
 double *ab;
 {
-  double a = 0.5,x=2.5;       /* Á½¸ö²ÎÊý*/
-  if(j==0)                    /*b0= 0£¬´ËÊ±µÄa0²»ÖØÒª*/
-  {
-    ab[0] = 0.0;
-    ab[1] = 0.0;
-  }
-  else if(j==1)               /* a1 ºÍ b1*/
-  {
-    ab[0] = 1.0;
-    ab[1] = x+1.0-a;
-  }
-  else                        /* aj ºÍ bj*/
-  {
-    ab[0] = (j-1)*(a-j+1.0);
-    ab[1] = x+2.0*j+1.0-a;
-  }
-  return;
+double a = 0.5, x = 2.5;       /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+if(j==0)                    /*b0= 0ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½a0ï¿½ï¿½ï¿½ï¿½Òª*/
+{
+ab[0] = 0.0;
+ab[1] = 0.0;
+}
+else if(j==1)               /* a1 ï¿½ï¿½ b1*/
+{
+ab[0] = 1.0;
+ab[1] = x+1.0-
+a;
+}
+else                        /* aj ï¿½ï¿½ bj*/
+{
+ab[0] = (j-1)*(a-j+1.0);
+ab[1] = x+2.0*j+1.0-
+a;
+}
+return;
 }

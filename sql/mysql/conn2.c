@@ -4,8 +4,7 @@
 #include<mysql/mysql.h>
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     MYSQL mysql;
 
     char *host;
@@ -18,16 +17,20 @@ int main(int argc, char *argv[])
     printf("input host,user and password:\n");
     while ((oc = getopt(argc, argv, "h:u:p:")) != -1) {
         switch (oc) {
-        case 'h': host = optarg;
-            printf("h -> %s\n", host);
-            break;
-        case 'u': user = optarg;
-            printf("u -> %s\n", user);
-            break;
-        case 'p': password = optarg;
-            printf("pwd -> %s\n", password);
-            break;
-        default: printf("fuck\n");
+            case 'h':
+                host = optarg;
+                printf("h -> %s\n", host);
+                break;
+            case 'u':
+                user = optarg;
+                printf("u -> %s\n", user);
+                break;
+            case 'p':
+                password = optarg;
+                printf("pwd -> %s\n", password);
+                break;
+            default:
+                printf("fuck\n");
         }
     }
 

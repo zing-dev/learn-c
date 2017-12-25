@@ -31,7 +31,7 @@ typedef struct Node *LinkList; /* 定义LinkList */
 Status InitList(LinkList *L) {
     *L = (LinkList) malloc(sizeof(Node)); /* 产生头结点,并使L指向此头结点 */
     if (!(*L)) /* 存储分配失败 */{
-        printf("%d\n",*L);
+        printf("%d\n", *L);
         return ERROR;
     }
     (*L)->next = NULL; /* 指针域为空 */

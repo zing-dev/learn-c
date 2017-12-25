@@ -12,8 +12,8 @@
 #include <arpa/inet.h>
 
 #define MAXBUF 256
-int main(int argc, char const *argv[])
-{
+
+int main(int argc, char const *argv[]) {
     int s = 0;
     int n = 0;
     int reuse = 1;
@@ -30,8 +30,7 @@ int main(int argc, char const *argv[])
 
     /*创建UDP套节字*/
     s = socket(AF_INET, SOCK_DGRAM, 0);
-    if (s<0)
-    {
+    if (s < 0) {
         perror("socket");
         return -1;
     }
@@ -40,21 +39,20 @@ int main(int argc, char const *argv[])
     setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 
     /*绑定指定端口*/
-    if (bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-    {
+    if (bind(s, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
         perror("bind");
         return -1;
     }
 
-    while(1){
+    while (1) {
         memset(buf, 0, MAXBUF);
         /*从套节字s中读取数据*/
-        n = recvfrom(s, buf, MAXBUF, 0, (struct sockaddr *)&cli, &cli_len);
-        if(n<0){
+        n = recvfrom(s, buf, MAXBUF, 0, (struct sockaddr *) &cli, &cli_len);
+        if (n < 0) {
             perror("recvfrom");
             return -1;
-        }else{
-            printf("receive msg from %s(port=%d) len %d: %s\n",inet_ntoa(cli.sin_addr), port, n, buf);
+        } else {
+            printf("receive msg from %s(port=%d) len %d: %s\n", inet_ntoa(cli.sin_addr), port, n, buf);
         }
     }
 

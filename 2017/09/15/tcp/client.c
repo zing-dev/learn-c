@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
     serverAddr.sin_port = htons(SERVER_PORT);
     //指定服务器端的ip，本地测试：127.0.0.1
     //inet_addr()函数，将点分十进制IP转换成网络字节序IP
-    if(argc == 2){
-        printf("s_addr...............%s\n",argv[1]);
+    if (argc == 2) {
+        printf("s_addr...............%s\n", argv[1]);
         serverAddr.sin_addr.s_addr = inet_addr(argv[1]);
-    } else{
+    } else {
         serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
     }
 //    serverAddr.sin_addr.s_addr = inet_addr("192.168.33.11");

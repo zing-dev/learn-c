@@ -5,32 +5,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-void one()
-{
+
+void one() {
     char *ptr = NULL;
     char *buflist = NULL;
     buflist = (char *) malloc(1024);
-    ptr =(char *)(*((unsigned long *)buflist));
+    ptr = (char *) (*((unsigned long *) buflist));
 
     printf("----------------------------------\n");
-    if(ptr == NULL){
+    if (ptr == NULL) {
         printf("error");
         exit(1);
-    }
-    else{
+    } else {
         printf("ptr != NULL");
     }
     for (int i = 0; i < 5; ++i) {
-            ptr[i] =(char) i;
+        ptr[i] = (char) i;
     }
 //
     for (int i = 0; i < 5; ++i) {
-        printf("%d\n",*(ptr++));
+        printf("%d\n", *(ptr++));
     }
 
 }
-int main()
-{
+
+int main() {
     one();
 
 }

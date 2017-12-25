@@ -36,7 +36,7 @@ int QueueFull(Queue *Q) {
 
 //入队
 void EnQueue(Queue *Q, DataType v) {
-    if (QueueFull(Q)){
+    if (QueueFull(Q)) {
         printf("Error, the queue is full!\n");
         return;
     }

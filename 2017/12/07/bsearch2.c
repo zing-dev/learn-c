@@ -18,7 +18,7 @@ int main() {
     int key = 40, i = 0;
     qsort(values, 6, sizeof(int), compareints);
     for (i = 0; i < 6; ++i) {
-        printf("%d\t",values[i]);
+        printf("%d\t", values[i]);
     }
     printf("\n");
     pItem = (int *) bsearch(&key, values, 6, sizeof(int), compareints);

@@ -3,27 +3,26 @@
 #include "mmas.c"
 #include "bist.c"
 #include "qcks.c"
-main()
-{ 
-	int i,j,p[50],ma,mi,m12;
-	printf("Data:\n");
-	for(i=0; i<5; i++)                            /* Éú³ÉÒ»Ð©ÎÞÐòÊý¾Ý*/
-	{ 
-		for(j=0; j<10; j++)
-		{
-			p[10*i+j] = 20+10*i-j ;
-			printf("%d   ",p[10*i+j]);
-		}
-		printf("\n");
-	} 
-	printf("mima:\n");                           /* ÕÒ×î´óÖµºÍ×îÐ¡Öµ*/
-	mima(p,50,&mi,&ma);
-	printf("min = %d , max = %d\n",mi,ma);
-	printf("mmas:\n");
-	mmas(p,50,12);                               /* ÕÒµÚ12´óµÄÔªËØ*/
-	m12 = p[11];
-	printf("The 12th smallest m12 is: %d\n",m12);
-	qcks(p,0,49);                                 /* ÅÅÐò*/
-	i = bist(p,50,m12);                           /* ¶þ·Ö²éÕÒ*/
-	printf("m12's position in the ordered sqeu is: %d\n",i);
+
+main() {
+    int i, j, p[50], ma, mi, m12;
+    printf("Data:\n");
+    for (i = 0; i < 5; i++)                            /* ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    {
+        for (j = 0; j < 10; j++) {
+            p[10 * i + j] = 20 + 10 * i - j;
+            printf("%d   ", p[10 * i + j]);
+        }
+        printf("\n");
+    }
+    printf("mima:\n");                           /* ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ð¡Öµ*/
+    mima(p, 50, &mi, &ma);
+    printf("min = %d , max = %d\n", mi, ma);
+    printf("mmas:\n");
+    mmas(p, 50, 12);                               /* ï¿½Òµï¿½12ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
+    m12 = p[11];
+    printf("The 12th smallest m12 is: %d\n", m12);
+    qcks(p, 0, 49);                                 /* ï¿½ï¿½ï¿½ï¿½*/
+    i = bist(p, 50, m12);                           /* ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½*/
+    printf("m12's position in the ordered sqeu is: %d\n", i);
 }

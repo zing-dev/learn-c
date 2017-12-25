@@ -39,10 +39,10 @@
  * int putc(int ch,FILE *stream);
  */
 int main() {
-    FILE *fp,*fout;
+    FILE *fp, *fout;
     char ch;
     char buf[1024];
-    if((fout = fopen("out.txt","w")) == NULL){
+    if ((fout = fopen("out.txt", "w")) == NULL) {
         printf("open file error");
         exit(-1);
     }
@@ -79,8 +79,8 @@ int main() {
     }while (fgets(buf, 1024, fp));
      */
 
-    while (fgets(buf,1024,fp)){
-        printf("%s",buf);
+    while (fgets(buf, 1024, fp)) {
+        printf("%s", buf);
     }
     fclose(fp);
 }

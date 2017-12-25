@@ -17,27 +17,26 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-int main(int argc, char *argv[])
-{
-        /* 0. 检查参数是否正确 */
-        if (argc != 2) {
-                fprintf(stderr, "usage: %s <addr>\n", argv[0]);
-                return -1;
-        }
+int main(int argc, char *argv[]) {
+    /* 0. 检查参数是否正确 */
+    if (argc != 2) {
+        fprintf(stderr, "usage: %s <addr>\n", argv[0]);
+        return -1;
+    }
 
-        /* 1. 将点分十进制转换成网络字节序的 IP 地址 */
-        struct in_addr net;
-        int ret = inet_aton(argv[1], &net);
-        if (ret == 0) {
-                fprintf(stderr, "inet_aton: convert %s failed\n", argv[1]);
-                return -1;
-        }
+    /* 1. 将点分十进制转换成网络字节序的 IP 地址 */
+    struct in_addr net;
+    int ret = inet_aton(argv[1], &net);
+    if (ret == 0) {
+        fprintf(stderr, "inet_aton: convert %s failed\n", argv[1]);
+        return -1;
+    }
 
-        /* 2. 将网络字节序的 IP 地址转换成本地字节序 */
-        unsigned int host = ntohl(net.s_addr);
+    /* 2. 将网络字节序的 IP 地址转换成本地字节序 */
+    unsigned int host = ntohl(net.s_addr);
 
-        /* 3. 打印结果 */
-        printf("0x%x\n", host);
+    /* 3. 打印结果 */
+    printf("0x%x\n", host);
 
-        return 0;
+    return 0;
 }

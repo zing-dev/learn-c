@@ -6,17 +6,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main()
-{
+int main() {
     int result = system("ls");
-    if(result == -1){
+    if (result == -1) {
         printf("error.....");
-    }
-    else{
+    } else {
         printf("success....");
     }
     char *ls;
-    exec("ls",ls);
-    printf("%s\n",ls);
+    exec("ls", ls);
+    printf("%s\n", ls);
     return 0;
 }

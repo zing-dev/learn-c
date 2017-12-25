@@ -6,9 +6,8 @@
  * unix> gcc -O1 -S -m64 simple_1.c -o code64.s
  */
 
-long int simple_1(long int *xp, long int y)
-{
-        long int t = *xp + t;
-        *xp = t;
-        return t;
+long int simple_1(long int *xp, long int y) {
+    long int t = *xp + t;
+    *xp = t;
+    return t;
 }

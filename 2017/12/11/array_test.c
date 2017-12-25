@@ -38,8 +38,8 @@ int main(int argc, char **argv) {
     // Retreive the string and print it
     char *str;
     int ii;
-    array_get_at(ar, 0, (void*) &str);
-    array_get_at(ar, 1, (void*) &ii);
+    array_get_at(ar, 0, (void *) &str);
+    array_get_at(ar, 1, (void *) &ii);
     printf("%s\n", str);
     printf("%d\n", ii);
 

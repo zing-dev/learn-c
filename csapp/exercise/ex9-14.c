@@ -16,23 +16,22 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-int modify_file_using_mmap(int fd)
-{
-        struct stat st;
-        int ret = fstat(fd, &st);
-        if (ret) {
-                perror("fstat");
-                return -1;
-        }
+int modify_file_using_mmap(int fd) {
+    struct stat st;
+    int ret = fstat(fd, &st);
+    if (ret) {
+        perror("fstat");
+        return -1;
+    }
 
-        void *map_addr = mmap(NULL, st.st_size, PROT_WRITE, MAP_SHARED, fd, 0);
-        if (map_addr == MAP_FAILED) {
-                perror("mmap");
-                return -1;
-        }
+    void *map_addr = mmap(NULL, st.st_size, PROT_WRITE, MAP_SHARED, fd, 0);
+    if (map_addr == MAP_FAILED) {
+        perror("mmap");
+        return -1;
+    }
 
-        char *buf = map_addr;
-        *buf = 'J';
+    char *buf = map_addr;
+    *buf = 'J';
 
-        return 0;
+    return 0;
 }

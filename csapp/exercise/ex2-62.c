@@ -8,9 +8,8 @@
 
 #include <limits.h>
 
-int int_shifts_are_logical(void)
-{
-        int x = (~0 - 1) >> 1;
+int int_shifts_are_logical(void) {
+    int x = (~0 - 1) >> 1;
 
-        return x != INT_MAX;
+    return x != INT_MAX;
 }

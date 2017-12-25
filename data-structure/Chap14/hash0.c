@@ -1,24 +1,24 @@
-#define KEY name                                             /* µ÷ÓÃ¹þÏ£º¯ÊýÐèÒªµÄºê*/
+#define KEY name                                             /* ï¿½ï¿½ï¿½Ã¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Äºï¿½*/
 #define NULLTag "\0"
 #define DELTag "1\0"
 #define HashSize 29
 
-struct student{                                              /* ¶¨Òå´æ·ÅÑ§ÉúÐÅÏ¢µÄ½á¹¹Ìå*/
-	int num;
-	char name[8];
-	char sex;
-	int age;
+struct student {                                              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ä½á¹¹ï¿½ï¿½*/
+    int num;
+    char name[8];
+    char sex;
+    int age;
 };
 
 typedef struct student ElemType;
-typedef struct student* ElemTypeP;
+typedef struct student *ElemTypeP;
 typedef ElemType hashlist[HashSize];
 typedef char KeyType[8];
- 
-int	KeyEqu(char* stra,char* strb);   /* ÅÐ¶Ï¹Ø¼ü×ÖÊÇ·ñÏàÍ¬*/
-void ElemCP(ElemType *a, ElemType *b);                         /* ½«ÔªËØbÖÐÄÚÈÝ¿½±´µ½aÖÐ*/
-void ElemDEL(ElemType *a);                                    /* ½«ÔªËØaÉè³ÉÒÑÉ¾³ý*/
-void ElemNULL(ElemType *a);                                   /* ½«ÔªËØaÉè³É¿Õ£¬ÓÃÓÚ³õÊ¼»¯»òÇå¿Õ¹þÏ£±í*/
+
+int KeyEqu(char *stra, char *strb);   /* ï¿½Ð¶Ï¹Ø¼ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬*/
+void ElemCP(ElemType *a, ElemType *b);                         /* ï¿½ï¿½Ôªï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½*/
+void ElemDEL(ElemType *a);                                    /* ï¿½ï¿½Ôªï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½*/
+void ElemNULL(ElemType *a);                                   /* ï¿½ï¿½Ôªï¿½ï¿½aï¿½ï¿½É¿Õ£ï¿½ï¿½ï¿½ï¿½Ú³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½Ï£ï¿½ï¿½*/
 
 #include "stdio.h"
 #include "string.h"
@@ -28,57 +28,63 @@ void ElemNULL(ElemType *a);                                   /* ½«ÔªËØaÉè³É¿Õ£¬
 #include "hashsch.c"
 #include "hashdel.c"
 
-main()
-{ 
-	int i,m;
-	static ElemType x[16]={{101,"Zhao",'M',19},
-	{102,"Qian",'F',18},{103,"Sun",'M',19},
-	{104,"Li",'F',20},{105,"Zhou",'M',19},
-	{106,"Wu",'F',18},{107,"Zheng",'M',17},
-	{108,"Wang",'F',21},{109,"Jiang",'M',19},
-	{110,"Shen",'F',18},{111,"Chu",'M',19},
-	{112,"Wei",'F',19},{113,"He",'M',18},
-	{114,"Lv",'F',18},{115,"Shi",'M',19},
-	{110,"Zhang",'F',18}};
-	KeyType a = "Zhou";                                /* aÎªÒª²éÕÒµÄ¹Ø¼ü×Ö*/
-	hashlist HT;                                        /* ¶¨Òå¹þÏ£±í*/
-	m = HashSize;
-	for(i=0; i<m; i++)                                  /* ³õÊ¼»¯¹þÏ£±í*/
-		ElemNULL(&HT[i]);	
-	for(i=0; i<16; i++)                                 /* ½«ÔªËØ²åÈë¹þÏ£±í*/
-		hashins(HT,m,x[i]);
-	i = hashsch(HT,m,a);                                /* ÔÚ¹þÏ£±íÖÐ²éÕÒ*/
-	if(i != -1)
-		printf("%-5d%-8s%-2c%-2d%\n",HT[i].num,HT[i].name,HT[i].sex,HT[i].age);
+main() {
+    int i, m;
+    static ElemType x[16] = {{101, "Zhao",  'M', 19},
+                             {102, "Qian",  'F', 18},
+                             {103, "Sun",   'M', 19},
+                             {104, "Li",    'F', 20},
+                             {105, "Zhou",  'M', 19},
+                             {106, "Wu",    'F', 18},
+                             {107, "Zheng", 'M', 17},
+                             {108, "Wang",  'F', 21},
+                             {109, "Jiang", 'M', 19},
+                             {110, "Shen",  'F', 18},
+                             {111, "Chu",   'M', 19},
+                             {112, "Wei",   'F', 19},
+                             {113, "He",    'M', 18},
+                             {114, "Lv",    'F', 18},
+                             {115, "Shi",   'M', 19},
+                             {110, "Zhang", 'F', 18}};
+    KeyType a = "Zhou";                                /* aÎªÒªï¿½ï¿½ï¿½ÒµÄ¹Ø¼ï¿½ï¿½ï¿½*/
+    hashlist HT;                                        /* ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½*/
+    m = HashSize;
+    for (i = 0; i < m; i++)                                  /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½*/
+        ElemNULL(&HT[i]);
+    for (i = 0; i < 16; i++)                                 /* ï¿½ï¿½Ôªï¿½Ø²ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½*/
+        hashins(HT, m, x[i]);
+    i = hashsch(HT, m, a);                                /* ï¿½Ú¹ï¿½Ï£ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½*/
+    if (i != -1)
+        printf("%-5d%-8s%-2c%-2d%\n", HT[i].num, HT[i].name, HT[i].sex, HT[i].age);
 }
 
-int	KeyEqu(char* stra, char* strb)   /* ÅÐ¶Ï¹Ø¼ü×ÖÊÇ·ñÏàÍ¬*/
+int KeyEqu(char *stra, char *strb)   /* ï¿½Ð¶Ï¹Ø¼ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬*/
 {
-	return(!strcmp(stra, strb));
+    return (!strcmp(stra, strb));
 }
 
-void ElemCP(ElemType *a, ElemType *b)                          /* ½«ÔªËØbÖÐÄÚÈÝ¿½±´µ½aÖÐ*/
+void ElemCP(ElemType *a, ElemType *b)                          /* ï¿½ï¿½Ôªï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½*/
 {
-	int i;
-	a->num = b->num;
-	for(i=0; i<8; i++)
-		a->name[i] = b->name[i];
-	a->name[7] = '\0';
-	a->sex = b->sex;
-	a->age = b->age;
+    int i;
+    a->num = b->num;
+    for (i = 0; i < 8; i++)
+        a->name[i] = b->name[i];
+    a->name[7] = '\0';
+    a->sex = b->sex;
+    a->age = b->age;
 }
 
-void ElemDEL(ElemType *a)                                    /* ½«ÔªËØaÉè³ÉÒÑÉ¾³ý*/
+void ElemDEL(ElemType *a)                                    /* ï¿½ï¿½Ôªï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½*/
 {
-	int i;
-	a->name[0] = '1';
-	for(i=1; i<8; i++)
-		a->name[i] = '\0';
+    int i;
+    a->name[0] = '1';
+    for (i = 1; i < 8; i++)
+        a->name[i] = '\0';
 }
 
-void ElemNULL(ElemType *a)                                    /* ½«ÔªËØaÉè³ÉÒÑÉ¾³ý*/
+void ElemNULL(ElemType *a)                                    /* ï¿½ï¿½Ôªï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½*/
 {
-	int i;
-	for(i=0; i<8; i++)
-		a->name[i] = '\0';
+    int i;
+    for (i = 0; i < 8; i++)
+        a->name[i] = '\0';
 }

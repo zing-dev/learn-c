@@ -38,9 +38,8 @@
 
 typedef unsigned packed_t;
 
-int xbyte(packed_t word, int bytenum)
-{
-        int shift_left = (3 - bytenum) << 3;
+int xbyte(packed_t word, int bytenum) {
+    int shift_left = (3 - bytenum) << 3;
 
-        return (word << shift_left) >> 24;
+    return (word << shift_left) >> 24;
 }

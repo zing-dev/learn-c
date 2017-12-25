@@ -4,7 +4,6 @@
 
 double x;
 
-void f()
-{
-        x = -0.0;
+void f() {
+    x = -0.0;
 }

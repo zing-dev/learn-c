@@ -1,33 +1,46 @@
 /*======================================================
-//º¯ÊýÃû£ºqrroot
-//¹¦ÄÜÃèÊö£ºQR·½·¨Çó¶àÏîÊ½·½³ÌÈ«²¿Êµ¸ù
-//ÊäÈë²ÎÊý£ºa   Ö¸Ïò´æ·Å¶àÏîÊ½ÏµÊýµÄÖ¸Õë£¨½µÃÝÅÅÁÐ£©
-			n   ¶àÏîÊ½½×Êý
-			u   ·µ»ØµÄ¸ùµÄÊµ²¿
-			v   ·µ»ØµÄ¸ùµÄÐé²¿
-			eps ¾«¶ÈÒªÇó£¬ÓÃÓÚÅÐ¶ÏÔªËØÊÇ·ñÎª0
-			itmax ×î´óµü´ú´ÎÊý
-//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½qrroot
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½QRï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Êµï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a   Ö¸ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½Ê½Ïµï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ë£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½
+			n   ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+			u   ï¿½ï¿½ï¿½ØµÄ¸ï¿½ï¿½ï¿½Êµï¿½ï¿½
+			v   ï¿½ï¿½ï¿½ØµÄ¸ï¿½ï¿½ï¿½ï¿½é²¿
+			eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ôªï¿½ï¿½ï¿½Ç·ï¿½Îª0
+			itmax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
 #include "mhdqr.c"
 
-int qrroot(a,n,u,v,eps,itmax)
-double *a,*u,*v,eps;
-int n,itmax;
+int qrroot(a, n, u, v, eps, itmax)
+double *a, *u, *v, eps;
+int n, itmax;
 {
-	int i;
-	double *H;
-	H=(double*)malloc(sizeof(double)*n*n);    /* Éú³ÉµÄÉÏH¾ØÕó*/
-	for(i=0;i<n;i++)
-		H[i]=-1.0*a[i+1]/a[0];                /* µÚÒ»ÐÐ*/
-	for(i=n;i<n*n;i++)
-		H[i]=0.0;                               /* ÏÂÃæÎª0*/
-	for(i=1;i<n;i++)
-		H[i*n+i-1]=1.0;                         /* ´Î¶Ô½ÇÏßÎª1*/
-	return(mhdqr(H,n,u,v,eps,itmax));         /* µ÷ÓÃÉÏH¾ØÕóÇóÌØÕ÷ÖµµÄº¯Êý*/
+int i;
+double *H;
+H = (double *) malloc(sizeof(double) * n * n);    /* ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+H[i]=-1.0*a[i+1]/a[0];                /* ï¿½ï¿½Ò»ï¿½ï¿½*/
+for(
+i = n;
+i<n *n;
+i++)
+H[i]=0.0;                               /* ï¿½ï¿½ï¿½ï¿½Îª0*/
+for(
+i = 1;
+i<n;
+i++)
+H[
+i *n
++i-1]=1.0;                         /* ï¿½Î¶Ô½ï¿½ï¿½ï¿½Îª1*/
+return(
+mhdqr(H, n, u, v, eps, itmax
+));         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Äºï¿½ï¿½ï¿½*/
 }
 
 

@@ -29,10 +29,9 @@
 
 #include <limits.h>
 
-int int_size_is_32(void)
-{
-        int t = 0x80000000;
-        return t == INT_MIN;
+int int_size_is_32(void) {
+    int t = 0x80000000;
+    return t == INT_MIN;
 }
 
 /*
@@ -47,17 +46,15 @@ int int_size_is_32(void)
 /*
  * B. 下面的代码在 int 至少为 32 位的任何机器上都能正确运行
  */
-int int_size_is_at_least_32(void)
-{
-        int t = 0x80000000;
-        return t;
+int int_size_is_at_least_32(void) {
+    int t = 0x80000000;
+    return t;
 }
 
 /*
  * C. 下面的代码在 int 至少位 16 位的任何机器上都能正确运行
  */
-int int_size_is_at_least_16(void)
-{
-        int t = 0x8000;
-        return t;
+int int_size_is_at_least_16(void) {
+    int t = 0x8000;
+    return t;
 }

@@ -6,8 +6,8 @@
 //#include <syslib.h>
 #include <string.h>
 #include <stdio.h>
-int main()
-{
+
+int main() {
     char *s = "GoldenGlobalView";
     char *l = "lob";
     char *p;

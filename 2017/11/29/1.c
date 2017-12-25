@@ -11,6 +11,7 @@ void get(void *data) {
     pInt = (int *) (data);
     printf(">>>>>>>>>>>>>> %d\n", *pInt);
 }
+
 int main() {
     unsigned int ii[] = {5, 3, [5] = 10}, iii = 111;
     unsigned char index[sizeof(ii)];

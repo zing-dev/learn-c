@@ -28,25 +28,24 @@
  * 移 3 位，得到的就是小数点之和。只有当符号位和最低三位数值都是 1 时，才会有
  * f=-1。
  */
-int fiveeighths(int x)
-{
-        int sign         = (x & INT_MIN) == INT_MIN;
-        int lowest_one   = x & 1;
-        int lowest_three = !!(x & 7);
+int fiveeighths(int x) {
+    int sign = (x & INT_MIN) == INT_MIN;
+    int lowest_one = x & 1;
+    int lowest_three = !!(x & 7);
 
-        /*
-         * 只有 sign=1 && (lowest_one||lowest_three) 求值为 1 时，mask=mask2=-8
-         * 否则，mask=mask2=0
-         */
-        int mask  = ~(((sign & lowest_one)   << 3) - 1) & -8;
-        int mask2 = ~(((sign & lowest_three) << 3) - 1) & -8;
+    /*
+     * 只有 sign=1 && (lowest_one||lowest_three) 求值为 1 时，mask=mask2=-8
+     * 否则，mask=mask2=0
+     */
+    int mask = ~(((sign & lowest_one) << 3) - 1) & -8;
+    int mask2 = ~(((sign & lowest_three) << 3) - 1) & -8;
 
-        int fraction  = ((x & 1) << 2) + mask;
-        int fraction2 = (x & 7) + mask2;
+    int fraction = ((x & 1) << 2) + mask;
+    int fraction2 = (x & 7) + mask2;
 
-        int bias  = (1 + !sign) & 1;
-        int bias2 = (7 + !sign) & 7;
-        int remainder = (fraction + fraction2 + bias2) >> 3;
+    int bias = (1 + !sign) & 1;
+    int bias2 = (7 + !sign) & 7;
+    int remainder = (fraction + fraction2 + bias2) >> 3;
 
-        return ((x + bias) >> 1) + ((x + bias2) >> 3) + remainder;
+    return ((x + bias) >> 1) + ((x + bias2) >> 3) + remainder;
 }

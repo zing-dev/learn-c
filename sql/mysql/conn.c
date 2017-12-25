@@ -2,8 +2,7 @@
 #include<mysql/mysql.h>
 
 
-int main(int argc, const char *argv[])
-{
+int main(int argc, const char *argv[]) {
     MYSQL mysql;
     if (mysql_init(&mysql) == NULL) {
         printf("mysql_init() : %s\n", mysql_error(&mysql));

@@ -6,12 +6,11 @@
 #include <stdio.h>
 #include <string.h>
 
-int main()
-{
+int main() {
     char *str[3] = {
-        "Hello,this is a sample!",
-        "Hi,good morning.",
-        "Hello World"
+            "Hello,this is a sample!",
+            "Hi,good morning.",
+            "Hello World"
     };
     char s[80] = {'\0'};
     strcat(s, str[0]); //也可写成 strcpy(s,*str);

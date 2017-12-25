@@ -17,41 +17,38 @@
 #include <unistd.h>
 #include <signal.h>
 
-void handler(int sig)
-{
-        return;
+void handler(int sig) {
+    return;
 }
 
-unsigned int snooze(unsigned int secs)
-{
-        unsigned sleep_secs, reserve_secs;
+unsigned int snooze(unsigned int secs) {
+    unsigned sleep_secs, reserve_secs;
 
-        reserve_secs = sleep(secs);
-        sleep_secs = secs - reserve_secs;
+    reserve_secs = sleep(secs);
+    sleep_secs = secs - reserve_secs;
 
-        printf("Slept for %u of %u secs\t\t"
-               "User hits ctrl-c after %u seconds\n",
-               sleep_secs, secs, sleep_secs);
+    printf("Slept for %u of %u secs\t\t"
+                   "User hits ctrl-c after %u seconds\n",
+           sleep_secs, secs, sleep_secs);
 
-        return reserve_secs;
+    return reserve_secs;
 }
 
-int main(int argc, char *argv[])
-{
-        unsigned secs;
+int main(int argc, char *argv[]) {
+    unsigned secs;
 
-        if (argc != 2) {
-                fprintf(stderr, "usage: %s seconds\n", argv[0]);
-                exit(1);
-        }
+    if (argc != 2) {
+        fprintf(stderr, "usage: %s seconds\n", argv[0]);
+        exit(1);
+    }
 
-        if (signal(SIGINT, handler) == SIG_ERR) {
-                fprintf(stderr, "signal error: %s\n", strerror(errno));
-                exit(0);
-        }
+    if (signal(SIGINT, handler) == SIG_ERR) {
+        fprintf(stderr, "signal error: %s\n", strerror(errno));
+        exit(0);
+    }
 
-        secs = atoi(argv[1]);
-        snooze((unsigned)secs);
+    secs = atoi(argv[1]);
+    snooze((unsigned) secs);
 
-        return 0;
+    return 0;
 }

@@ -8,52 +8,48 @@
 /*
  * Return 1 when OK, otherwise return 0
  */
-int tmul_ok_32(int x, int y)
-{
-        int p = x * y;
-        return !x || p / x == y;
+int tmul_ok_32(int x, int y) {
+    int p = x * y;
+    return !x || p / x == y;
 }
 
 /*
  * A solution
  */
-int largest_factorial_32(void)
-{
-        int result = 1;
-        int n = 1, overflow;
+int largest_factorial_32(void) {
+    int result = 1;
+    int n = 1, overflow;
 
-        for (;;) {
-                n++;
-                overflow = !tmul_ok_32(result, n);
-                if (overflow)
-                        break;
-                result *= n;
-        }
+    for (;;) {
+        n++;
+        overflow = !tmul_ok_32(result, n);
+        if (overflow)
+            break;
+        result *= n;
+    }
 
-        return n - 1;
+    return n - 1;
 }
 
-int tmul_ok_64(long long int x, long long int y)
-{
-        long long int p = x * y;
-        return !x || p / x == y;
+int tmul_ok_64(long long int x, long long int y) {
+    long long int p = x * y;
+    return !x || p / x == y;
 }
 
 /*
  * B solution
  */
-int largest_factorial_64(void)
-{
-        long long int result = 1;
-        int n = 1, overflow;
+int largest_factorial_64(void) {
+    long long int result = 1;
+    int n = 1, overflow;
 
-        for (;;) {
-                n++;
-                overflow = !tmul_ok_64(result, n);
-                if (overflow)
-                        break;
-                result *= n;
-        }
+    for (;;) {
+        n++;
+        overflow = !tmul_ok_64(result, n);
+        if (overflow)
+            break;
+        result *= n;
+    }
 
-        return n - 1;
+    return n - 1;
 }

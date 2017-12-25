@@ -64,7 +64,7 @@ void DestroyStack(mStack *pStack) {
 
     ///释放栈内节点
     while (tmp != NULL) {
-        printf("%d free\n",*(int *)tmp->pelm);
+        printf("%d free\n", *(int *) tmp->pelm);
         tmp = tmp->next;
         free(pStack->top);
         pStack->top = tmp;
@@ -84,7 +84,7 @@ void DestroyStack(mStack *pStack) {
 void ClearStack(mStack *pStack) {
     StackNode *tmp = pStack->top;
     while (tmp != NULL) {
-        printf("%d clear",*(int *)tmp->pelm);
+        printf("%d clear", *(int *) tmp->pelm);
         tmp = tmp->next;
         free(pStack->top);
         pStack->top = tmp;
@@ -155,7 +155,7 @@ int Pop(mStack *pStack, void **pdata) {
 
     ///将栈顶指针向下退一位
     StackNode *p = pStack->top->next;
-    printf("Pop %d free",*(int *) pStack->top->pelm);
+    printf("Pop %d free", *(int *) pStack->top->pelm);
     free(pStack->top);
     pStack->top = p;
     return --pStack->height;

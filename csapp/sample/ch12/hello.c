@@ -13,16 +13,15 @@
 
 void *thread(void *argvp);
 
-int main()
-{
-        pthread_t tid;
-        Pthread_create(&tid, NULL, thread, NULL);
-        Pthread_join(tid, NULL);
-        exit(0);
+int main() {
+    pthread_t tid;
+    Pthread_create(&tid, NULL, thread, NULL);
+    Pthread_join(tid, NULL);
+    exit(0);
 }
 
 void *thread(void *argvp)       /* Thread routine */
 {
-        printf("Hello, world!\n");
-        return NULL;
+    printf("Hello, world!\n");
+    return NULL;
 }

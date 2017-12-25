@@ -7,8 +7,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void strtoktest()
-{
+void strtoktest() {
     char input[16] = "abc=d";
     char *p;
     /*strtok places a NULL terminator
@@ -23,15 +22,15 @@ void strtoktest()
     if (p)
         printf("%s\n", (p));
 }
-int strtoktest2()
-{
+
+int strtoktest2() {
     char input[27] = "TPROXY_CPORT = 11111";
     char *temp;
-    if ((temp = (char *) strtok (input, " "))){
-        printf("-->  %s\n",temp);
+    if ((temp = (char *) strtok(input, " "))) {
+        printf("-->  %s\n", temp);
     }
-    if ((temp = (char *) strtok (NULL, " "))){
-        printf("---->  %s\n",(temp));
+    if ((temp = (char *) strtok(NULL, " "))) {
+        printf("---->  %s\n", (temp));
     }
 //    if ((temp = (char *) strtok (NULL, " "))){
 //        printf("---->  %s\n",temp);
@@ -39,20 +38,19 @@ int strtoktest2()
 
 
 
-    if(!strcmp(temp, "TPROXY_CPORT"))
-    {
-        printf("-------> %d\n",temp);
-        if((temp = (char *) strtok (NULL, " ")) == NULL)
+    if (!strcmp(temp, "TPROXY_CPORT")) {
+        printf("-------> %d\n", temp);
+        if ((temp = (char *) strtok(NULL, " ")) == NULL)
             return 1;
         int GF_TPROXY_CPORT = atoi(temp);
-        printf("--> %d\n",temp);
-        printf("%d\n",GF_TPROXY_CPORT);
+        printf("--> %d\n", temp);
+        printf("%d\n", GF_TPROXY_CPORT);
         printf("---------------------end---------------------");
     }
     return 1;
 }
-int main(void)
-{
+
+int main(void) {
     strtoktest();
 //    strtoktest2();
     return 0;

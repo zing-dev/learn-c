@@ -4,8 +4,8 @@
 //
 
 #include <stdio.h>
-int main(void)
-{
+
+int main(void) {
     char str[] = "zhangrongxiang";
     char *p = str;
     printf("str   = %p        p        = %p\n", str, p);

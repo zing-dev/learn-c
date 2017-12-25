@@ -1,58 +1,57 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "ftest.c"
+
 #define pi 3.1415926
 
-void main()
-{
-    int j,na,nb,nc,rtab,rtbc,rtac;
-    double *a,*b,*c;
-    double x,alpha;
-    na = 50;       /* Éú³É10¸öËæ»úÊý*/
+void main() {
+    int j, na, nb, nc, rtab, rtbc, rtac;
+    double *a, *b, *c;
+    double x, alpha;
+    na = 50;       /* ï¿½ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
     nb = 70;
-	nc = 60;
-	alpha=0.1;
+    nc = 60;
+    alpha = 0.1;
 
-    a=(double*)malloc(sizeof(double)*na);
-	b=(double*)malloc(sizeof(double)*nb);
-    c=(double*)malloc(sizeof(double)*nc);
-	if(a==NULL||b==NULL||c==NULL)
-    {
-         printf("memory alloc failed.\n");
-         exit(0);
+    a = (double *) malloc(sizeof(double) * na);
+    b = (double *) malloc(sizeof(double) * nb);
+    c = (double *) malloc(sizeof(double) * nc);
+    if (a == NULL || b == NULL || c == NULL) {
+        printf("memory alloc failed.\n");
+        exit(0);
     }
-    for(j=0;j<na;j++)				//Ëæ»úÊýÑù±¾a
+    for (j = 0; j < na; j++)                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a
     {
-        x = pi*j/na;    
+        x = pi * j / na;
         a[j] = sin(x);
     }
-    for(j=0;j<nb;j++)              //Ëæ»úÑù±¾b
+    for (j = 0; j < nb; j++)              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b
     {
-        x = pi*j/nb;
+        x = pi * j / nb;
         b[j] = cos(x);
     }
-	for(j=0;j<nc;j++)              //Ëæ»úÑù±¾c
+    for (j = 0; j < nc; j++)              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c
     {
-        x = pi*j/nc;
+        x = pi * j / nc;
         c[j] = sin(x);
     }
-    rtab=ftest(a,na,b,nb,alpha);         /* ¼ìÑéaºÍb*/
-	if(rtab)
-	    printf("aÓëbÓÐÏÔÖøÐÔ²îÒì\n");
-	else
-		printf("aÓëbÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
+    rtab = ftest(a, na, b, nb, alpha);         /* ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½b*/
+    if (rtab)
+        printf("aï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
+    else
+        printf("aï¿½ï¿½bÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
 
 
-	rtbc=ftest(c,nc,b,nb,alpha);         /* ¼ìÑébºÍc*/
-	if(rtbc)
-	    printf("bÓëcÓÐÏÔÖøÐÔ²îÒì\n");
-	else
-		printf("bÓëcÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
+    rtbc = ftest(c, nc, b, nb, alpha);         /* ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½c*/
+    if (rtbc)
+        printf("bï¿½ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
+    else
+        printf("bï¿½ï¿½cÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
 
-	rtac=ftest(a,na,c,nc,alpha);        /* ¼ìÑéaºÍc*/
-	if(rtac)
-	    printf("aÓëcÓÐÏÔÖøÐÔ²îÒì\n");
-	else
-		printf("aÓëcÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
+    rtac = ftest(a, na, c, nc, alpha);        /* ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½c*/
+    if (rtac)
+        printf("aï¿½ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
+    else
+        printf("aï¿½ï¿½cÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
 
 }

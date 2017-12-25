@@ -25,71 +25,70 @@
 
 extern char *environ[];
 
-int mysystem(char *command)
-{
-        pid_t pid;
+int mysystem(char *command) {
+    pid_t pid;
 
-        pid = fork();
+    pid = fork();
 
-        /* error */
-        if (pid < 0) {
-                perror("fork");
-                return -1;
-        }
+    /* error */
+    if (pid < 0) {
+        perror("fork");
+        return -1;
+    }
 
         /* child */
-        else if (pid == 0) {
-                const int MAX_OPTION = 4096;
-                char *argv[MAX_OPTION];
+    else if (pid == 0) {
+        const int MAX_OPTION = 4096;
+        char *argv[MAX_OPTION];
 
-                if (!command) {
-                        fprintf(stderr, "mysystem: command is NULL\n");
-                        exit(-1);
-                }
-
-                /*
-                 * BUG: The code below can't handler command which is
-                 * emacs/nano/top.
-                 *
-                 * The error message is something like: TERM not set.
-                 */
-                char *term = getenv("TERM");
-                if (!term) {
-                        int err = setenv("TERM", "xterm", 0);
-                        if (err)
-                                fprintf(stderr, "TERM not set\n");
-                }
-
-                argv[0] = "sh";
-                argv[1] = "-c";
-                argv[2] = command;
-                argv[3] = NULL;
-                execve("/bin/sh", argv, environ);
-
-                /* Something went wrong */
-                perror("execve");
-                return -1;
+        if (!command) {
+            fprintf(stderr, "mysystem: command is NULL\n");
+            exit(-1);
         }
+
+        /*
+         * BUG: The code below can't handler command which is
+         * emacs/nano/top.
+         *
+         * The error message is something like: TERM not set.
+         */
+        char *term = getenv("TERM");
+        if (!term) {
+            int err = setenv("TERM", "xterm", 0);
+            if (err)
+                fprintf(stderr, "TERM not set\n");
+        }
+
+        argv[0] = "sh";
+        argv[1] = "-c";
+        argv[2] = command;
+        argv[3] = NULL;
+        execve("/bin/sh", argv, environ);
+
+        /* Something went wrong */
+        perror("execve");
+        return -1;
+    }
 
         /* parent */
-        else {
-                int status, ret;
+    else {
+        int status, ret;
 
-                ret = waitpid(pid, &status, 0);
+        ret = waitpid(pid, &status, 0);
 
-                /* waitpid error */
-                if (ret < 0) {
-                        perror("waitpid");
-                        return -1;
-                }
-
-                /* The child process is terminated */
-                if (WIFEXITED(status)) {
-                        int child_ret = WEXITSTATUS(status);
-                        return child_ret;
-                }
-
-                /* Ignore other situation.  Good but not great? */
-                return 0;
+        /* waitpid error */
+        if (ret < 0) {
+            perror("waitpid");
+            return -1;
         }
+
+        /* The child process is terminated */
+        if (WIFEXITED(status)) {
+            int child_ret = WEXITSTATUS(status);
+            return child_ret;
+        }
+
+        /* Ignore other situation.  Good but not great? */
+        return 0;
+    }
 }

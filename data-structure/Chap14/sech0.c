@@ -1,59 +1,65 @@
 #define STRU struct student
 #define KEY age
-STRU{ 
-	int num;
-	char name[8];
-	char sex;
-	int age;
+STRU {
+    int num;
+    char name[8];
+    char sex;
+    int age;
 };
 
 #include "stdio.h"
 #include "sech.c"
 #include "Fsech.c"
 
-main()
-{ 
-	int i,q,a;
-	long int k;
-	static STRU x[16]={{101,"Zhao",'M',19},
-	{102,"Qian",'F',18},{103,"Sun",'M',19},
-	{104,"Li",'F',20},{105,"Zhou",'M',19},
-	{106,"Wu",'F',18},{107,"Zheng",'M',17},
-	{108,"Wang",'F',21},{109,"Jiang",'M',19},
-	{110,"Shen",'F',18},{111,"Chu",'M',19},
-	{112,"Wei",'F',19},{113,"He",'M',18},
-	{114,"Lv",'F',18},{115,"Shi",'M',19},
-	{110,"Zhang",'F',18}};
-	FILE *fp;
-	STRU str;
-	printf("Serch from Array: \n");	
-	a=18; 
-	i=0;
-	do{ 
-		q=sech(x,16,i,a);                           /* ²éÕÒ²¢´òÓ¡*/
-		if(q!=-1)
-			printf("%-5d%-8s%-2c%-2d%\n",x[q].num,
-			x[q].name,x[q].sex,x[q].age);
-		i=q+1;
-	}while (q!=-1);
-	k = sizeof(STRU);
-	fp = fopen("stu.dat","w+");                       /* ´ò¿ªÎÄ¼þÐ´*/
-	for(i=0; i<16; i++)
-		if(fwrite(&x[i], k,1,fp) != 1)                /* Ð´ÈëÎÄ¼þ*/
-		{
-			printf("Cannot write file\n");           /* Ð´ÈëÊ§°Ü*/
-			i = 16;
-		}
-	fclose(fp);
+main() {
+    int i, q, a;
+    long int k;
+    static STRU x[16] = {{101, "Zhao",  'M', 19},
+                         {102, "Qian",  'F', 18},
+                         {103, "Sun",   'M', 19},
+                         {104, "Li",    'F', 20},
+                         {105, "Zhou",  'M', 19},
+                         {106, "Wu",    'F', 18},
+                         {107, "Zheng", 'M', 17},
+                         {108, "Wang",  'F', 21},
+                         {109, "Jiang", 'M', 19},
+                         {110, "Shen",  'F', 18},
+                         {111, "Chu",   'M', 19},
+                         {112, "Wei",   'F', 19},
+                         {113, "He",    'M', 18},
+                         {114, "Lv",    'F', 18},
+                         {115, "Shi",   'M', 19},
+                         {110, "Zhang", 'F', 18}};
+    FILE *fp;
+    STRU str;
+    printf("Serch from Array: \n");
+    a = 18;
+    i = 0;
+    do {
+        q = sech(x, 16, i, a);                           /* ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ó¡*/
+        if (q != -1)
+            printf("%-5d%-8s%-2c%-2d%\n", x[q].num,
+                   x[q].name, x[q].sex, x[q].age);
+        i = q + 1;
+    } while (q != -1);
+    k = sizeof(STRU);
+    fp = fopen("stu.dat", "w+");                       /* ï¿½ï¿½ï¿½Ä¼ï¿½Ð´*/
+    for (i = 0; i < 16; i++)
+        if (fwrite(&x[i], k, 1, fp) != 1)                /* Ð´ï¿½ï¿½ï¿½Ä¼ï¿½*/
+        {
+            printf("Cannot write file\n");           /* Ð´ï¿½ï¿½Ê§ï¿½ï¿½*/
+            i = 16;
+        }
+    fclose(fp);
 
-	printf("\nSerch from File: \n");
-	fp = fopen("stu.dat","r+");                      /* ´ò¿ªÎÄ¼þ¶Á*/
-	do{
-		q = Fsech(fp,a,&str);                        /* ²éÕÒ²¢´òÓ¡*/
-		if(q)
-			printf("%-5d%-8s%-2c%-2d%\n",str.num,
-			str.name,str.sex,str.age);
-	}while(q);
-	fclose(fp);
+    printf("\nSerch from File: \n");
+    fp = fopen("stu.dat", "r+");                      /* ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½*/
+    do {
+        q = Fsech(fp, a, &str);                        /* ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ó¡*/
+        if (q)
+            printf("%-5d%-8s%-2c%-2d%\n", str.num,
+                   str.name, str.sex, str.age);
+    } while (q);
+    fclose(fp);
 }
 

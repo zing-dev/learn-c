@@ -1,63 +1,78 @@
 /*======================================================
-// º¯ÊýÃû£ºgmqr
-// ¹¦ÄÜÃèÊö£ºÓÃQR·Ö½â·¨½â¶Ô³Æ·½³Ì×é
-// ÊäÈë²ÎÊý£ºa ½âÏµÊý¾ØÕó£¬b ³£Êý¾ØÕó£¬x·µ»ØµÄ½âÏòÁ¿
-//           m ·½³ÌµÄ¸öÊý£¬n Î´ÖªÊý¸öÊý£¬
-//           eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚepsµÄÖµ£¬ÈÏÎªÊÇ0¡£
-// ·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gmqr
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½QRï¿½Ö½â·¨ï¿½ï¿½Ô³Æ·ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½
+//           m ï¿½ï¿½ï¿½ÌµÄ¸ï¿½ï¿½ï¿½ï¿½ï¿½n Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//           eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½ï¿½epsï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int gmqr(a,b,x,m,n,eps)
-double *a,*b,*x,eps;
+int gmqr(a, b, x, m, n, eps)
+
+double *a, *b, *x, eps;
 int n;
 {
-    int i,k;
-    double *c,*q,t;
-    if((a==NULL)||(b==NULL)||(x==NULL))            /* ¼ì²âÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
-    {
-        printf("The pointer is NULL\n");
-        return(0);
-    }
-    if(m<n)
-    {
-		printf("m<n, QR decomposition failed\n");
-		return(0);
-    }
-    c = (double *)malloc(m*sizeof(double));
-    q = (double *)malloc(m*m*sizeof(double));         /* ·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
-    if((c==NULL)||(q==NULL))
-    {
-		free(c);                                      /* ÊÍ·Å¿Õ¼ä*/
-		free(q);
-        printf("Memory alloc failed\n");
-        return(0);
-    }
-	i = r_mqr(a,m,n,q,eps);                        /* µ÷ÓÃº¯Êý½øÐÐQR·Ö½â*/
-	if(i==0)                                       /* ÅÐ¶ÏÊÇ·ñ·Ö½â³É¹¦*/
-    {
-		free(c);                                      /* ÊÍ·Å¿Õ¼ä*/
-		free(q);
-		printf("QR decomposition failed\n");
-		return(0);
-    }
-    for(i=0; i<n; i++)                             /* Çó³öc*/
-    {
-		t = 0.0;
-		for(k=0; k<m; k++)
-			t = t+q[k*m+i]*b[k];
-		c[i] = t;
-    }
-    for(i=n-1; i>=0; i--)                          /* Çó³ö½âÏòÁ¿x*/
-    {
-		t = 0.0;
-		for(k=i+1; k<n; k++)
-			t = t+a[i*n+k]*x[k];
-		x[i] = (c[i] - t)/a[i*n+i];
-    }
-	free(c);                                      /* ÊÍ·Å¿Õ¼ä*/
-	free(q);
-    return(1);
+int i, k;
+double *c, *q, t;
+if((a==NULL)||(b==NULL)||(x==NULL))            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("The pointer is NULL\n");
+return(0);
+}
+if(m<n)
+{
+printf("m<n, QR decomposition failed\n");
+return(0);
+}
+c = (double *) malloc(m * sizeof(double));
+q = (double *) malloc(m * m * sizeof(double));         /* ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
+if((c==NULL)||(q==NULL))
+{
+free(c);                                      /* ï¿½Í·Å¿Õ¼ï¿½*/
+free(q);
+printf("Memory alloc failed\n");
+return(0);
+}
+i = r_mqr(a, m, n, q, eps);                        /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½QRï¿½Ö½ï¿½*/
+if(i==0)                                       /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ö½ï¿½É¹ï¿½*/
+{
+free(c);                                      /* ï¿½Í·Å¿Õ¼ï¿½*/
+free(q);
+printf("QR decomposition failed\n");
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)                             /* ï¿½ï¿½ï¿½c*/
+{
+t = 0.0;
+for(
+k = 0;
+k<m;
+k++)
+t = t + q[k * m + i] * b[k];
+c[i] =
+t;
+}
+for(
+i = n - 1;
+i>=0; i--)                          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x*/
+{
+t = 0.0;
+for(
+k = i + 1;
+k<n;
+k++)
+t = t + a[i * n + k] * x[k];
+x[i] = (c[i] - t)/a[
+i *n
++i];
+}
+free(c);                                      /* ï¿½Í·Å¿Õ¼ï¿½*/
+free(q);
+return(1);
 }

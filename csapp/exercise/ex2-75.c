@@ -20,11 +20,10 @@
  */
 #include <limits.h>             /* INT_MIN */
 
-unsigned unsigned_high_prod(unsigned x, unsigned y)
-{
-        int x_highest_bit = (x & INT_MIN) == INT_MIN;
-        int y_highest_bit = (y & INT_MIN) == INT_MIN;
+unsigned unsigned_high_prod(unsigned x, unsigned y) {
+    int x_highest_bit = (x & INT_MIN) == INT_MIN;
+    int y_highest_bit = (y & INT_MIN) == INT_MIN;
 
-        int result = signed_high_prod(x, y) + x * y_highest_bit + y * x_highest_bit;
-        return result;
+    int result = signed_high_prod(x, y) + x * y_highest_bit + y * x_highest_bit;
+    return result;
 }

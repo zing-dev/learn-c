@@ -28,70 +28,69 @@
 #include <stdlib.h>             /* random() */
 #include <stdio.h>              /* printf() */
 
-int main(void)
-{
-        /* Create some arbitrary values */
-        int x = random();
-        int y = random();
+int main(void) {
+    /* Create some arbitrary values */
+    int x = random();
+    int y = random();
 
-        /* Convert to unsigned */
-        unsigned ux = (unsigned)x;
-        unsigned uy = (unsigned)y;
+    /* Convert to unsigned */
+    unsigned ux = (unsigned) x;
+    unsigned uy = (unsigned) y;
 
-        /*
-         *  A. (x > y) == (-x < -y)
-         *
-         *  当 y=INT_MIN 时，这个表达式为 0
-         */
-        printf("(x > INT_MIN) == (-x < -INT_MIN): %d\n", (x > INT_MIN) == (-x < -INT_MIN));
+    /*
+     *  A. (x > y) == (-x < -y)
+     *
+     *  当 y=INT_MIN 时，这个表达式为 0
+     */
+    printf("(x > INT_MIN) == (-x < -INT_MIN): %d\n", (x > INT_MIN) == (-x < -INT_MIN));
 
-        /*
-         * B. ((x + y) << 5) + x - y == 31 * y + 33 * x
-         *
-         * 这个表达式求值为 1
-         *
-         * 补码加减法符合基本的数学原理
-         */
-        printf("((x + y) << 5) + x - y == 31 * y + 33 * x: %d\n", ((x + y) << 5) + x - y == 31 * y + 33 * x);
+    /*
+     * B. ((x + y) << 5) + x - y == 31 * y + 33 * x
+     *
+     * 这个表达式求值为 1
+     *
+     * 补码加减法符合基本的数学原理
+     */
+    printf("((x + y) << 5) + x - y == 31 * y + 33 * x: %d\n", ((x + y) << 5) + x - y == 31 * y + 33 * x);
 
-        /*
-         * C. ~x + ~y == ~(x + y)
-         *
-         * 这个表达式求值为 0
-         *
-         * ~x = 2^w - x - 1
-         * ~y = 2^w - y - 1
-         * ~x + ~y = 2^(w+1) - x - y -2
-         *
-         * ~(x+y) = 2^w - x - y - 1
-         */
-        printf("~x + ~y == ~(x + y): %d\n", ~x + ~y == ~(x + y));
+    /*
+     * C. ~x + ~y == ~(x + y)
+     *
+     * 这个表达式求值为 0
+     *
+     * ~x = 2^w - x - 1
+     * ~y = 2^w - y - 1
+     * ~x + ~y = 2^(w+1) - x - y -2
+     *
+     * ~(x+y) = 2^w - x - y - 1
+     */
+    printf("~x + ~y == ~(x + y): %d\n", ~x + ~y == ~(x + y));
 
-        /*
-         * D. (int)(ux - uy) == -(y - x)
-         *
-         * 这个表达式求值为 1
-         *
-         * 对于任意的数字 a，有如下的等式成立：
-         *
-         *     -a = ~a + 1 = 2^w - a
-         *
-         * -(y - x) = 2^w - (y - x) = 2^w + x - y
-         * 对于 w 位补码，算术运算的结果截断为 w 位。
-         *
-         * ux - uy == 2^w + x - y
-         */
-        printf("(int)(ux - uy) == -(y - x): %d\n", (int)(ux - uy) == -(y - x));
+    /*
+     * D. (int)(ux - uy) == -(y - x)
+     *
+     * 这个表达式求值为 1
+     *
+     * 对于任意的数字 a，有如下的等式成立：
+     *
+     *     -a = ~a + 1 = 2^w - a
+     *
+     * -(y - x) = 2^w - (y - x) = 2^w + x - y
+     * 对于 w 位补码，算术运算的结果截断为 w 位。
+     *
+     * ux - uy == 2^w + x - y
+     */
+    printf("(int)(ux - uy) == -(y - x): %d\n", (int) (ux - uy) == -(y - x));
 
-        /*
-         * E. ((x >> 1) << 1) <= x
-         *
-         * 这个表达式值为 1
-         *
-         * 因为右移会将最低位置零，如果最低位是 1 的话，那么左移回来就会小于移位
-         * 之前的数；如果最低位是 0 的话，那么左移回来的数就会等于移位之前的数。
-         */
-        printf("((x >> 1) << 1) <= x: %d\n", ((x >> 1) << 1) <= x);
+    /*
+     * E. ((x >> 1) << 1) <= x
+     *
+     * 这个表达式值为 1
+     *
+     * 因为右移会将最低位置零，如果最低位是 1 的话，那么左移回来就会小于移位
+     * 之前的数；如果最低位是 0 的话，那么左移回来的数就会等于移位之前的数。
+     */
+    printf("((x >> 1) << 1) <= x: %d\n", ((x >> 1) << 1) <= x);
 
-        return 0;
+    return 0;
 }

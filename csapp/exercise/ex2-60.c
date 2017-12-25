@@ -12,16 +12,15 @@
  * replace_byte(0x12345678, 0xAB, 0) --> 0x123456AB
  */
 
-unsigned replace_byte(unsigned x, unsigned char b, int i)
-{
-        /* 1. 首先将 0x12345678 变为 0x12005678 */
-        int w = sizeof(int) - 1; /* 取值范围: 0~3 */
-        int shift_left = (i & w)<<3;
-        unsigned m = x & ~(0xFF << shift_left);
+unsigned replace_byte(unsigned x, unsigned char b, int i) {
+    /* 1. 首先将 0x12345678 变为 0x12005678 */
+    int w = sizeof(int) - 1; /* 取值范围: 0~3 */
+    int shift_left = (i & w) << 3;
+    unsigned m = x & ~(0xFF << shift_left);
 
-        /* 2. 将 0xAB 左移 2 两个字节得到数值 0x00AB0000 */
-        unsigned int n = (unsigned)b << shift_left;
+    /* 2. 将 0xAB 左移 2 两个字节得到数值 0x00AB0000 */
+    unsigned int n = (unsigned) b << shift_left;
 
-        /* 3. 将 0x12005678+0x00AB0000 作为结果返回 */
-        return m + n;
+    /* 3. 将 0x12005678+0x00AB0000 作为结果返回 */
+    return m + n;
 }

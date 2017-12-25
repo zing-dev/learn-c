@@ -1,48 +1,61 @@
 /*=============================================================
-// º¯ Êý Ãû£ºrpdiv(a,n,b,m,q,r)
-// ¹¦ÄÜÃèÊö£ºÍê³ÉÏµÊý±íÊ¾µÄÊµÏµÊýµÄ¶àÏîÊ½AÓëBÏà³ý
-       ÉÌ¶àÏîÊ½ÏµÊý·ÅÔÚqÀï£¬ÓàÊ½ÏµÊý·ÅÔÚrÀï
-// ÊäÈë²ÎÊý£ºa£¨¶àÏîÊ½AÏµÊý£©£¬n£¨ÏµÊý¸öÊý£©
-       b£¨¶àÏîÊ½BÏµÊý£©£¬m£¨ÏµÊý¸öÊý£©
-       q£¨ÉÌ¶àÏîÊ½QÏµÊý£©£¬k£¨ÏµÊý¸öÊý£©k=max(n-m+1,0)
-       r£¨ÓàÊ½RÏµÊý£©£¬l£¨ÏµÊý¸öÊý£©ÐèÒªl=n
-// ·µ »Ø Öµ£ºÕûÐÍÊý×Ö¡£¼ÆËã³É¹¦Ôò·µ»Ø1£¬·ñÔò·µ»Ø0
+// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½rpdiv(a,n,b,m,q,r)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ÊµÏµï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ê½Aï¿½ï¿½Bï¿½ï¿½ï¿½
+       ï¿½Ì¶ï¿½ï¿½ï¿½Ê½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½qï¿½ï£¬ï¿½ï¿½Ê½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½AÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+       bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½BÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+       qï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½Ê½QÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½k=max(n-m+1,0)
+       rï¿½ï¿½ï¿½ï¿½Ê½RÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªl=n
+// ï¿½ï¿½ ï¿½ï¿½ Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ò·µ»ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0
 //==============================================================*/
 #include"stdio.h"
-int rpdiv(a,n,b,m,q,k,r,l)
-double *a,*b,*q,*r;
-int n,m,k,l;
+
+int rpdiv(a, n, b, m, q, k, r, l)
+
+double *a, *b, *q, *r;
+int n, m, k, l;
 {
-  int i,j,kk,jj;
-  if((a==NULL)||(b==NULL)||(q==NULL)||(r==NULL)) /* ¼ì²âÖ¸ÕëÊÇ·ñÎª¿Õ*/
-  {
-    printf("(rpdiv)NULL pointer found.\n");
-    return(0);
-  }
-  if(l!=n)					/* ¼ì²âÓàÊ½µÄ¿Õ¼äÊÇ·ñ×ã¹»*/
-  {
-    printf("(rpdiv)please set the length of r to n.\n");
-    return(0);
-  }
-  for(i=0; i<n; i++)				/* ³õÊ¼»¯ÓàÊ½ºÍÉÌ*/
-    r[i] = a[i];
-  for(i=0; i<k; i++)
-    q[i] = 0.0;
- 
-  if(b[m-1]+1.0==1.0)				/* ¼ì²â³ýÊ½µÄÊ×ÏîÏµÊý£¬ÈôÆä¼¸ºõÎª0£¬º¯Êý½áÊø¡£*/
-  {
-    printf("(rpdiv)Cannot divide zero");
-    return(0);
-  }
-  for(i=0; i<k; i++)
-  {
-    kk = k-i-1;
-    jj = n-i-1; 
-    q[kk] = r[jj]/b[m-1];   			/* ¼ÆËãµ±Ç°ÉÌ*/   
-    r[jj] = 0.0;				/* ´ÓÓàÊ½ÖÐ¼õÈ¥µ±Ç°ÉÌÓë¶àÏîÊ½BµÄ³Ë»ý*/
-    for(j=0; j<m-1; j++)
-      r[j+kk] -= q[kk]*b[j];
-  }
-  return(1); 
+int i, j, kk, jj;
+if((a==NULL)||(b==NULL)||(q==NULL)||(r==NULL)) /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("(rpdiv)NULL pointer found.\n");
+return(0);
+}
+if(l!=n)                    /* ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ä¿Õ¼ï¿½ï¿½Ç·ï¿½ï¿½ã¹»*/
+{
+printf("(rpdiv)please set the length of r to n.\n");
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)                /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½*/
+r[i] = a[i];
+for(
+i = 0;
+i<k;
+i++)
+q[i] = 0.0;
+
+if(b[m-1]+1.0==1.0)                /* ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä¼¸ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+printf("(rpdiv)Cannot divide zero");
+return(0);
+}
+for(
+i = 0;
+i<k;
+i++)
+{
+kk = k - i - 1;
+jj = n - i - 1;
+q[kk] = r[jj]/b[m-1];            /* ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½*/
+r[jj] = 0.0;                /* ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ð¼ï¿½È¥ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Bï¿½Ä³Ë»ï¿½*/
+for(
+j = 0;
+j<m-1; j++)
+r[j+kk] -= q[kk]*b[j];
+}
+return(1);
 }
 

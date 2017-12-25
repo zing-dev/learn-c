@@ -21,50 +21,49 @@
  * C. !((x & (0xFF << ((sizeof(int)-1) << 3))) + (1 << ((sizeof(int)-1) << 3)))
  * D. !(x & 0xFF)
  */
-void ex2_61(void)
-{
-        int x;
-        int w = sizeof(int) << 3;
+void ex2_61(void) {
+    int x;
+    int w = sizeof(int) << 3;
 
-        /* A. x=111...111 */
+    /* A. x=111...111 */
 
-        printf("x=111...111 return 1\n");
+    printf("x=111...111 return 1\n");
 
-        x = ~0;
-        printf("!(0x%X+1): %s\n", x, !(x+1) ? "right" : "wrong");
+    x = ~0;
+    printf("!(0x%X+1): %s\n", x, !(x + 1) ? "right" : "wrong");
 
-        x = 0xFFFFFFFE;
-        printf("!(0x%X+1): %s\n", x, !(x+1) ? "right" : "wrong");
+    x = 0xFFFFFFFE;
+    printf("!(0x%X+1): %s\n", x, !(x + 1) ? "right" : "wrong");
 
-        /* B. x=000...000 */
+    /* B. x=000...000 */
 
-        printf("x=000...000 return 1\n");
+    printf("x=000...000 return 1\n");
 
-        x = 0;
-        printf("!0x%X: %s\n", x, !x ? "right" : "wrong");
+    x = 0;
+    printf("!0x%X: %s\n", x, !x ? "right" : "wrong");
 
-        x = 1;
-        printf("!0x%X: %s\n", x, !x ? "right" : "wrong");
+    x = 1;
+    printf("!0x%X: %s\n", x, !x ? "right" : "wrong");
 
-        /* C. 1111 1111 0101 ... 0101 */
+    /* C. 1111 1111 0101 ... 0101 */
 
-        printf("x=_1111 1111_else return 1\n");
+    printf("x=_1111 1111_else return 1\n");
 
-        x = 0xFF123456;
-        printf("(0x%X & (0xFF << ((sizeof(int)-1) << 3))) + (1 << ((sizeof(int)-1) << 3)): %s\n",
-               x, !((x & (0xFF << (w-8))) + (1 << (w-8))) ? "right" : "wrong");
+    x = 0xFF123456;
+    printf("(0x%X & (0xFF << ((sizeof(int)-1) << 3))) + (1 << ((sizeof(int)-1) << 3)): %s\n",
+           x, !((x & (0xFF << (w - 8))) + (1 << (w - 8))) ? "right" : "wrong");
 
-        x = 0xEFFFFFFF;
-        printf("(0x%X & (0xFF << ((sizeof(int)-1) << 3))) + (1 << ((sizeof(int)-1) << 3)): %s\n",
-               x, !((x & (0xFF << (w-8))) + (1 << (w-8))) ? "right" : "wrong");
+    x = 0xEFFFFFFF;
+    printf("(0x%X & (0xFF << ((sizeof(int)-1) << 3))) + (1 << ((sizeof(int)-1) << 3)): %s\n",
+           x, !((x & (0xFF << (w - 8))) + (1 << (w - 8))) ? "right" : "wrong");
 
-        /* D. 1010 0101 ... 0000 0000 */
+    /* D. 1010 0101 ... 0000 0000 */
 
-        printf("x=else..._0000 0000_ return 1\n");
+    printf("x=else..._0000 0000_ return 1\n");
 
-        x = 0x12345600;
-        printf("!(0x%X & 0xFF): %s\n", x, !(x & 0xFF) ? "right" : "wrong");
+    x = 0x12345600;
+    printf("!(0x%X & 0xFF): %s\n", x, !(x & 0xFF) ? "right" : "wrong");
 
-        x = 0x12345601;
-        printf("!(0x%X & 0xFF): %s\n", x, !(x & 0xFF) ? "right" : "wrong");
+    x = 0x12345601;
+    printf("!(0x%X & 0xFF): %s\n", x, !(x & 0xFF) ? "right" : "wrong");
 }

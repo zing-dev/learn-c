@@ -12,15 +12,13 @@
 /*
  * A. ~((1 << n) - 1)
  */
-int nlowest_zero(int n)
-{
-        return ~((1 << n) - 1);
+int nlowest_zero(int n) {
+    return ~((1 << n) - 1);
 }
 
 /*
  * B. ((1 << n) - 1) - ((1 << m) - 1) = (1 << n) - (1 << m)
  */
-int nlowestone_minus_mlowestone(int n, int m)
-{
-        return (1 << (m + n)) - (1 << m);
+int nlowestone_minus_mlowestone(int n, int m) {
+    return (1 << (m + n)) - (1 << m);
 }

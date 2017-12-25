@@ -6,8 +6,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <string.h>
+
 #define flen 1024 * 8
-const char *INI_NAME =  "conf.ini";
+const char *INI_NAME = "conf.ini";
 
 void trim(char *strIn, char *strOut);//去除字符串首位空格
 

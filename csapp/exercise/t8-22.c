@@ -8,7 +8,6 @@
 
 extern int mysystem(char *command); /* ex8-22.c */
 
-int main(int argc, char *argv[])
-{
-        return mysystem(argv[1]);
+int main(int argc, char *argv[]) {
+    return mysystem(argv[1]);
 }

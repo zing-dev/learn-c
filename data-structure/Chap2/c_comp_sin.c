@@ -1,9 +1,9 @@
 /*======================================================
-//º¯ÊıÃû£ºc_comp_sin.c
-//¹¦ÄÜÃèÊö£ºÇó¸´ÊıµÄÕıÏÒ
-//ÊäÈë²ÎÊı£ºa£¨ÊäÈëµÄ½á¹¹Ìå£©
-//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_comp_sin.c
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£©
+//          cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£©
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
 =========================================================*/
 
 #include "stdio.h"
@@ -15,21 +15,24 @@
     double imz;
 }c_comp;
 */
-int c_comp_sin(a,c)
-struct c_comp *a,*c;
+int c_comp_sin(a, c)
+
+struct c_comp *a, *c;
 {
-    double tmp1,tmp2;
+double tmp1, tmp2;
 
-    if(a == NULL || c == NULL)
-    {
-        printf("(c_comp_sin)The c_comp pointer is NULL!\n");
-        return(0);
-    }
+if(a == NULL || c == NULL)
+{
+printf("(c_comp_sin)The c_comp pointer is NULL!\n");
+return(0);
+}
 
-    tmp1 = exp(a->imz);
-    tmp2 = exp(-a->imz);
-    c->rmz = sin(a->rmz)*(tmp1+tmp2)/2;
-    c->imz = cos(a->rmz)*(tmp1-tmp2)/2;
+tmp1 = exp(a->imz);
+tmp2 = exp(-a->imz);
+c->
+rmz = sin(a->rmz) * (tmp1 + tmp2) / 2;
+c->
+imz = cos(a->rmz) * (tmp1 - tmp2) / 2;
 
-    return(1);
+return(1);
 }

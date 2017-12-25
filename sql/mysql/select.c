@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <mysql/mysql.h>
 #include "database.h"
-int main()
-{
+
+int main() {
     MYSQL *mysql = (MYSQL *) malloc(sizeof(MYSQL));
     database_init_and_connect(mysql);
     MYSQL_RES *rs;

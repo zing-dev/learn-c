@@ -3,34 +3,34 @@
 #include "randu01s.c"
 #include "c2test.c"
 
-void main()
-{
-	int L,i,*a,*e,r,k,v,temp;
-	double *u_ran,c2,alpha;
+void main() {
+    int L, i, *a, *e, r, k, v, temp;
+    double *u_ran, c2, alpha;
 
-	L=10000;alpha=0.05;
-	r=10;k=1;
-	a=(int *)malloc(sizeof(int)*r);
-	e=(int *)malloc(sizeof(int)*r);
-	u_ran=(double *)malloc(sizeof(double)*L);
-	randu01s(L,u_ran);//Éú²úL¸ö[0,1]Çø¼äµÄ¾ùÔÈËæ»úÊý
-	
-	for(i=0;i<r;i++)
-	{
-		e[i]=L/r;  //Ã¿¸öÇø¼äÄÚL/r
-		a[i]=0;
-	}
+    L = 10000;
+    alpha = 0.05;
+    r = 10;
+    k = 1;
+    a = (int *) malloc(sizeof(int) * r);
+    e = (int *) malloc(sizeof(int) * r);
+    u_ran = (double *) malloc(sizeof(double) * L);
+    randu01s(L, u_ran);//ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½[0,1]ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	for(i=0;i<L;i++)
-		a[(int)(u_ran[i]*10)]++;
+    for (i = 0; i < r; i++) {
+        e[i] = L / r;  //Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½L/r
+        a[i] = 0;
+    }
 
-	temp=c2test(a,e,r,k,&v,&c2,alpha);
+    for (i = 0; i < L; i++)
+        a[(int) (u_ran[i] * 10)]++;
 
-	printf("v=%d  c2=%1.5f\n",v,c2);
-	if(temp)
-		printf("·ûºÏ·Ö²¼\n");
-	else
-		printf("²»·ûºÏ·Ö²¼\n");
+    temp = c2test(a, e, r, k, &v, &c2, alpha);
+
+    printf("v=%d  c2=%1.5f\n", v, c2);
+    if (temp)
+        printf("ï¿½ï¿½ï¿½Ï·Ö²ï¿½\n");
+    else
+        printf("ï¿½ï¿½ï¿½ï¿½ï¿½Ï·Ö²ï¿½\n");
 }
 	
 

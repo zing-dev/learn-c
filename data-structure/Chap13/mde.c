@@ -1,47 +1,79 @@
 /*======================================================
-//º¯ÊýÃû£ºmde.c
-//¹¦ÄÜÃèÊö£ºÇó·Ö²¼µÄ¾à
-//ÊäÈë²ÎÊý£ºa£¨¼òµ¥Ëæ»úÑù±¾µÄÑù±¾Öµ£©
-//	    n£¨Ñù±¾¸öÊý£©
-//          mean£¨´æ·Å¾ùÖµ£©
-//	    adev£¨´æ·ÅÆ½¾ù²î£©
-//	    sddev£¨´æ·Å±ê×¼²î£©
-//	    var£¨´æ·Å·½²î£©
-//	    skew£¨´æ·ÅÐ±²î£©
-//	    kurt£¨´æ·Å·åÌ¬£©
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mde.c
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½Ä¾ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
+//	    nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//          meanï¿½ï¿½ï¿½ï¿½Å¾ï¿½Öµï¿½ï¿½
+//	    adevï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½î£©
+//	    sddevï¿½ï¿½ï¿½ï¿½Å±ï¿½×¼ï¿½î£©
+//	    varï¿½ï¿½ï¿½ï¿½Å·ï¿½ï¿½î£©
+//	    skewï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½î£©
+//	    kurtï¿½ï¿½ï¿½ï¿½Å·ï¿½Ì¬ï¿½ï¿½
 =========================================================*/
 
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-void mde(a,n,mean,adev,sddev,var,skew,kurt)
-double *a,*mean,*adev,*sddev,*var,*skew,*kurt;
+void mde(a, n, mean, adev, sddev, var, skew, kurt)
+
+double *a, *mean, *adev, *sddev, *var, *skew, *kurt;
 int n;
 {
-    int j=0;
-	double *dis;
-	dis=(double*)malloc(sizeof(double)*n); //´æ·ÅÊý¾ÝÓë¾ùÖµµÄ²î
-	*mean=0;*adev=0;*sddev=0;*var=0;*skew=0;*kurt=0;//³õÊ¼»¯
-	for(j=0;j<n;j++)
-		*mean+=a[j];
-	*mean=*mean/n;//¼ÆËã¾ùÖµ
-	for(j=0;j<n;j++)
-		dis[j]=a[j]-*mean;
-	for(j=0;j<n;j++)
-	{
-		*adev+=fabs(dis[j]);//Æ½¾ù²î
-		*var+=dis[j]*dis[j];//·½²î
-	}
-	*adev=*adev/n;
-	*var=*var/(n-1);
-	*sddev=sqrt(*var);//±ê×¼²î
-	for(j=0;j<n;j++)
-	{
-		dis[j]=dis[j]/(*sddev);
-		*skew+=dis[j]*dis[j]*dis[j];//Ð±²î
-		*kurt+=dis[j]*dis[j]*dis[j]*dis[j];//·åÌ¬
-	}
-	*skew=*skew/n;
-	*kurt=*kurt/n-3;
+int j = 0;
+double *dis;
+dis = (double *) malloc(sizeof(double) * n); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ä²ï¿½
+*
+mean = 0;
+*
+adev = 0;
+*
+sddev = 0;
+*
+var = 0;
+*
+skew = 0;
+*
+kurt = 0;//ï¿½ï¿½Ê¼ï¿½ï¿½
+for(
+j = 0;
+j<n;
+j++)
+*mean+=a[j];
+*
+mean = *mean / n;//ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+for(
+j = 0;
+j<n;
+j++)
+dis[j]=a[j]-*
+mean;
+for(
+j = 0;
+j<n;
+j++)
+{
+*adev+=
+fabs(dis[j]);//Æ½ï¿½ï¿½ï¿½ï¿½
+*var+=dis[j]*dis[j];//ï¿½ï¿½ï¿½ï¿½
+}
+*
+adev = *adev / n;
+*
+var = *var / (n - 1);
+*
+sddev = sqrt(*var);//ï¿½ï¿½×¼ï¿½ï¿½
+for(
+j = 0;
+j<n;
+j++)
+{
+dis[j]=dis[j]/(*sddev);
+*skew+=dis[j]*dis[j]*dis[j];//Ð±ï¿½ï¿½
+*kurt+=dis[j]*dis[j]*dis[j]*dis[j];//ï¿½ï¿½Ì¬
+}
+*
+skew = *skew / n;
+*
+kurt = *kurt / n - 3;
 }

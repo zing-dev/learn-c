@@ -12,8 +12,7 @@
 
 typedef unsigned int uint_t;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     mqd_t mqd;
     void *ptr;
     size_t len;

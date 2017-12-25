@@ -1,120 +1,189 @@
 /*======================================================
-//º¯ÊýÃû£ºgillvh
-//¹¦ÄÜÃèÊö£º±ä²½³¤»ù¶ûËã·¨Çó³£Î¢·Ö·½³Ì×éµÄ³õÖµÎÊÌâ
-//ÊäÈë²ÎÊý£º*y£¨ Ö¸Ïòº¯Êý³õÖµÒÔ¼°º¯Êý·µ»ØÖµµÄÖ¸Õën*(m+1)£©
-//          n£¨·½³Ì×é¸öÊý£©£¬f£¨Ä¿±êº¯ÊýµÄ¼ÆËã£©
-//          h£¨²½³¤£©£¬m£¨²½Êý£©£¬a£¨Çø¼äÆðµã£©£¬eps£¨¾«¶È£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gillvh
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½Î¢ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Öµï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*yï¿½ï¿½ Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö¸ï¿½ï¿½n*(m+1)ï¿½ï¿½
+//          nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½Ä¿ï¿½êº¯ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ã£©
+//          hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£©ï¿½ï¿½epsï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<math.h>
 
-int gillvh(y,n,f,h,m,a,eps)
-double *y,(*f)(),h,a,eps;
-int n,m;
+int gillvh(y, n, f, h, m, a, eps)
+
+double *y, (*f)(), h, a, eps;
+int n, m;
 {
-    double x,*y1,*y2,*ytemp1,*ytemp2,dis,ht=h;
-    int k=0,i,m1,m2;
-    int gillinvh();                              /* ÐèÒªÊ¹ÓÃ¶¨²½³¤»ù¶ûËã·¨µÃ×Óº¯Êý*/
-    y1=(double*)malloc(sizeof(double)*n);        /* ¶¯Ì¬·ÖÅä*/
-    y2=(double*)malloc(sizeof(double)*n);
-    if(y1==NULL||y2==NULL)
-    {
-        printf("memory alloc failed.\n");
-        return(0);
-    }
-    do                                          /* ¶Ôk½øÐÐÑ­»·£¬·Ö±ð¼ÆËãxk´¦µÄº¯ÊýÖµ*/
-    {
-        x=a+k*h;    	
-        do{                                     /* ÔÚÃ¿¸öxk´¦£¬½øÐÐ²½³¤µÄ¶¯Ì¬Ñ¡Ôñ*/
-            m1=(int)(h/ht);                     /* htÎª²½³¤*/
-            ytemp1=(double*)malloc(sizeof(double)*n*(m1+1));
-            if(ytemp1==NULL)
-    		{
-                printf("memory alloc failed.\n");
-                return(0);
-    		}
-            for(i=n;i<n*(m1+1);i++)
-                ytemp1[i]=0.0;                  /* ³õÊ¼»¯*/
-            for(i=0;i<n;i++)
-                ytemp1[i]=y[k*n+i];
-            gillinvh(ytemp1,n,f,ht,m1,x);       /* µ÷ÓÃ¶¨²½³¤¹«Ê½*/
-            for(i=0;i<n;i++)
-                y1[i]=ytemp1[m1*n+i];				
-            free(ytemp1);
-            m2=2*m1;                            /* ht/2Îª²½³¤*/
-            ytemp2=(double*)malloc(sizeof(double)*n*(m2+1));
-            if(ytemp2==NULL)
-    		{
-                printf("memory alloc failed.\n");
-                return(0);
-    		}
-            for(i=n;i<n*(m2+1);i++)
-                ytemp2[i]=0.0;
-            for(i=0;i<n;i++)
-                ytemp2[i]=y[k*n+i];
-            gillinvh(ytemp2,n,f,ht/2,m2,x);
-            for(i=0;i<n;i++)
-                y2[i]=ytemp2[m2*n+i];
-            free(ytemp2);
-            ht=ht/2;                          /* ÏÂÒ»´ÎÑ­»·µÄ²½³¤*/
-            dis=0.0;                          /* max¾àÀë*/
-            for(i=0;i<n;i++)
-                if(dis<fabs(y1[i]-y2[i]))     /* ¼ÆËã´Ë´¦µÄº¯ÊýÖµ*/
-                    dis=fabs(y1[i]-y2[i]);
-        }
-        while(dis>=eps);                      /* ¿´¾àÀëÊÇ·ñÂú×ã¾«¶È*/
-        for(i=0;i<n;i++)
-            y[(k+1)*n+i]=y2[i];               /* ½á¹û¼ÇÂ¼*/
-        k++;                                  /* ÏÂÒ»¸öxk*/
-    }
-    while(k<m);                               /* m¸öxkµÄÑ­»·*/
-    free(y1);free(y2);
-    return (1);
+double x, *y1, *y2, *ytemp1, *ytemp2, dis, ht = h;
+int k = 0, i, m1, m2;
+
+int gillinvh();                              /* ï¿½ï¿½ÒªÊ¹ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½*/
+y1 = (double *) malloc(sizeof(double) * n);        /* ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½*/
+y2 = (double *) malloc(sizeof(double) * n);
+if(y1==NULL||y2==NULL)
+{
+printf("memory alloc failed.\n");
+return(0);
+}
+do                                          /* ï¿½ï¿½kï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½xkï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½Öµ*/
+{
+x = a + k * h;
+do{                                     /* ï¿½ï¿½Ã¿ï¿½ï¿½xkï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½Ì¬Ñ¡ï¿½ï¿½*/
+m1 = (int) (h / ht);                     /* htÎªï¿½ï¿½ï¿½ï¿½*/
+ytemp1 = (double *) malloc(sizeof(double) * n * (m1 + 1));
+if(ytemp1==NULL)
+{
+printf("memory alloc failed.\n");
+return(0);
+}
+for(
+i = n;
+i< n
+*(m1+1);i++)
+ytemp1[i]=0.0;                  /* ï¿½ï¿½Ê¼ï¿½ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp1[i]=y[
+k *n
++i];
+gillinvh(ytemp1, n, f, ht, m1, x
+);       /* ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½*/
+for(
+i = 0;
+i<n;
+i++)
+y1[i]=ytemp1[
+m1 *n
++i];
+free(ytemp1);
+m2 = 2 * m1;                            /* ht/2Îªï¿½ï¿½ï¿½ï¿½*/
+ytemp2 = (double *) malloc(sizeof(double) * n * (m2 + 1));
+if(ytemp2==NULL)
+{
+printf("memory alloc failed.\n");
+return(0);
+}
+for(
+i = n;
+i< n
+*(m2+1);i++)
+ytemp2[i]=0.0;
+for(
+i = 0;
+i<n;
+i++)
+ytemp2[i]=y[
+k *n
++i];
+gillinvh(ytemp2, n, f, ht
+/2,m2,x);
+for(
+i = 0;
+i<n;
+i++)
+y2[i]=ytemp2[
+m2 *n
++i];
+free(ytemp2);
+ht = ht / 2;                          /* ï¿½ï¿½Ò»ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½*/
+dis = 0.0;                          /* maxï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+if(
+dis< fabs(y1[i] - y2[i])
+)     /* ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½Äºï¿½ï¿½ï¿½Öµ*/
+dis = fabs(y1[i] - y2[i]);
+}
+while(dis>=eps);                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ã¾«ï¿½ï¿½*/
+for(
+i = 0;
+i<n;
+i++)
+y[(k+1)*n+i]=y2[i];               /* ï¿½ï¿½ï¿½ï¿½ï¿½Â¼*/
+k++;                                  /* ï¿½ï¿½Ò»ï¿½ï¿½xk*/
+}
+while(k<m);                               /* mï¿½ï¿½xkï¿½ï¿½Ñ­ï¿½ï¿½*/
+free(y1);
+free(y2);
+return (1);
 }
 
-int gillinvh(y,n,f,h,m,a)
-double *y,(*f)(),h,a;
-int n,m;
+int gillinvh(y, n, f, h, m, a)
+double *y, (*f)(), h, a;
+int n, m;
 {
-    double *k1,*k2,*k3,*k4,*ytemp,x,s2;
-    int k=0,i;
-    s2=sqrt(2)/2;
-    k1=(double*)malloc(sizeof(double)*n);    /* Î¢·Ö·½³ÌÐ±ÂÊ*/
-    k2=(double*)malloc(sizeof(double)*n);
-    k3=(double*)malloc(sizeof(double)*n);
-    k4=(double*)malloc(sizeof(double)*n);
-    ytemp=(double*)malloc(sizeof(double)*n);
+double *k1, *k2, *k3, *k4, *ytemp, x, s2;
+int k = 0, i;
+s2 = sqrt(2) / 2;
+k1 = (double *) malloc(sizeof(double) * n);    /* Î¢ï¿½Ö·ï¿½ï¿½ï¿½Ð±ï¿½ï¿½*/
+k2 = (double *) malloc(sizeof(double) * n);
+k3 = (double *) malloc(sizeof(double) * n);
+k4 = (double *) malloc(sizeof(double) * n);
+ytemp = (double *) malloc(sizeof(double) * n);
 
-    if(k1==NULL||k2==NULL||k3==NULL||k4==NULL||ytemp==NULL)
-    {
-        printf("memory alloc failed.\n");
-        return(0);
-    }
-    do
-    {
-        x=a+k*h;
-        f(&y[k*n],k1,x);                    /* k1*/
-        for(i=0;i<n;i++)
-            ytemp[i]=y[k*n+i]+h*k1[i]/2;
-        f(ytemp,k2,x+h/2);                  /* k2*/		
-        for(i=0;i<n;i++)
-            ytemp[i]=ytemp[i]+(s2-1)*h*k1[i]+(1-s2)*h*k2[i];
-        f(ytemp,k3,x+h/2);                  /* k3*/		
-        for(i=0;i<n;i++)
-            ytemp[i]=y[k*n+i]-s2*h*k2[i]+(1+s2)*h*k3[i];
-        f(ytemp,k4,x+h);                    /* k4*/
-    	
-        for(i=0;i<n;i++)                    /* ¼ÆËã´Ë´¦µÄº¯ÊýÖµ*/
-            y[(k+1)*n+i]=y[k*n+i]+h/6*(k1[i]+(2-2*s2)*k2[i]+(2+2*s2)*k3[i]+k4[i]);         
-        k++;
-    }
-    while(k<m);
-    free(k1);
-    free(k2);
-    free(k3);
-    free(k4);
-    free(ytemp);
-    return (1);
+if(k1==NULL||k2==NULL||k3==NULL||k4==NULL||ytemp==NULL)
+{
+printf("memory alloc failed.\n");
+return(0);
+}
+do
+{
+x = a + k * h;
+f(&y[k * n], k1, x
+);                    /* k1*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=y[
+k *n
++i]+
+h *k1[i]
+/2;
+f(ytemp, k2, x
++h/2);                  /* k2*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=ytemp[i]+(s2-1)*
+h *k1[i]
++(1-s2)*
+h *k2[i];
+f(ytemp, k3, x
++h/2);                  /* k3*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=y[
+k *n
++i]-
+s2 *h
+*k2[i]+(1+s2)*
+h *k3[i];
+f(ytemp, k4, x
++h);                    /* k4*/
+
+for(
+i = 0;
+i<n;
+i++)                    /* ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½Äºï¿½ï¿½ï¿½Öµ*/
+y[(k+1)*n+i]=y[
+k *n
++i]+h/6*(k1[i]+(2-2*s2)*k2[i]+(2+2*s2)*k3[i]+k4[i]);
+k++;
+}
+while(k<m);
+free(k1);
+free(k2);
+free(k3);
+free(k4);
+free(ytemp);
+return (1);
 } 

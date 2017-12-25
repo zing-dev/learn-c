@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-int main()
-{
+
+int main() {
     srand(time(0));
     char s[64];
     int offset = 0;

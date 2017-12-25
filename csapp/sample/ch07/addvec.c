@@ -5,10 +5,9 @@
  * unix> ar rcs libvector.a addvec.o multvec.o
  */
 
-void addvec(int *x, int *y, int *z, int n)
-{
-        int i;
+void addvec(int *x, int *y, int *z, int n) {
+    int i;
 
-        for (i = 0; i < n; i++)
-                z[i] = x[i] + y[i];
+    for (i = 0; i < n; i++)
+        z[i] = x[i] + y[i];
 }

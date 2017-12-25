@@ -1,21 +1,31 @@
 /*======================================================
-//º¯ÊýÃû£ºrandu01s
-//¹¦ÄÜÃèÊö£ºÉú³É(0,1)Çø¼äµÄ¾ùÔÈ·Ö²¼µÄËæ»úÐòÁÐ
-//ÊäÈë²ÎÊý£ºL(Éú³ÉËæ»úÐòÁÐµÄ³¤¶È) u_ran(Ö¸ÏòÉú³ÉËæ»úÊýÐòÁÐµÄÖ¸Õë)
-//·µ»ØÖµ£º1£º³É¹¦Éú³É¡£0£ºÉú³ÉÊ§°Ü¡£
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½randu01s
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(0,1)ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½È·Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½L(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ³ï¿½ï¿½ï¿½) u_ran(Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ö¸ï¿½ï¿½)
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½É¡ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü¡ï¿½
 =========================================================*/
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-int randu01s(L,u_ran)
+int randu01s(L, u_ran)
+
 int L;
 double *u_ran;
 {
-    int i;
-    srand((unsigned)time(0));             /* ÓÃÏµÍ³Ê±ÖÓ×öÖÖ×Ó*/
-    for(i=0;i<L;i++)
-    u_ran[i]=rand()/(double)RAND_MAX;     /* Éú³É(0,1)Ëæ»úÊý£¬L´Î */
-    return(1);   
+int i;
+srand((
+unsigned)time(0));             /* ï¿½ï¿½ÏµÍ³Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 0;
+i<L;
+i++)
+u_ran[i]=
+
+rand()
+
+/(double)
+RAND_MAX;     /* ï¿½ï¿½ï¿½ï¿½(0,1)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ */
+return(1);
 }
 

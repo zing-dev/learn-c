@@ -5,17 +5,16 @@
  */
 
 /* Compute i,k of variable matrix product */
-int var_prod_ele(int n, int A[n][n], int B[n][n], int i, int k)
-{
-        int j;
-        int result = 0;
+int var_prod_ele(int n, int A[n][n], int B[n][n], int i, int k) {
+    int j;
+    int result = 0;
 
-        void *Arow = (void *)&A[i][0];
-        void *Bcol = (void *)&B[0][k];
+    void *Arow = (void *) &A[i][0];
+    void *Bcol = (void *) &B[0][k];
 
-        int N = 4 * n;
-        for (j = 0; j < N; j += 4)
-                result += *(int *)(Arow + j) * *(int *)(Bcol + N);
+    int N = 4 * n;
+    for (j = 0; j < N; j += 4)
+        result += *(int *) (Arow + j) * *(int *) (Bcol + N);
 
-        return result;
+    return result;
 }

@@ -5,15 +5,15 @@
  */
 
 union ele {
-        struct {
-                int *p;
-                int x;
-        } e1;
+    struct {
+        int *p;
+        int x;
+    } e1;
 
-        struct {
-                int y;
-                union ele *next;
-        } e2;
+    struct {
+        int y;
+        union ele *next;
+    } e2;
 };
 
 /*
@@ -21,7 +21,6 @@ union ele {
  * B. 8 个字节
  * C. 填写的缺失代码如下
  */
-void proc(union ele *up)
-{
-        up->next->x = *(up->next->p) - up->y;
+void proc(union ele *up) {
+    up->next->x = *(up->next->p) - up->y;
 }

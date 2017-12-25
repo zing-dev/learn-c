@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     int yes;
     FILE *file;
 
-    if ((file = fopen("client.c", "r"))== NULL) {
+    if ((file = fopen("client.c", "r")) == NULL) {
         printf("open out.txt error....\n");
         exit(-1);
     }
@@ -51,7 +51,8 @@ int main(int argc, char *argv[]) {
     while (fgets(sendbuf, 100, file)) {
         printf("%s", sendbuf);
         sendto(fd, sendbuf, strlen(sendbuf), 0, (struct sockaddr *) &server, len);
-        if ((numbytes = recvfrom(fd, recvbuf, MAXDATASIZE, 0, (struct sockaddr *) &server, &len)) == -1) { /* calls recvfrom() */
+        if ((numbytes = recvfrom(fd, recvbuf, MAXDATASIZE, 0, (struct sockaddr *) &server, &len)) ==
+            -1) { /* calls recvfrom() */
             printf("recvfrom() error\n");
             break;
         }

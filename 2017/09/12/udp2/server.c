@@ -44,9 +44,9 @@ int main(int argc, char *argv[]) {
         printf("read [%s:%d] mag-->%s\n", inet_ntoa(client.sin_addr), ntohs(client.sin_port), msg);
         //这里发送信息过去, 也可以事先connect这里就不绑定了
         int send = sendto(socketfd, msg, strlen(msg), 0, (struct sockaddr *) &client, sock_len);
-        if(send > 0){
+        if (send > 0) {
             printf("send success ......\n");
-        } else{
+        } else {
             perror("send error ...\n");
             break;
         }

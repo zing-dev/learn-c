@@ -1,26 +1,27 @@
 #include "stdio.h"
 #include "tzi1.c"
 #include "lfsi.c"
-main()
-{
-  double a,b,eps,h0,z;
-  double f1(double);
-  a = 0.0;
-  b = 4.0;
-  eps = 1e-8;
-  h0 = 1e-5;
-  z=tzi1(a,b,4,eps,h0,f1);                     /* ÓÃ±ä²½³¤ÌÝÐÎÇó»ý·¨»ý·Ö*/
-  printf("tzi1: t=%2.5f\n",z);                 /* ´òÓ¡½á¹û*/
-  z=lfsi(a,b,4,eps,f1);                        /* ÓÃÁ¬·ÖÊ½Çó»ý·¨»ý·Ö*/
-  printf("lfsi: t=%2.5f\n",z);
-  getchar();
+
+main() {
+    double a, b, eps, h0, z;
+    double f1(double);
+    a = 0.0;
+    b = 4.0;
+    eps = 1e-8;
+    h0 = 1e-5;
+    z = tzi1(a, b, 4, eps, h0, f1);                     /* ï¿½Ã±ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    printf("tzi1: t=%2.5f\n", z);                 /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+    z = lfsi(a, b, 4, eps, f1);                        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    printf("lfsi: t=%2.5f\n", z);
+    getchar();
 }
 
 #include "math.h"
+
 double f1(x)
-double x;                                      /* ±»»ý·ÖµÄº¯Êý*/
+double x;                                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄºï¿½ï¿½ï¿½*/
 {
-  double y;
-    y=exp(-x*x)/(1.0+x*x);
-  return(y);
+double y;
+y = exp(-x * x) / (1.0 + x * x);
+return(y);
 }

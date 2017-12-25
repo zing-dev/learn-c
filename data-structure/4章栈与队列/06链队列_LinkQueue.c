@@ -98,7 +98,7 @@ Status EnQueue(LinkQueue *Q, QElemType e) {
     QueuePtr s = (QueuePtr) malloc(sizeof(QNode));
     if (!s) /* 存储分配失败 */
         exit(OVERFLOW);
-    else{
+    else {
         s->data = e;
         s->next = NULL;
         Q->rear->next = s;    /* 把拥有元素e的新结点s赋值给原队尾结点的后继，见图中① */

@@ -1,7 +1,7 @@
-#include "stdio.h"    
-#include "stdlib.h"   
-#include "io.h"  
-#include "math.h"  
+#include "stdio.h"
+#include "stdlib.h"
+#include "io.h"
+#include "math.h"
 #include "time.h"
 
 #define OK 1
@@ -13,141 +13,129 @@
 #define MAXVEX 20
 #define INFINITY 65535
 
-typedef int Status;	/* StatusÊÇº¯ÊýµÄÀàÐÍ,ÆäÖµÊÇº¯Êý½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */ 
+typedef int Status;    /* Statusï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½OKï¿½ï¿½ */
 
 
-typedef struct
-{
-	int vexs[MAXVEX];
-	int arc[MAXVEX][MAXVEX];
-	int numVertexes, numEdges;
-}MGraph;
+typedef struct {
+    int vexs[MAXVEX];
+    int arc[MAXVEX][MAXVEX];
+    int numVertexes, numEdges;
+} MGraph;
 
-typedef int Patharc[MAXVEX];    /* ÓÃÓÚ´æ´¢×î¶ÌÂ·¾¶ÏÂ±êµÄÊý×é */
-typedef int ShortPathTable[MAXVEX];/* ÓÃÓÚ´æ´¢µ½¸÷µã×î¶ÌÂ·¾¶µÄÈ¨ÖµºÍ */
+typedef int Patharc[MAXVEX];    /* ï¿½ï¿½ï¿½Ú´æ´¢ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+typedef int ShortPathTable[MAXVEX];/* ï¿½ï¿½ï¿½Ú´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½È¨Öµï¿½ï¿½ */
 
-/* ¹¹¼þÍ¼ */
-void CreateMGraph(MGraph *G)
-{
-	int i, j;
+/* ï¿½ï¿½ï¿½ï¿½Í¼ */
+void CreateMGraph(MGraph *G) {
+    int i, j;
 
-	/* printf("ÇëÊäÈë±ßÊýºÍ¶¥µãÊý:"); */
-	G->numEdges=16;
-	G->numVertexes=9;
+    /* printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½:"); */
+    G->numEdges = 16;
+    G->numVertexes = 9;
 
-	for (i = 0; i < G->numVertexes; i++)/* ³õÊ¼»¯Í¼ */
-	{
-		G->vexs[i]=i;
-	}
+    for (i = 0; i < G->numVertexes; i++)/* ï¿½ï¿½Ê¼ï¿½ï¿½Í¼ */
+    {
+        G->vexs[i] = i;
+    }
 
-	for (i = 0; i < G->numVertexes; i++)/* ³õÊ¼»¯Í¼ */
-	{
-		for ( j = 0; j < G->numVertexes; j++)
-		{
-			if (i==j)
-				G->arc[i][j]=0;
-			else
-				G->arc[i][j] = G->arc[j][i] = INFINITY;
-		}
-	}
+    for (i = 0; i < G->numVertexes; i++)/* ï¿½ï¿½Ê¼ï¿½ï¿½Í¼ */
+    {
+        for (j = 0; j < G->numVertexes; j++) {
+            if (i == j)
+                G->arc[i][j] = 0;
+            else
+                G->arc[i][j] = G->arc[j][i] = INFINITY;
+        }
+    }
 
-	G->arc[0][1]=1;
-	G->arc[0][2]=5; 
-	G->arc[1][2]=3; 
-	G->arc[1][3]=7; 
-	G->arc[1][4]=5; 
+    G->arc[0][1] = 1;
+    G->arc[0][2] = 5;
+    G->arc[1][2] = 3;
+    G->arc[1][3] = 7;
+    G->arc[1][4] = 5;
 
-	G->arc[2][4]=1; 
-	G->arc[2][5]=7; 
-	G->arc[3][4]=2; 
-	G->arc[3][6]=3; 
-	G->arc[4][5]=3;
+    G->arc[2][4] = 1;
+    G->arc[2][5] = 7;
+    G->arc[3][4] = 2;
+    G->arc[3][6] = 3;
+    G->arc[4][5] = 3;
 
-	G->arc[4][6]=6;
-	G->arc[4][7]=9; 
-	G->arc[5][7]=5; 
-	G->arc[6][7]=2; 
-	G->arc[6][8]=7;
+    G->arc[4][6] = 6;
+    G->arc[4][7] = 9;
+    G->arc[5][7] = 5;
+    G->arc[6][7] = 2;
+    G->arc[6][8] = 7;
 
-	G->arc[7][8]=4;
+    G->arc[7][8] = 4;
 
 
-	for(i = 0; i < G->numVertexes; i++)
-	{
-		for(j = i; j < G->numVertexes; j++)
-		{
-			G->arc[j][i] =G->arc[i][j];
-		}
-	}
+    for (i = 0; i < G->numVertexes; i++) {
+        for (j = i; j < G->numVertexes; j++) {
+            G->arc[j][i] = G->arc[i][j];
+        }
+    }
 
 }
 
-/*  DijkstraËã·¨£¬ÇóÓÐÏòÍøGµÄv0¶¥µãµ½ÆäÓà¶¥µãvµÄ×î¶ÌÂ·¾¶P[v]¼°´øÈ¨³¤¶ÈD[v] */    
-/*  P[v]µÄÖµÎªÇ°Çý¶¥µãÏÂ±ê,D[v]±íÊ¾v0µ½vµÄ×î¶ÌÂ·¾¶³¤¶ÈºÍ */  
-void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D)
-{    
-	int v,w,k,min;    
-	int final[MAXVEX];/* final[w]=1±íÊ¾ÇóµÃ¶¥µãv0ÖÁvwµÄ×î¶ÌÂ·¾¶ */
-	for(v=0; v<G.numVertexes; v++)    /* ³õÊ¼»¯Êý¾Ý */
-	{        
-		final[v] = 0;			/* È«²¿¶¥µã³õÊ¼»¯ÎªÎ´Öª×î¶ÌÂ·¾¶×´Ì¬ */
-		(*D)[v] = G.arc[v0][v];/* ½«Óëv0µãÓÐÁ¬ÏßµÄ¶¥µã¼ÓÉÏÈ¨Öµ */
-		(*P)[v] = -1;				/* ³õÊ¼»¯Â·¾¶Êý×éPÎª-1  */       
-	}
+/*  Dijkstraï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½v0ï¿½ï¿½ï¿½ãµ½ï¿½ï¿½ï¿½à¶¥ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½P[v]ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½D[v] */
+/*  P[v]ï¿½ï¿½ÖµÎªÇ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½,D[v]ï¿½ï¿½Ê¾v0ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Èºï¿½ */
+void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D) {
+    int v, w, k, min;
+    int final[MAXVEX];/* final[w]=1ï¿½ï¿½Ê¾ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½v0ï¿½ï¿½vwï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ */
+    for (v = 0; v < G.numVertexes; v++)    /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+    {
+        final[v] = 0;            /* È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ÎªÎ´Öªï¿½ï¿½ï¿½Â·ï¿½ï¿½×´Ì¬ */
+        (*D)[v] = G.arc[v0][v];/* ï¿½ï¿½ï¿½ï¿½v0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨Öµ */
+        (*P)[v] = -1;                /* ï¿½ï¿½Ê¼ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½PÎª-1  */
+    }
 
-	(*D)[v0] = 0;  /* v0ÖÁv0Â·¾¶Îª0 */  
-	final[v0] = 1;    /* v0ÖÁv0²»ÐèÒªÇóÂ·¾¶ */        
-	/* ¿ªÊ¼Ö÷Ñ­»·£¬Ã¿´ÎÇóµÃv0µ½Ä³¸öv¶¥µãµÄ×î¶ÌÂ·¾¶ */   
-	for(v=1; v<G.numVertexes; v++)   
-	{
-		min=INFINITY;    /* µ±Ç°ËùÖªÀëv0¶¥µãµÄ×î½ü¾àÀë */        
-		for(w=0; w<G.numVertexes; w++) /* Ñ°ÕÒÀëv0×î½üµÄ¶¥µã */    
-		{            
-			if(!final[w] && (*D)[w]<min)             
-			{                   
-				k=w;                    
-				min = (*D)[w];    /* w¶¥µãÀëv0¶¥µã¸ü½ü */            
-			}        
-		}        
-		final[k] = 1;    /* ½«Ä¿Ç°ÕÒµ½µÄ×î½üµÄ¶¥µãÖÃÎª1 */
-		for(w=0; w<G.numVertexes; w++) /* ÐÞÕýµ±Ç°×î¶ÌÂ·¾¶¼°¾àÀë */
-		{
-			/* Èç¹û¾­¹ýv¶¥µãµÄÂ·¾¶±ÈÏÖÔÚÕâÌõÂ·¾¶µÄ³¤¶È¶ÌµÄ»° */
-			if(!final[w] && (min+G.arc[k][w]<(*D)[w]))   
-			{ /*  ËµÃ÷ÕÒµ½ÁË¸ü¶ÌµÄÂ·¾¶£¬ÐÞ¸ÄD[w]ºÍP[w] */
-				(*D)[w] = min + G.arc[k][w];  /* ÐÞ¸Äµ±Ç°Â·¾¶³¤¶È */               
-				(*P)[w]=k;        
-			}       
-		}   
-	}
+    (*D)[v0] = 0;  /* v0ï¿½ï¿½v0Â·ï¿½ï¿½Îª0 */
+    final[v0] = 1;    /* v0ï¿½ï¿½v0ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Â·ï¿½ï¿½ */
+    /* ï¿½ï¿½Ê¼ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½v0ï¿½ï¿½Ä³ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ */
+    for (v = 1; v < G.numVertexes; v++) {
+        min = INFINITY;    /* ï¿½ï¿½Ç°ï¿½ï¿½Öªï¿½ï¿½v0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        for (w = 0; w < G.numVertexes; w++) /* Ñ°ï¿½ï¿½ï¿½ï¿½v0ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ */
+        {
+            if (!final[w] && (*D)[w] < min) {
+                k = w;
+                min = (*D)[w];    /* wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½v0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+            }
+        }
+        final[k] = 1;    /* ï¿½ï¿½Ä¿Ç°ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½Îª1 */
+        for (w = 0; w < G.numVertexes; w++) /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        {
+            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½Ä³ï¿½ï¿½È¶ÌµÄ»ï¿½ */
+            if (!final[w] && (min + G.arc[k][w] < (*D)[w])) { /*  Ëµï¿½ï¿½ï¿½Òµï¿½ï¿½Ë¸ï¿½ï¿½Ìµï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½D[w]ï¿½ï¿½P[w] */
+                (*D)[w] = min + G.arc[k][w];  /* ï¿½Þ¸Äµï¿½Ç°Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+                (*P)[w] = k;
+            }
+        }
+    }
 }
 
-int main(void)
-{   
-	int i,j,v0;
-	MGraph G;    
-	Patharc P;    
-	ShortPathTable D; /* ÇóÄ³µãµ½ÆäÓà¸÷µãµÄ×î¶ÌÂ·¾¶ */   
-	v0=0;
-	
-	CreateMGraph(&G);
-	
-	ShortestPath_Dijkstra(G, v0, &P, &D);  
+int main(void) {
+    int i, j, v0;
+    MGraph G;
+    Patharc P;
+    ShortPathTable D; /* ï¿½ï¿½Ä³ï¿½ãµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ */
+    v0 = 0;
 
-	printf("×î¶ÌÂ·¾¶µ¹ÐòÈçÏÂ:\n");    
-	for(i=1;i<G.numVertexes;++i)   
-	{       
-		printf("v%d - v%d : ",v0,i);
-		j=i;
-		while(P[j]!=-1)
-		{
-			printf("%d ",P[j]);
-			j=P[j];
-		}
-		printf("\n");
-	}    
-	printf("\nÔ´µãµ½¸÷¶¥µãµÄ×î¶ÌÂ·¾¶³¤¶ÈÎª:\n");  
-	for(i=1;i<G.numVertexes;++i)        
-		printf("v%d - v%d : %d \n",G.vexs[0],G.vexs[i],D[i]);     
-	return 0;
+    CreateMGraph(&G);
+
+    ShortestPath_Dijkstra(G, v0, &P, &D);
+
+    printf("ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    for (i = 1; i < G.numVertexes; ++i) {
+        printf("v%d - v%d : ", v0, i);
+        j = i;
+        while (P[j] != -1) {
+            printf("%d ", P[j]);
+            j = P[j];
+        }
+        printf("\n");
+    }
+    printf("\nÔ´ï¿½ãµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª:\n");
+    for (i = 1; i < G.numVertexes; ++i)
+        printf("v%d - v%d : %d \n", G.vexs[0], G.vexs[i], D[i]);
+    return 0;
 }

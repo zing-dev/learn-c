@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    if ((file = fopen("client.c", "r"))== NULL) {
+    if ((file = fopen("client.c", "r")) == NULL) {
         printf("open out.txt error....\n");
         exit(-1);
     }

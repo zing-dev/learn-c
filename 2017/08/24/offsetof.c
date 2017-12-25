@@ -5,16 +5,14 @@
 #include <stddef.h>
 #include <stdio.h>
 
-struct address
-{
+struct address {
     char name[50];
     char street[50];
     int phone;
     long l;
 };
 
-int main()
-{
+int main() {
 //    该宏返回值的类型是size_t，该类型成员的偏移值。
     /**
      * C库宏offsetof(type, member-designator)

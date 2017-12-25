@@ -1,81 +1,113 @@
 /*======================================================
-//º¯ÊýÃû£ºtoepl
-//¹¦ÄÜÃèÊö£ºÇó½âÍÐ²®Àû×È·½³Ì×é
-//ÊäÈë²ÎÊý£ºt Ö¸Ïò´æ·Ån½×ÍÐ²®Àû×È¾ØÕóÔªËØµÄÊý×éµÄÖ¸Õë
-//          b Ö¸Ïò´æ·Å³£ÊýÏòÁ¿Êý×éµÄÖ¸Õë
-//          x Ö¸Ïò·µ»ØµÄ½âÏòÁ¿Êý×éµÄÖ¸Õë
-//          n ¾ØÕó½×Êý
-//          eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚ´ËÖµµÄÊý¾ÝÈÏÎªÊÇ0
-//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½toepl
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½t Ö¸ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//          b Ö¸ï¿½ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//          x Ö¸ï¿½ò·µ»ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//          n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//          eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½Ú´ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int toepl(t,b,x,n,eps)
-double *t,*b,*x,eps;
+int toepl(t, b, x, n, eps)
+
+double *t, *b, *x, eps;
 int n;
 {
-  int i,j,k;
-  double beta,s1,s,p,q,*y,*yy;
-  if((t==NULL)||(b==NULL)||(x==NULL))                /* ¼ì²âÖ¸ÕëÊÇ·ñÎª¿Õ*/
-  {
-    printf("One of the pointer is NULL\n");          /* ÈôÎª¿ÕÔò´òÓ¡´íÎóÏûÏ¢£¬º¯Êý½áÊø*/
-    return(0);
-  }
-  y = (double*)malloc(n*sizeof(double));
-  yy = (double*)malloc(n*sizeof(double));
-  if((y==NULL)||(yy==NULL))                          /* ·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
-  {
-    printf("Memory alloc failed\n");
-	free(y);
-	free(yy);
-    return(0);
-  }
-  for(i=0; i<n; i++)                                 /* ½«yºÍyyÊý×é¸³³õÖµÎªÁã*/
-  {
-    y[i] = 0.0;
-    yy[i] = 0.0;
-  }
-  if(fabs(t[0]) < eps)                               /* ÒòÒª×ö³ýÊý£¬ÐèÒª¼ì²éÆä·¶Î§*/
-  {
-	free(y);
-	free(yy);
-    printf("Failed.\n");
-    return(0);
-  }
-  y[0] = 1.0/t[0];                                   /* Éè¶¨³õÖµ*/
-  x[0] = b[0]/t[0];
-  for(k=1; k<n; k++)                                 /* µÝÍÆÇó½â*/
-  {
-    beta = 0.0;
-    for(i=0; i<k; i++)                               /* Çó³öbeta*/
-      beta = beta+t[i+1]*y[i];
-    s1 = 1.0-beta*beta;
-    if(fabs(s1) < eps)                              /* ÒòÒª×ö³ýÊý£¬ÐèÒª¼ì²éÆä·¶Î§*/
-    {
-	   free(y);
-	   free(yy);
-      printf("Failed.\n");
-      return(0);
-    }
-    p = 1.0/s1;                                     /* ¼ÆËãpºÍs*/
-    s = -beta/s1;
-    yy[0] = s*y[k-1];
-    for(i=1; i<k; i++)                              /* µÝÍÆ¼ÆËãyy*/
-      yy[i] = p*y[i-1] + s*y[k-1-i];
-    yy[k] = p*y[k-1];
-    q = 0.0;
-    for(i=0; i<k; i++)
-      q = q+t[k-i]*x[i];
-    s = b[k]-q;                                     /* µÝÍÆ¼ÆËãx*/
-    for(i=0; i<k; i++)
-      x[i] = x[i] + s*yy[i];
-    x[k] = s*yy[k];
-    for(i=0; i<k+1; i++)                            /* ½«yyµÄÖµ¸³¸øy*/
-      y[i] = yy[i];
-  }
-  free(y);
-  free(yy);
-  return(1);
+int i, j, k;
+double beta, s1, s, p, q, *y, *yy;
+if((t==NULL)||(b==NULL)||(x==NULL))                /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("One of the pointer is NULL\n");          /* ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+return(0);
+}
+y = (double *) malloc(n * sizeof(double));
+yy = (double *) malloc(n * sizeof(double));
+if((y==NULL)||(yy==NULL))                          /* ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
+{
+printf("Memory alloc failed\n");
+free(y);
+free(yy);
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)                                 /* ï¿½ï¿½yï¿½ï¿½yyï¿½ï¿½ï¿½é¸³ï¿½ï¿½ÖµÎªï¿½ï¿½*/
+{
+y[i] = 0.0;
+yy[i] = 0.0;
+}
+if(
+fabs(t[0])
+< eps)                               /* ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ä·¶Î§*/
+{
+free(y);
+free(yy);
+printf("Failed.\n");
+return(0);
+}
+y[0] = 1.0/t[0];                                   /* ï¿½è¶¨ï¿½ï¿½Öµ*/
+x[0] = b[0]/t[0];
+for(
+k = 1;
+k<n;
+k++)                                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+beta = 0.0;
+for(
+i = 0;
+i<k;
+i++)                               /* ï¿½ï¿½ï¿½beta*/
+beta = beta + t[i + 1] * y[i];
+s1 = 1.0 - beta * beta;
+if(
+fabs(s1)
+< eps)                              /* ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ä·¶Î§*/
+{
+free(y);
+free(yy);
+printf("Failed.\n");
+return(0);
+}
+p = 1.0 / s1;                                     /* ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½s*/
+s = -beta / s1;
+yy[0] =
+s *y[k - 1];
+for(
+i = 1;
+i<k;
+i++)                              /* ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½yy*/
+yy[i] =
+p *y[i - 1]
++
+s *y[k - 1 - i];
+yy[k] =
+p *y[k - 1];
+q = 0.0;
+for(
+i = 0;
+i<k;
+i++)
+q = q + t[k - i] * x[i];
+s = b[k] - q;                                     /* ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½x*/
+for(
+i = 0;
+i<k;
+i++)
+x[i] = x[i] +
+s *yy[i];
+x[k] =
+s *yy[k];
+for(
+i = 0;
+i<k+1; i++)                            /* ï¿½ï¿½yyï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½y*/
+y[i] = yy[i];
+}
+free(y);
+free(yy);
+return(1);
 }

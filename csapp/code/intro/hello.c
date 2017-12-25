@@ -1,8 +1,7 @@
 /* $begin hello */
 #include <stdio.h>
 
-int main() 
-{
+int main() {
     printf("hello, world\n");
 }
 /* $end hello */

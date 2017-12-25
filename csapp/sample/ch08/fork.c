@@ -7,8 +7,7 @@
 
 #include "csapp.h"
 
-int main()
-{
+int main() {
     pid_t pid;
     int x = 1;
 

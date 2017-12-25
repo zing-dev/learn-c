@@ -9,27 +9,26 @@
 typedef struct ELE *tree_ptr;
 
 struct ELE {
-        tree_ptr left;
-        tree_ptr right;
-        long val;
+    tree_ptr left;
+    tree_ptr right;
+    long val;
 };
 
 /*
  * 递归计算二叉树中所有节点中的最小值
  */
-long traverse(tree_ptr tp)
-{
-        if (!tp)
-                return -1;
+long traverse(tree_ptr tp) {
+    if (!tp)
+        return -1;
 
-        long v = tp->val;
-        long vleft = traverse(tp->left);
-        long vright = traverse(tp->right);
+    long v = tp->val;
+    long vleft = traverse(tp->left);
+    long vright = traverse(tp->right);
 
-        if (vright > vleft)
-                vright = vleft;
-        if (v > vright)
-                v = vright;
+    if (vright > vleft)
+        vright = vleft;
+    if (v > vright)
+        v = vright;
 
-        return v;
+    return v;
 }

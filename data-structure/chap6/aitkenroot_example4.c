@@ -3,25 +3,26 @@
 #include<math.h>
 #include"aitkenroot.c"
 
-void main()
-{
-	double x, eps;
-	double *x0 = &x;
-	double f(double);
-	int max;
-	*x0=1.0;                              /* ³õÖµ£¬¾«¶È£¬×î´óµü´ú´ÎÊý*/
-	eps=0.00001;
-	max=60;
-	printf("  x(k)         x(k+1)        dis\n");
-	if(aitkenroot(x0,f,eps,max))          /* µ÷ÓÃº¯ÊýÇó½â²¢´òÓ¡½á¹û*/
-		printf("\n%1.5f\n\n",*x0);
-	else
-		printf("failed!\n");
+void main() {
+    double x, eps;
+    double *x0 = &x;
+    double f(double);
+    int max;
+    *x0 = 1.0;                              /* ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    eps = 0.00001;
+    max = 60;
+    printf("  x(k)         x(k+1)        dis\n");
+    if (aitkenroot(x0, f, eps, max))          /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½â²¢ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+        printf("\n%1.5f\n\n", *x0);
+    else
+        printf("failed!\n");
 
 }
 
-double f(x)                                 /* ¼ÆËãº¯ÊýÖµ*/
+double f(x)                                 /* ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Öµ*/
 double x;
 {
-	return  x*x*x-2*x+1;
+return
+x *x
+*x-2*x+1;
 }

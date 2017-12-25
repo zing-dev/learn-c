@@ -4,8 +4,8 @@
 //
 #include <stdio.h>
 #include <string.h>
-int main()
-{
+
+int main() {
     char destination[] = "********************"; // destination串为: "********************0"
     const char *source = "-----";                // source串为:      "-----0"
 

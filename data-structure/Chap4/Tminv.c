@@ -1,98 +1,131 @@
 /*======================================================
-//º¯ÊýÃû£ºTminv
-//¹¦ÄÜÃèÊö£ºToeplitz¾ØÕó¿ìËÙÇóÄæ
-//ÊäÈë²ÎÊý£ºt1 Ë«¾«¶ÈÊµÐÍÒ»Î¬Êý×éµÄÖ¸Õë¬
-            Êý×éÖÐ´æ·Ån½×TÐÍ¾ØÕóµÚÒ»¸öÔªËØ¼°ÉÏÈý½ÇÔªËØ
-            t2 Ë«¾«¶ÈÊµÐÍÒ»Î¬Êý×éµÄÖ¸Õë¬
-            ÆäÖÐºón-1¸öÔªËØ´æ·Ån½×TÐÍ¾ØÕóÖÐµÄÏÂÈý½ÇÔªËØ
-            n ¾ØÕó½×Êý
-            mat ·µ»ØµÄÄæ¾ØÕó´æ·ÅÎ»ÖÃ
-            eps ¾«¶ÈÒªÇó£¬¾ø¶ÔÖµÐ¡ÓÚ´ËÊýµÄÖµÈÏÎªÊÇ0
-//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Tminv
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Toeplitzï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½t1 Ë«ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ò»Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½nï¿½ï¿½Tï¿½Í¾ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
+            t2 Ë«ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ò»Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            ï¿½ï¿½ï¿½Ðºï¿½n-1ï¿½ï¿½Ôªï¿½Ø´ï¿½ï¿½nï¿½ï¿½Tï¿½Í¾ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
+            n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            mat ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+            eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ó£¬¾ï¿½ï¿½ï¿½ÖµÐ¡ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½0
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int Tminv(t1,t2,n,mat,eps)
+int Tminv(t1, t2, n, mat, eps)
+
 double *t1, *t2;
 int n;
 double *mat;
 double eps;
 {
-    int i,j,k,l;
-    double a,tmp,*c,*r,*p;
+int i, j, k, l;
+double a, tmp, *c, *r, *p;
 
-    c = (double *)malloc(n*sizeof(double));    /* ÎªÁÙÊ±±äÁ¿·ÖÅä¿Õ¼ä*/
-    r = (double *)malloc(n*sizeof(double));
-    p = (double *)malloc(n*sizeof(double));
+c = (double *) malloc(n * sizeof(double));    /* Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½*/
+r = (double *) malloc(n * sizeof(double));
+p = (double *) malloc(n * sizeof(double));
 
-    if (fabs(t1[0]) < eps)                     /* ¼ì²éÊ×ÏîÊÇ·ñÎª0*/
-    {
-      free(c);                                 /* ÈôÊ×ÏîÎª0£¬ÔòÊÍ·Å¿Õ¼ä²¢ÍË³ö*/
-      free(r);
-      free(p);
-      printf("Fail to invert\n");
-      return(0);
-    }
+if (
+fabs(t1[0])
+< eps)                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îª0*/
+{
+free(c);                                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½Í·Å¿Õ¼ä²¢ï¿½Ë³ï¿½*/
+free(r);
+free(p);
+printf("Fail to invert\n");
+return(0);
+}
 
-    a = t1[0];                                /* ¼ÆËã³õÖµ*/
-    c[0] = t2[1]/t1[0];
-    r[0] = t1[1]/t1[0];
+a = t1[0];                                /* ï¿½ï¿½ï¿½ï¿½ï¿½Öµ*/
+c[0] = t2[1]/t1[0];
+r[0] = t1[1]/t1[0];
 
-    for(k=0; k<n-2; k++)                      /* k´Ó0µ½n-3×öÈçÏÂµÄÑ­»·*/
-    {
-        tmp = 0.0;
-        for(j=1; j<k+2; j++)                  /* ÇóµÚÒ»¸öÀÛ¼ÓºÍ*/
-          tmp = tmp + c[k+1-j]*t2[j];
-        tmp=(tmp-t2[k+2])/a;
+for(
+k = 0;
+k<n-2; k++)                      /* kï¿½ï¿½0ï¿½ï¿½n-3ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ñ­ï¿½ï¿½*/
+{
+tmp = 0.0;
+for(
+j = 1;
+j<k+2; j++)                  /* ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Û¼Óºï¿½*/
+tmp = tmp + c[k + 1 - j] * t2[j];
+tmp = (tmp - t2[k + 2]) / a;
 
-        for(i=0; i<k+1; i++)              /* ÏÈ´æ·ÅÔÚpÖÐ£¬ÒòÎªc[i]µÄÔ­Öµ»¹ÒªÊ¹ÓÃ*/
-          p[i] = c[i] + tmp*r[k-i];
-        c[k+1] = -tmp;                    /* ÐÂÇó³öc[k+1]µÄÖµ*/
+for(
+i = 0;
+i<k+1; i++)              /* ï¿½È´ï¿½ï¿½ï¿½ï¿½pï¿½Ð£ï¿½ï¿½ï¿½Îªc[i]ï¿½ï¿½Ô­Öµï¿½ï¿½ÒªÊ¹ï¿½ï¿½*/
+p[i] = c[i] +
+tmp *r[k - i];
+c[k+1] = -
+tmp;                    /* ï¿½ï¿½ï¿½ï¿½ï¿½c[k+1]ï¿½ï¿½Öµ*/
 
-        tmp = 0.0;
-        for(j=1; j<k+2; j++)              /* µÚ¶þ¸öÀÛ¼ÓºÍ*/
-          tmp = tmp + r[k+1-j]*t1[j];
-        tmp = (tmp-t1[k+2])/a;
+tmp = 0.0;
+for(
+j = 1;
+j<k+2; j++)              /* ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½Û¼Óºï¿½*/
+tmp = tmp + r[k + 1 - j] * t1[j];
+tmp = (tmp - t1[k + 2]) / a;
 
-        for(i=0; i<k+1; i++)
-        {
-            r[i] = r[i] + tmp*c[k-i];     /* ¸üÐÂr[i]µÄÖµ*/
-            c[k-i] = p[k-i];              /* c[k-i]µÄÖµ²»ÔÙÊ¹ÓÃ£¬ÓÃpÖÐµÄÊý¾Ý¸üÐÂ*/
-        }
-        r[k+1] = -tmp;                    /* ÐÂÇó³ör[k+i]µÄÖµ*/
+for(
+i = 0;
+i<k+1; i++)
+{
+r[i] = r[i] +
+tmp *c[k - i];     /* ï¿½ï¿½ï¿½ï¿½r[i]ï¿½ï¿½Öµ*/
+c[k-i] = p[k-i];              /* c[k-i]ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½pï¿½Ðµï¿½ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½*/
+}
+r[k+1] = -
+tmp;                    /* ï¿½ï¿½ï¿½ï¿½ï¿½r[k+i]ï¿½ï¿½Öµ*/
 
-        a = 0.0;
-        for(j=1; j<k+3; j++)              /* ¸üÐÂaµÄÖµ*/
-          a = a+ t1[j]*c[j-1];
-        a = t1[0]-a;
-        if(fabs(a) < eps)                 /* Èôa¹ýÐ¡£¬ÔòÍË³öº¯Êý¡£ÇóÄæ¹ý³Ì²»ÄÜ¼ÌÐø*/
-        {
-            free(c);                      /* ÊÍ·Å¿Õ¼ä*/
-            free(r);
-            free(p);
-            printf("Fail to invert\n");
-            return(0);
-        }
-    }
+a = 0.0;
+for(
+j = 1;
+j<k+3; j++)              /* ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½Öµ*/
+a = a + t1[j] * c[j - 1];
+a = t1[0] - a;
+if(
+fabs(a)
+< eps)                 /* ï¿½ï¿½aï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì²ï¿½ï¿½Ü¼ï¿½ï¿½ï¿½*/
+{
+free(c);                      /* ï¿½Í·Å¿Õ¼ï¿½*/
+free(r);
+free(p);
+printf("Fail to invert\n");
+return(0);
+}
+}
 
-    mat[0] = 1.0/a;                      /* ÀûÓÃÇóµÃµÄr,c,a¹¹ÔìÄæ¾ØÕó*/
-    for(i=0; i<n-1; i++)
-    {
-        k = i+1;
-        mat[k] = -r[i]/a;                /* Äæ¾ØÕóµÄµÚÒ»ÐÐ*/
-        mat[k*n] = -c[i]/a;              /* Äæ¾ØÕóµÄµÚÒ»ÁÐ*/
-    }
-    for(i=0; i<n-1; i++)                 /* Äæ¾ØÕóµÄÆäËûÔªËØ*/
-    for(j=0; j<n-1; j++)
-    {
-        l = (i+1)*n+j+1;
-        k = i*n+j;
-        mat[l] = mat[k]+(c[i]*r[j] - r[n-2-i]*c[n-2-j])/a;
-    }
-    free(c);                            /* ÊÍ·Å¿Õ¼ä*/
-    free(r);
-    free(p);
-    return(1);
+mat[0] = 1.0/
+a;                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½r,c,aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 0;
+i<n-1; i++)
+{
+k = i + 1;
+mat[k] = -r[i]/
+a;                /* ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½*/
+mat[
+k *n
+] = -c[i]/
+a;              /* ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½*/
+}
+for(
+i = 0;
+i<n-1; i++)                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
+for(
+j = 0;
+j<n-1; j++)
+{
+l = (i + 1) * n + j + 1;
+k = i * n + j;
+mat[l] = mat[k]+(c[i]*r[j] - r[n-2-i]*c[n-2-j])/
+a;
+}
+free(c);                            /* ï¿½Í·Å¿Õ¼ï¿½*/
+free(r);
+free(p);
+return(1);
 }

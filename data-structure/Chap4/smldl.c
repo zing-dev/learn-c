@@ -1,58 +1,92 @@
 /*======================================================
-//º¯ÊýÃû£ºsmldl
-//¹¦ÄÜÃèÊö£ºÈ«Ñ¡Ö÷ÔªµÄLDL·Ö½â
-//ÊäÈë²ÎÊý£ºmat Ö¸Ïò´ý·Ö½âµÄ¾ØÕóµÄÖ¸Õë
-            n ¾ØÕó½×Êý
-            L   Ö¸Ïò·µ»ØµÄÏÂÈý½ÇÕóµÄÖ¸Õë
-            D   Ö¸Ïò·µ»Ø´æ·Å¶Ô½ÇÔªËØµÄÊý×éµÄÖ¸Õë
-            eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚ´ËÖµµÄÊý¾ÝÈÏÎªÊÇ0
-//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½smldl
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«Ñ¡ï¿½ï¿½Ôªï¿½ï¿½LDLï¿½Ö½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mat Ö¸ï¿½ï¿½ï¿½ï¿½Ö½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            L   Ö¸ï¿½ò·µ»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            D   Ö¸ï¿½ò·µ»Ø´ï¿½Å¶Ô½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½Ú´ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int smldl(mat,n,L,D,eps)
-double *mat,*L,*D,eps;
+int smldl(mat, n, L, D, eps)
+
+double *mat, *L, *D, eps;
 int n;
 {
-  int i,j,k;
-  double t;
-  if((mat==NULL)||(L==NULL)||(D==NULL)) /* ¼ì²âÖ¸ÕëÊÇ·ñÎª¿Õ*/
-  {
-    printf("One of the pointer is NULL\n");            /* ÈôÎª¿ÕÔò´òÓ¡´íÎóÏûÏ¢£¬º¯Êý½áÊø*/
-    return(0);
-  }
-  for(i=0; i<n; i++)                                   /* ½«L¾ØÕó¸³³õÖµÎªµ¥Î»Õó*/
-  {
-    for(j=0; j<n; j++)
-      L[i*n+j] = 0.0;
-    L[i*n+i] = 1.0;
-  }
-  D[0] = mat[0];
-  if(fabs(D[0]) < eps)                               /* ÒòÒª×ö³ýÊý£¬ÐèÒª¼ì²éÆä·¶Î§*/
-  {
-    printf("Failed.\n");
-    return(0);
-  }                                                 /* µÝÍÆÇó½â*/
-  for(i=1; i<n; i++)
-  {
-    for(j=0; j<i; j++)
-    {
-      t = 0.0;
-      for(k=0; k<j; k++)                            /* Çó½âLijÖÐµÄÇóºÍ²¿·Ö*/
-        t = t+L[i*n+k]*L[j*n+k]*D[k];
-      L[i*n+j] = (mat[i*n+j]-t)/D[j];               /* Çó½âLij*/
-    }
-    t = 0.0;
-    for(k=0; k<i; k++)
-      t = t+L[i*n+k]*L[i*n+k]*D[k];
-    D[i] = mat[i*n+i]-t;                            /* Çó½âD[i]*/
-    if(fabs(D[i]) < eps)                            /* ¼ì²éÆä·¶Î§*/
-    {
-      printf("Failed.\n");
-      return(0);
-    }
-  }
-  return(1);
+int i, j, k;
+double t;
+if((mat==NULL)||(L==NULL)||(D==NULL)) /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("One of the pointer is NULL\n");            /* ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)                                   /* ï¿½ï¿½Lï¿½ï¿½ï¿½ó¸³³ï¿½ÖµÎªï¿½ï¿½Î»ï¿½ï¿½*/
+{
+for(
+j = 0;
+j<n;
+j++)
+L[
+i *n
++j] = 0.0;
+L[
+i *n
++i] = 1.0;
+}
+D[0] = mat[0];
+if(
+fabs(D[0])
+< eps)                               /* ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ä·¶Î§*/
+{
+printf("Failed.\n");
+return(0);
+}                                                 /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 1;
+i<n;
+i++)
+{
+for(
+j = 0;
+j<i;
+j++)
+{
+t = 0.0;
+for(
+k = 0;
+k<j;
+k++)                            /* ï¿½ï¿½ï¿½Lijï¿½Ðµï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½*/
+t = t + L[i * n + k] * L[j * n + k] * D[k];
+L[
+i *n
++j] = (mat[
+i *n
++j]-t)/D[j];               /* ï¿½ï¿½ï¿½Lij*/
+}
+t = 0.0;
+for(
+k = 0;
+k<i;
+k++)
+t = t + L[i * n + k] * L[i * n + k] * D[k];
+D[i] = mat[
+i *n
++i]-
+t;                            /* ï¿½ï¿½ï¿½D[i]*/
+if(
+fabs(D[i])
+< eps)                            /* ï¿½ï¿½ï¿½ï¿½ä·¶Î§*/
+{
+printf("Failed.\n");
+return(0);
+}
+}
+return(1);
 }

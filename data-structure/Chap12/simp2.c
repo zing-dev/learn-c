@@ -1,224 +1,307 @@
 /*======================================================
-// º¯ÊýÃû£ºsimp2
-// ¹¦ÄÜÃèÊö£º ÇóÔ¼ÊøÌõ¼þÏÂnÎ¬¼«ÖµµÄµ¥´¿ÐÎ·¨
-// ÊäÈë²ÎÊý£ºn   ÎÊÌâµÄÎ¬Êý
-//           m   º¯ÊýÔ¼ÊøÌõ¼þµÄ¸öÊý
-//           a[n] ³£Á¿Ô¼ÊøÌõ¼þÖÐxµÄÏÂ½ç
-//           b[n] ³£Á¿Ô¼ÊøÌõ¼þÖÐxµÄÉÏ½ç
-//           (*sf)() ¼ÆËã¶¥µãÊÇ·ñÂú×ãº¯ÊýÔ¼ÊøÌõ¼þµÄº¯Êý
-//           d    ¼ÆËã³õÊ¼µ¥´¿ÐÎµÄ²ÎÊý
-//           alf  ·´ÉäÏµÊý£¬Ò»°ãÈ¡1.3
-//           x[(2n)*n]  ·µ»Ø×îºóµ¥´¿ÐÎµÄ2n¸ö¶¥µã×ø±ê
-//           fx[2n]    ·µ»Ø×îºóµÄµ¥´¿ÐÎµÄ2n¸ö¶¥µãÉÏµÄÄ¿±êº¯ÊýÖµ
-//           xopt[n+1]  ÊäÈëÒ»¸öµ¥´¿ÐÎµÄ³õÊ¼½áµã£¬Ç°n¸ö·ÖÁ¿·µ»Ø¼«Ð¡ÖµµÄn¸ö×ø±ê£¬×îºóÒ»¸ö·ÖÁ¿·µ»Ø¼«Ð¡Öµ
-//           f Ö¸ÏòÄ¿±êº¯ÊýµÄÖ¸Õë
-//         eps ¿ØÖÆ¾«¶ÈÒªÇó
-//         itmax ×î´óµü´ú´ÎÊý
-// ·µ»ØÖµ£º  µü´ú´ÎÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½simp2
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nÎ¬ï¿½ï¿½Öµï¿½Äµï¿½ï¿½ï¿½ï¿½Î·ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½n   ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½
+//           m   ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
+//           a[n] ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Â½ï¿½
+//           b[n] ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Ï½ï¿½
+//           (*sf)() ï¿½ï¿½ï¿½ã¶¥ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½
+//           d    ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ÎµÄ²ï¿½ï¿½ï¿½
+//           alf  ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½È¡1.3
+//           x[(2n)*n]  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½óµ¥´ï¿½ï¿½Îµï¿½2nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//           fx[2n]    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Îµï¿½2nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ä¿ï¿½êº¯ï¿½ï¿½Öµ
+//           xopt[n+1]  ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎµÄ³ï¿½Ê¼ï¿½ï¿½ã£¬Ç°nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½Ð¡Öµï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½Ð¡Öµ
+//           f Ö¸ï¿½ï¿½Ä¿ï¿½êº¯ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+//         eps ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½Òªï¿½ï¿½
+//         itmax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 =========================================================*/
 
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
+
 #define TINY 1.0e-7
 
-int simp2(n,m,a,b,d,alf,eps,x,fx,xopt,sf,f,itmax)
-int itmax,n,m;
-double *a,*b,*x,*fx,*xopt;
-double d,alf,eps;
-double (*f)();
-int (*sf)();                                    
-{
-	int it,in,i,j,h,g,iflag;
-	double *xt,*xc,ft,fc,fg,fh,flag,tmp,rr,simprn();
+int simp2(n, m, a, b, d, alf, eps, x, fx, xopt, sf, f, itmax)
 
-	if(a==NULL||b==NULL||x==NULL||fx==NULL||xopt==NULL)           /* ¼ì²éÖ¸ÕëÊÇ·ñÎª¿Õ*/
-	{
-		printf("One of pointer is null\n");
-		return(-1);
-	}
-	xt = (double*)malloc(n*sizeof(double));                      /* ·ÖÅä¿Õ¼ä²¢¼ì²éÊÇ·ñ³É¹¦*/
-	xc = (double*)malloc(n*sizeof(double));
-	if(xt==NULL||xc==NULL)
-	{
-		free(xt);
-		free(xc);
-		printf("memory alloc faile\n");
-		return(-1);
-	}
-	j = 0;
-	while(j<n)                                                /* ¼ì²é³õÊ¼µãÊÇ·ñÂú×ãÔ¼Êø*/
-	if(a[j]<=xopt[j] && xopt[j]<=b[j])
-		j++;
-	else
-	{
-		free(xt);
-		free(xc);
-		printf("imput x0 is out of range\n");
-		return(0);
-	}
-	if( !(*sf)(xopt) )
-	{
-		free(xt);
-		free(xc);
-		printf("imput x0 is out of range\n");
-		return(0);
-	}
-	for(j=0; j<n; j++)
-		x[j] = xopt[j];                                         /* ³õÊ¼½áµã*/
-	fx[0] = (*f)(xopt);
-	rr = 0.0;
-	for(i=1; i<2*n; i++)                                        /* ¹¹Ôì³õÊ¼µÄµ¥´¿ÐÎ*/
-	for(j=0; j<n; j++)
-		x[i*n+j] = a[j] + d*simprn(&rr);
-	for(i=1; i<2*n; i++)                                        /* µ÷Õû¶¥µãÂú×ãº¯ÊýÔ¼ÊøÌõ¼þ*/
-	{
-		it = 1;			
-		in = i*n;
-		for(j=0; j<n; j++)                                     /* Çó³öÒÑÖª½áµãµÄÖØÐÄ*/
-		{
-			tmp = 0.0;
-			for(h=0; h<i; h++)
-				tmp = tmp+x[h*n+j];
-			xc[j] = tmp/(1.0*i);
-		}
-		iflag = 0;
-		while(it==1&&iflag<200)
-		{
-			it = 0;
-			for(j=0; j<n; j++)                              /* µ÷ÕûÊ¹ÆäÂú×ã³£Á¿Ô¼ÊøÌõ¼þ*/
-			{
-				if(x[in+j] < a[j])
-				{
-					x[in+j] = a[j]+TINY;
-					it = 1;
-				}
-				else if(x[in+j] > b[j])
-				{
-					x[in+j] = b[j] - TINY;
-					it = 1;
-				}
-			}
-			if(it == 0)                                   /* µ÷ÕûÊ¹ÆäÂú×ãº¯ÊýÔ¼ÊøÌõ¼þ*/
-			{
-				if( !(*sf)(&(x[i*n])) )
-				{
-					for(j=0; j<n; j++)
-						x[in+j] = (x[in+j]+xc[j])*0.5;
-					it = 1;
-				}
-			}
-			iflag++;
-		}
-		if(iflag>=200)
-		{
-			free(xt);
-			free(xc);
-			printf("simplex construction failed\n");
-			return(0);
-		}
-		fx[i] = (*f)(&x[in]);                                  /* Çó³öÔÚ¸÷¸ö¶¥µãÉÏµÄº¯ÊýÖµ*/
-	}
-	flag = 1.0+eps;                                           /* flagÓÃÓÚ¼ÆËãµ¥´¿ÐÎÖÐ½áµã¾àÀë*/
-	it = 0;
-	while(it++<itmax && flag>eps)
-	{
-		ft = fx[0];
-		fg = fx[0];
-		h = 0;                                                /* ×î»µµã*/
-		g = 0;                                                /* ´Î»µµã*/
-		for(i=1; i<2*n; i++)
-		{
-			if(fx[i] > fg)
-			{
-				if(fx[i]>fh)                                /* ²éÕÒ×î»µµãºÍ´Î»µµã*/
-				{
-					g = h;
-					h = i;
-				}
-				else                                        /* ²éÕÒÐÂ´Î»µµã*/                    
-					g = i;
-				fg = fx[g];
-				fh = fx[h];
-			}
-		}
-		for(j=0; j<n; j++)                              
-		{
-			xc[j] = 0.0;                                  /* ÇóÖØÐÄµÄn¸ö×ø±ê*/
-			for(i=0; i<2*n; i++)
-				xc[j] = xc[j]+x[i*n+j];
-			tmp = x[h*n+j];
-			xc[j] = (xc[j]-tmp)/(2*n-1.0);                /* È¥³ý×î²îµãºóµÄÆ½¾ùÖµ*/
-			xt[j] = xc[j]+alf*(xc[j]-tmp);               /* ·´Éäµã*/
-		}
-		iflag = 1;
-		while(iflag==1)
-		{
-			ft = (*f)(xt);
-			if(ft > fg)                                    /* µ÷ÕûÊ¹ft<=fg*/
-			{
-				for(j=0; j<n; j++)
-					xt[j] = (xt[j]+xc[j])*0.5;
-				ft = (*f)(xt);
-			}
-			iflag = 0;
-			for(j=0; j<n; j++)                             /* µ÷ÕûÊ¹ÆäÂú×ã³£Á¿Ô¼ÊøÌõ¼þ*/
-			{
-				if(xt[j] < a[j])
-				{
-					xt[j] = a[j]+TINY;
-					iflag = 1;
-				}
-				else if(xt[j] > b[j])
-				{
-					xt[j] = b[j] - TINY;
-					iflag = 1;
-				}
-			}
-			if(iflag == 0)                                  /* µ÷ÕûÊ¹ÆäÂú×ãº¯ÊýÔ¼ÊøÌõ¼þ*/
-			{
-				if( !(*sf)(xt) )
-				{
-					for(j=0; j<n; j++)
-						xt[j] = (xt[j]+xc[j])*0.5;
-					iflag = 1;
-				}
-			}
-		}
-		for(j=0; j<n; j++)                                 /* xt=> xh*/
-			x[h*n+j] = xt[j];
-		fx[h] = ft;
-		fc = 0.0;
-		ft = 0.0;
-		for(i=0; i<2*n; i++)                            /* Çó¶¥µãµÄÆ½¾ù¾àÀë*/
-		{
-			tmp = fx[i];
-			fc = fc+tmp;
-			ft = ft+tmp*tmp;
-		}
-		fc = fc*fc/(2.0*n);
-		flag = (ft - fc)/(2.0*n-1.0);
-	}
-	for(j=0; j<n; j++)                                 /* ÇóËùÓÐ¶¥µãµÄÖØÐÄ×öÎª×îÓÅ½â*/
-	{
-		xopt[j] = 0.0;
-		for(i=0; i<2*n; i++)
-			xopt[j] = xopt[j]+x[i*n+j];
-		xopt[j] = xopt[j]/(2.0*n);
-	}
-	xopt[n] = (*f)(xopt);
-	free(xt);
-	free(xc);
-	return(it);
+int itmax, n, m;
+double *a, *b, *x, *fx, *xopt;
+double d, alf, eps;
+
+double (*f)();
+
+int (*sf)();
+
+{
+int it, in, i, j, h, g, iflag;
+double *xt, *xc, ft, fc, fg, fh, flag, tmp, rr, simprn();
+
+if(a==NULL||b==NULL||x==NULL||fx==NULL||xopt==NULL)           /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("One of pointer is null\n");
+return(-1);
+}
+xt = (double *) malloc(n * sizeof(double));                      /* ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
+xc = (double *) malloc(n * sizeof(double));
+if(xt==NULL||xc==NULL)
+{
+free(xt);
+free(xc);
+printf("memory alloc faile\n");
+return(-1);
+}
+j = 0;
+while(j<n)                                                /* ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½*/
+if(a[j]<=xopt[j] && xopt[j]<=b[j])
+j++;
+else
+{
+free(xt);
+free(xc);
+printf("imput x0 is out of range\n");
+return(0);
+}
+if( !(*sf)(xopt))
+{
+free(xt);
+free(xc);
+printf("imput x0 is out of range\n");
+return(0);
+}
+for(
+j = 0;
+j<n;
+j++)
+x[j] = xopt[j];                                         /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½*/
+fx[0] = (*f)(xopt);
+rr = 0.0;
+for(
+i = 1;
+i<2*
+n;
+i++)                                        /* ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+j = 0;
+j<n;
+j++)
+x[
+i *n
++j] = a[j] +
+d *simprn(&rr);
+for(
+i = 1;
+i<2*
+n;
+i++)                                        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+it = 1;
+in = i * n;
+for(
+j = 0;
+j<n;
+j++)                                     /* ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+tmp = 0.0;
+for(
+h = 0;
+h<i;
+h++)
+tmp = tmp + x[h * n + j];
+xc[j] = tmp/(1.0*i);
+}
+iflag = 0;
+while(it==1&&iflag<200)
+{
+it = 0;
+for(
+j = 0;
+j<n;
+j++)                              /* ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ã³£ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+if(x[in+j] < a[j])
+{
+x[in+j] = a[j]+TINY;
+it = 1;
+}
+else if(x[in+j] > b[j])
+{
+x[in+j] = b[j] - TINY;
+it = 1;
+}
+}
+if(it == 0)                                   /* ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+if( !(*sf)(&(x[
+i *n
+])))
+{
+for(
+j = 0;
+j<n;
+j++)
+x[in+j] = (x[in+j]+xc[j])*0.5;
+it = 1;
+}
+}
+iflag++;
+}
+if(iflag>=200)
+{
+free(xt);
+free(xc);
+printf("simplex construction failed\n");
+return(0);
+}
+fx[i] = (*f)(&x[in]);                                  /* ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄºï¿½ï¿½ï¿½Öµ*/
+}
+flag = 1.0 + eps;                                           /* flagï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ãµ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+it = 0;
+while(it++<
+itmax &&flag
+>eps)
+{
+ft = fx[0];
+fg = fx[0];
+h = 0;                                                /* ï¿½î»µï¿½ï¿½*/
+g = 0;                                                /* ï¿½Î»ï¿½ï¿½ï¿½*/
+for(
+i = 1;
+i<2*
+n;
+i++)
+{
+if(fx[i] > fg)
+{
+if(fx[i]>fh)                                /* ï¿½ï¿½ï¿½ï¿½ï¿½î»µï¿½ï¿½Í´Î»ï¿½ï¿½ï¿½*/
+{
+g = h;
+h = i;
+}
+else                                        /* ï¿½ï¿½ï¿½ï¿½ï¿½Â´Î»ï¿½ï¿½ï¿½*/
+g = i;
+fg = fx[g];
+fh = fx[h];
+}
+}
+for(
+j = 0;
+j<n;
+j++)
+{
+xc[j] = 0.0;                                  /* ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+for(
+i = 0;
+i<2*
+n;
+i++)
+xc[j] = xc[j]+x[
+i *n
++j];
+tmp = x[h * n + j];
+xc[j] = (xc[j]-tmp)/(2*n-1.0);                /* È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ*/
+xt[j] = xc[j]+
+alf *(xc[j]
+-tmp);               /* ï¿½ï¿½ï¿½ï¿½ï¿½*/
+}
+iflag = 1;
+while(iflag==1)
+{
+ft = (*f)(xt);
+if(ft > fg)                                    /* ï¿½ï¿½ï¿½ï¿½Ê¹ft<=fg*/
+{
+for(
+j = 0;
+j<n;
+j++)
+xt[j] = (xt[j]+xc[j])*0.5;
+ft = (*f)(xt);
+}
+iflag = 0;
+for(
+j = 0;
+j<n;
+j++)                             /* ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ã³£ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+if(xt[j] < a[j])
+{
+xt[j] = a[j]+TINY;
+iflag = 1;
+}
+else if(xt[j] > b[j])
+{
+xt[j] = b[j] - TINY;
+iflag = 1;
+}
+}
+if(iflag == 0)                                  /* ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+if( !(*sf)(xt))
+{
+for(
+j = 0;
+j<n;
+j++)
+xt[j] = (xt[j]+xc[j])*0.5;
+iflag = 1;
+}
+}
+}
+for(
+j = 0;
+j<n;
+j++)                                 /* xt=> xh*/
+x[
+h *n
++j] = xt[j];
+fx[h] =
+ft;
+fc = 0.0;
+ft = 0.0;
+for(
+i = 0;
+i<2*
+n;
+i++)                            /* ï¿½ó¶¥µï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+{
+tmp = fx[i];
+fc = fc + tmp;
+ft = ft + tmp * tmp;
+}
+fc = fc * fc / (2.0 * n);
+flag = (ft - fc) / (2.0 * n - 1.0);
+}
+for(
+j = 0;
+j<n;
+j++)                                 /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Å½ï¿½*/
+{
+xopt[j] = 0.0;
+for(
+i = 0;
+i<2*
+n;
+i++)
+xopt[j] = xopt[j]+x[
+i *n
++j];
+xopt[j] = xopt[j]/(2.0*n);
+}
+xopt[n] = (*f)(xopt);
+free(xt);
+free(xc);
+return(it);
 }
 
-static double simprn(rr)                               /* ÇóËæ»úÊýµÄ×Ó³ÌÐò*/
+static double simprn(rr)                               /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½*/
 double *rr;
 {
-	int m;
-	double s = 65536.0, u = 2053.0, v=13849.0;
-	*rr = v+u*(*rr);
-	m = *rr/s;
-	*rr = *rr-m*s;
-	return(*rr/s);
+int m;
+double s = 65536.0, u = 2053.0, v = 13849.0;
+*
+rr = v + u * (*rr);
+m = *rr / s;
+*
+rr = *rr - m * s;
+return(*rr/s);
 }

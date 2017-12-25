@@ -24,16 +24,14 @@ const char *g_db_name = "demo";
 
 const unsigned int g_db_port = 3306;
 
-void print_mysql_error(const char *msg)
-{ // 打印最后一次错误
+void print_mysql_error(const char *msg) { // 打印最后一次错误
     if (msg)
         printf("%s: %s\n", msg, mysql_error(g_conn));
     else
         puts(mysql_error(g_conn));
 }
 
-int executesql(const char *sql)
-{
+int executesql(const char *sql) {
     /*query the database according the sql*/
     if (mysql_real_query(g_conn, sql, strlen(sql))) // 如果失败
         return -1; // 表示失败
@@ -41,8 +39,7 @@ int executesql(const char *sql)
     return 0; // 成功执行
 }
 
-int init_mysql()
-{ // 初始化连接
+int init_mysql() { // 初始化连接
     // init the database connection
     g_conn = mysql_init(NULL);
 
@@ -57,8 +54,7 @@ int init_mysql()
     return 0; // 返回成功
 }
 
-int main(void)
-{
+int main(void) {
     puts("---------------------Hello Mysql--------------------\n"); /* prints Hello Mysql */
 
     if (init_mysql());

@@ -1,66 +1,91 @@
 /*=============================================================
-// º¯ Êý Ãû£ºcpdiv(a,n,b,m,q,r)
-// ¹¦ÄÜÃèÊö£ºÍê³ÉÏµÊý±íÊ¾µÄ¸´ÏµÊýµÄ¶àÏîÊ½AÓëBÏà³ý
-       ÉÌ¶àÏîÊ½ÏµÊý·ÅÔÚqÀï£¬ÓàÊ½ÏµÊý·ÅÔÚrÀï
-// ÊäÈë²ÎÊý£ºa£¨¶àÏîÊ½AÏµÊý£©£¬n£¨ÏµÊý¸öÊý£©
-       b£¨¶àÏîÊ½BÏµÊý£©£¬m£¨ÏµÊý¸öÊý£©
-       q£¨ÉÌ¶àÏîÊ½QÏµÊý£©£¬k£¨ÏµÊý¸öÊý£©k=max(n-m+1,0)
-       r£¨ÓàÊ½RÏµÊý£©£¬l£¨ÏµÊý¸öÊý£©ÐèÒªl=n
-// ·µ »Ø Öµ£ºÕûÐÍÊý×Ö¡£¼ÆËã³É¹¦Ôò·µ»Ø1£¬·ñÔò·µ»Ø0
+// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½cpdiv(a,n,b,m,q,r)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ä¸ï¿½Ïµï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ê½Aï¿½ï¿½Bï¿½ï¿½ï¿½
+       ï¿½Ì¶ï¿½ï¿½ï¿½Ê½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½qï¿½ï£¬ï¿½ï¿½Ê½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½AÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+       bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½BÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+       qï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½Ê½QÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½k=max(n-m+1,0)
+       rï¿½ï¿½ï¿½ï¿½Ê½RÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªl=n
+// ï¿½ï¿½ ï¿½ï¿½ Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ò·µ»ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0
 //==============================================================*/
 #include"stdio.h"
 #include"c_comp.c"
-int cpdiv(a,n,b,m,q,k,r,l)
-struct c_comp *a,*b,*q,*r;
-int n,m,k,l;
+
+int cpdiv(a, n, b, m, q, k, r, l)
+struct c_comp *a, *b, *q, *r;
+int n, m, k, l;
 {
-  int i,j,kk,jj;
-  struct c_comp t1,t2;
-  double tmp;
-  if((a==NULL)||(b==NULL)||(q==NULL)||(r==NULL))  /* ¼ì²âÖ¸ÕëÊÇ·ñÎª¿Õ*/
-  {
-    printf("(cpdiv)NULL pointer found.\n");
-    return(0);
-  }
-  if(l!=n)
-  {
-    printf("(cpdiv)please set the length of r to n.\n");
-    return(0);
-  }
-  for(i=0; i<n; i++)			          /* ÏÈ½«a´æÈërÖÐ£¬Õâ¾ÍÊÇ¿ªÊ¼³ý·¨Ç°µÄÓàÊ½*/
-  {
-    r[i].rmz = a[i].rmz;
-    r[i].imz = a[i].imz;
-  }
-  for(i=0; i<k; i++)				  /* ´ËÊ±µÄÉÌÎª0*/
-  {
-    q[i].rmz = 0;
-    q[i].imz = 0;
-  }
-  						  /* ÅÐ¶Ï¶àÏîÊ½B×î¸ß´ÎÏîÏµÊýÊÇ·ñÎª0*/
-  tmp = b[m-1].rmz*b[m-1].rmz+b[m-1].imz*b[m-1].imz;
-  if(tmp+1.0==1.0)
-  {
-    printf("(cpdiv)Cannot divide zero");
-    return(0);
-  }
-  b[m-1].imz = -b[m-1].imz;  			  /* ÏÈÈ¡b[m-1]µÄ¹²éî£¬½«¸´Êý³ý·¨×ª»¯³É³Ë·¨*/
-  for(i=0; i<k; i++)
-  {
-    kk = k-i-1;
-    jj = n-i-1; 
-    c_comp_product(&r[jj],&b[m-1],&t1);		  /* Çó³öµ±Ç°µÄÉÌ*/   
-    q[kk].rmz = t1.rmz/tmp;
-    q[kk].imz = t1.imz/tmp;
-    r[jj].rmz = 0.0;			          /* ´ÓÓàÊ½ÖÐ¼õÈ¥µ±Ç°µÄÉÌÓë¶àÏîÊ½BµÄ»ý*/
-    r[jj].imz = 0.0;
-    for(j=0; j<m-1; j++)
-    {
-      c_comp_product(&q[kk],&b[j],&t2);
-      c_comp_sub(&r[j+kk], &t2, &r[j+kk]);
-    }
-  }
-  b[m-1].imz = -b[m-1].imz; 			  /* »Ö¸´b[m-1]*/
-  return(1); 
+int i, j, kk, jj;
+struct c_comp t1, t2;
+double tmp;
+if((a==NULL)||(b==NULL)||(q==NULL)||(r==NULL))  /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("(cpdiv)NULL pointer found.\n");
+return(0);
+}
+if(l!=n)
+{
+printf("(cpdiv)please set the length of r to n.\n");
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)                      /* ï¿½È½ï¿½aï¿½ï¿½ï¿½ï¿½rï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ê½*/
+{
+r[i].
+rmz = a[i].rmz;
+r[i].
+imz = a[i].imz;
+}
+for(
+i = 0;
+i<k;
+i++)                  /* ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Îª0*/
+{
+q[i].
+rmz = 0;
+q[i].
+imz = 0;
+}
+/* ï¿½Ð¶Ï¶ï¿½ï¿½ï¿½Ê½Bï¿½ï¿½ß´ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½Ç·ï¿½Îª0*/
+tmp = b[m - 1].rmz * b[m - 1].rmz + b[m - 1].imz * b[m - 1].imz;
+if(tmp+1.0==1.0)
+{
+printf("(cpdiv)Cannot divide zero");
+return(0);
+}
+b[m-1].
+imz = -b[m - 1].imz;              /* ï¿½ï¿½È¡b[m-1]ï¿½Ä¹ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½É³Ë·ï¿½*/
+for(
+i = 0;
+i<k;
+i++)
+{
+kk = k - i - 1;
+jj = n - i - 1;
+c_comp_product(&r[jj], &b[m - 1], &t1
+);          /* ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½*/
+q[kk].
+rmz = t1.rmz / tmp;
+q[kk].
+imz = t1.imz / tmp;
+r[jj].
+rmz = 0.0;                      /* ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ð¼ï¿½È¥ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Bï¿½Ä»ï¿½*/
+r[jj].
+imz = 0.0;
+for(
+j = 0;
+j<m-1; j++)
+{
+c_comp_product(&q[kk], &b[j], &t2
+);
+c_comp_sub(&r[j + kk], &t2, &r[j + kk]
+);
+}
+}
+b[m-1].
+imz = -b[m - 1].imz;              /* ï¿½Ö¸ï¿½b[m-1]*/
+return(1);
 }
 

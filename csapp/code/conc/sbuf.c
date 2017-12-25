@@ -4,9 +4,8 @@
 
 /* Create an empty, bounded, shared FIFO buffer with n slots */
 /* $begin sbuf_init */
-void sbuf_init(sbuf_t *sp, int n)
-{
-    sp->buf = Calloc(n, sizeof(int)); 
+void sbuf_init(sbuf_t *sp, int n) {
+    sp->buf = Calloc(n, sizeof(int));
     sp->n = n;                       /* Buffer holds max of n items */
     sp->front = sp->rear = 0;        /* Empty buffer iff front == rear */
     Sem_init(&sp->mutex, 0, 1);      /* Binary semaphore for locking */
@@ -17,19 +16,17 @@ void sbuf_init(sbuf_t *sp, int n)
 
 /* Clean up buffer sp */
 /* $begin sbuf_deinit */
-void sbuf_deinit(sbuf_t *sp)
-{
+void sbuf_deinit(sbuf_t *sp) {
     Free(sp->buf);
 }
 /* $end sbuf_deinit */
 
 /* Insert item onto the rear of shared buffer sp */
 /* $begin sbuf_insert */
-void sbuf_insert(sbuf_t *sp, int item)
-{
+void sbuf_insert(sbuf_t *sp, int item) {
     P(&sp->slots);                          /* Wait for available slot */
     P(&sp->mutex);                          /* Lock the buffer */
-    sp->buf[(++sp->rear)%(sp->n)] = item;   /* Insert the item */
+    sp->buf[(++sp->rear) % (sp->n)] = item;   /* Insert the item */
     V(&sp->mutex);                          /* Unlock the buffer */
     V(&sp->items);                          /* Announce available item */
 }
@@ -37,12 +34,11 @@ void sbuf_insert(sbuf_t *sp, int item)
 
 /* Remove and return the first item from buffer sp */
 /* $begin sbuf_remove */
-int sbuf_remove(sbuf_t *sp)
-{
+int sbuf_remove(sbuf_t *sp) {
     int item;
     P(&sp->items);                          /* Wait for available item */
     P(&sp->mutex);                          /* Lock the buffer */
-    item = sp->buf[(++sp->front)%(sp->n)];  /* Remove the item */
+    item = sp->buf[(++sp->front) % (sp->n)];  /* Remove the item */
     V(&sp->mutex);                          /* Unlock the buffer */
     V(&sp->slots);                          /* Announce available slot */
     return item;

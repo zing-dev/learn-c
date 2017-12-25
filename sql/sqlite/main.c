@@ -31,8 +31,8 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 static int result(void *NotUsed, int argc, char **argv, char **azColName) {
     int i;
     for (i = 0; i < argc; i++) {
-        printf("%d\n",argc);
-        printf("%s\n",argv[argc]);
+        printf("%d\n", argc);
+        printf("%s\n", argv[argc]);
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
     printf("\n");
@@ -42,7 +42,7 @@ static int result(void *NotUsed, int argc, char **argv, char **azColName) {
     if (argv[argc] > 0) {
         printf("table already exists\n");
         return -1;
-    } else{
+    } else {
         printf("table no exists\n");
         return 0;
     }
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
     }
 
     sql = "SELECT COUNT(*) FROM sqlite_master where type='table' and name='USER'";
-    printf("-----> %d\n",sqlite3_exec(db, sql, result, 0, &zErrMsg));
+    printf("-----> %d\n", sqlite3_exec(db, sql, result, 0, &zErrMsg));
     if (sqlite3_exec(db, sql, result, 0, &zErrMsg) == 0) {
         /* Create SQL statement */
         sql = "DROP TABLE IF EXISTS"\

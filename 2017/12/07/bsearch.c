@@ -28,6 +28,7 @@ int data_cmp(void const *lhs, void const *rhs) {
     // return (l->nr > r->nr) - (l->nr < r->nr); // possible shortcut
     // return l->nr - r->nr; // erroneous shortcut (fails if INT_MIN is present)
 }
+
 int main(void) {
     Data key = {key.nr = 2};
 

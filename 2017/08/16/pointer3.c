@@ -6,15 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
-{
+int main(void) {
     //puts("Hello World!!!"); /* prints Hello World!!! */
     //二维数组的五种指针表示
     int i;
     int j;
     int a[2][3] = {
-        {1, 3, 5},
-        {2, 4, 6}
+            {1, 3, 5},
+            {2, 4, 6}
     };
     int *p;
     int (*pRow)[3];
@@ -34,7 +33,7 @@ int main(void)
         printf("%d", *(pRow[i]));
         printf("%d\n", *(*(pRow + i)));
     }
-        printf("\n");
+    printf("\n");
     //指针数组
     int m, i1 = 1, j1 = 2, k1 = 3, *pArray[3];
     pArray[0] = &i1;

@@ -14,16 +14,15 @@
 
 typedef unsigned float_bits;
 
-float_bits float_absval(float_bits f)
-{
-        unsigned exp = f >> 23 & 0xFF;
-        unsigned frac = f & 0x7FFFFF;
+float_bits float_absval(float_bits f) {
+    unsigned exp = f >> 23 & 0xFF;
+    unsigned frac = f & 0x7FFFFF;
 
-        /* NaN */
-        if (exp == 0xFF && frac != 0)
-                return f;
+    /* NaN */
+    if (exp == 0xFF && frac != 0)
+        return f;
 
-        return (exp << 23) | frac; /* sign=0 */
+    return (exp << 23) | frac; /* sign=0 */
 }
 
 /*
@@ -35,43 +34,44 @@ float_bits float_absval(float_bits f)
 
 extern float u2f(unsigned x);   /* ex2-89.c */
 
-unsigned f2u(float f)
-{
-        union { float f; unsigned u; } a;
-        a.f = f;
-        return a.u;
+unsigned f2u(float f) {
+    union {
+        float f;
+        unsigned u;
+    } a;
+    a.f = f;
+    return a.u;
 }
 
 /* test driver */
-int main(void)
-{
-        float f = -0.0;
-        unsigned uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+int main(void) {
+    float f = -0.0;
+    unsigned uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = 0.0;
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = 0.0;
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = 1.0;
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = 1.0;
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = -1.0;
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = -1.0;
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = u2f(0x7F800000);    /* +oo */
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = u2f(0x7F800000);    /* +oo */
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = u2f(0xFF800000);    /* -oo */
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = u2f(0xFF800000);    /* -oo */
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        f = u2f(0x7F800001);    /* NaN */
-        uf = f2u(f);
-        printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
+    f = u2f(0x7F800001);    /* NaN */
+    uf = f2u(f);
+    printf("%f(0x%X): %f\n", f, uf, u2f(float_absval(uf)));
 
-        return 0;
+    return 0;
 }

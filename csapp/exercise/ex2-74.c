@@ -13,11 +13,10 @@
 #include <limits.h>             /* INT_MIN */
 
 /* Determine whether subtracting arguments will cause overflow */
-int tsub_ovf(int x, int y)
-{
-        int r = x - y;
-        int pos_overflow = !(x & INT_MIN) &&  (y & INT_MIN) &&  (r & INT_MIN);
-        int neg_overflow =  (x & INT_MIN) && !(y & INT_MIN) && !(r & INT_MIN);
+int tsub_ovf(int x, int y) {
+    int r = x - y;
+    int pos_overflow = !(x & INT_MIN) && (y & INT_MIN) && (r & INT_MIN);
+    int neg_overflow = (x & INT_MIN) && !(y & INT_MIN) && !(r & INT_MIN);
 
-        return pos_overflow || neg_overflow;
+    return pos_overflow || neg_overflow;
 }

@@ -1,9 +1,9 @@
-#include <stdio.h>    
+#include <stdio.h>
 #include <string.h>
-#include <ctype.h>      
-#include <stdlib.h>   
-#include <io.h>  
-#include <math.h>  
+#include <ctype.h>
+#include <stdlib.h>
+#include <io.h>
+#include <math.h>
 #include <time.h>
 
 #define OK 1
@@ -11,438 +11,395 @@
 #define TRUE 1
 #define FALSE 0
 
-#define MAX_LENGTH_INSERT_SORT 7 /* ÓÃÓÚ¿ìËÙÅÅÐòÊ±ÅÐ¶ÏÊÇ·ñÑ¡ÓÃ²åÈëÅÅÐòãÚÖµ */
+#define MAX_LENGTH_INSERT_SORT 7 /* ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ñ¡ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ */
 
-typedef int Status; 
+typedef int Status;
 
 
-#define MAXSIZE 10000  /* ÓÃÓÚÒªÅÅÐòÊý×é¸öÊý×î´óÖµ£¬¿É¸ù¾ÝÐèÒªÐÞ¸Ä */
-typedef struct
-{
-	int r[MAXSIZE+1];	/* ÓÃÓÚ´æ´¢ÒªÅÅÐòÊý×é£¬r[0]ÓÃ×÷ÉÚ±ø»òÁÙÊ±±äÁ¿ */
-	int length;			/* ÓÃÓÚ¼ÇÂ¼Ë³Ðò±íµÄ³¤¶È */
-}SqList;
+#define MAXSIZE 10000  /* ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸ï¿½ */
+typedef struct {
+    int r[MAXSIZE + 1];    /* ï¿½ï¿½ï¿½Ú´æ´¢Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬r[0]ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ */
+    int length;            /* ï¿½ï¿½ï¿½Ú¼ï¿½Â¼Ë³ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ */
+} SqList;
 
-/* ½»»»LÖÐÊý×érµÄÏÂ±êÎªiºÍjµÄÖµ */
-void swap(SqList *L,int i,int j) 
-{ 
-	int temp=L->r[i]; 
-	L->r[i]=L->r[j]; 
-	L->r[j]=temp; 
+/* ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½Â±ï¿½Îªiï¿½ï¿½jï¿½ï¿½Öµ */
+void swap(SqList *L, int i, int j) {
+    int temp = L->r[i];
+    L->r[i] = L->r[j];
+    L->r[j] = temp;
 }
 
-void print(SqList L)
-{
-	int i;
-	for(i=1;i<L.length;i++)
-		printf("%d,",L.r[i]);
-	printf("%d",L.r[i]);
-	printf("\n");
+void print(SqList L) {
+    int i;
+    for (i = 1; i < L.length; i++)
+        printf("%d,", L.r[i]);
+    printf("%d", L.r[i]);
+    printf("\n");
 }
 
-/* ¶ÔË³Ðò±íL×÷½»»»ÅÅÐò£¨Ã°ÅÝÅÅÐò³õ¼¶°æ£© */
-void BubbleSort0(SqList *L)
-{ 
-	int i,j;
-	for(i=1;i<L->length;i++)
-	{
-		for(j=i+1;j<=L->length;j++)
-		{
-			if(L->r[i]>L->r[j])
-			{
-				 swap(L,i,j);/* ½»»»L->r[i]ÓëL->r[j]µÄÖµ */
-			}
-		}
-	}
-}
-
-/* ¶ÔË³Ðò±íL×÷Ã°ÅÝÅÅÐò */
-void BubbleSort(SqList *L)
-{ 
-	int i,j;
-	for(i=1;i<L->length;i++)
-	{
-		for(j=L->length-1;j>=i;j--)  /* ×¢ÒâjÊÇ´ÓºóÍùÇ°Ñ­»· */
-		{
-			if(L->r[j]>L->r[j+1]) /* ÈôÇ°Õß´óÓÚºóÕß£¨×¢ÒâÕâÀïÓëÉÏÒ»Ëã·¨µÄ²îÒì£©*/
-			{
-				 swap(L,j,j+1);/* ½»»»L->r[j]ÓëL->r[j+1]µÄÖµ */
-			}
-		}
-	}
-}
-
-/* ¶ÔË³Ðò±íL×÷¸Ä½øÃ°ÅÝËã·¨ */
-void BubbleSort2(SqList *L)
-{ 
-	int i,j;
-	Status flag=TRUE;			/* flagÓÃÀ´×÷Îª±ê¼Ç */
-	for(i=1;i<L->length && flag;i++) /* ÈôflagÎªtrueËµÃ÷ÓÐ¹ýÊý¾Ý½»»»£¬·ñÔòÍ£Ö¹Ñ­»· */
-	{
-		flag=FALSE;				/* ³õÊ¼ÎªFalse */
-		for(j=L->length-1;j>=i;j--)
-		{
-			if(L->r[j]>L->r[j+1])
-			{
-				 swap(L,j,j+1);	/* ½»»»L->r[j]ÓëL->r[j+1]µÄÖµ */
-				 flag=TRUE;		/* Èç¹ûÓÐÊý¾Ý½»»»£¬ÔòflagÎªtrue */
-			}
-		}
-	}
-}
-
-
-/* ¶ÔË³Ðò±íL×÷¼òµ¥Ñ¡ÔñÅÅÐò */
-void SelectSort(SqList *L)
-{
-	int i,j,min;
-	for(i=1;i<L->length;i++)
-	{ 
-		min = i;						/* ½«µ±Ç°ÏÂ±ê¶¨ÒåÎª×îÐ¡ÖµÏÂ±ê */
-		for (j = i+1;j<=L->length;j++)/* Ñ­»·Ö®ºóµÄÊý¾Ý */
-        {
-			if (L->r[min]>L->r[j])	/* Èç¹ûÓÐÐ¡ÓÚµ±Ç°×îÐ¡ÖµµÄ¹Ø¼ü×Ö */
-                min = j;				/* ½«´Ë¹Ø¼ü×ÖµÄÏÂ±ê¸³Öµ¸ømin */
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£© */
+void BubbleSort0(SqList *L) {
+    int i, j;
+    for (i = 1; i < L->length; i++) {
+        for (j = i + 1; j <= L->length; j++) {
+            if (L->r[i] > L->r[j]) {
+                swap(L, i, j);/* ï¿½ï¿½ï¿½ï¿½L->r[i]ï¿½ï¿½L->r[j]ï¿½ï¿½Öµ */
+            }
         }
-		if(i!=min)						/* Èômin²»µÈÓÚi£¬ËµÃ÷ÕÒµ½×îÐ¡Öµ£¬½»»» */
-			swap(L,i,min);				/* ½»»»L->r[i]ÓëL->r[min]µÄÖµ */
-	}
+    }
 }
 
-/* ¶ÔË³Ðò±íL×÷Ö±½Ó²åÈëÅÅÐò */
-void InsertSort(SqList *L)
-{ 
-	int i,j;
-	for(i=2;i<=L->length;i++)
-	{
-		if (L->r[i]<L->r[i-1]) /* Ðè½«L->r[i]²åÈëÓÐÐò×Ó±í */
-		{
-			L->r[0]=L->r[i]; /* ÉèÖÃÉÚ±ø */
-			for(j=i-1;L->r[j]>L->r[0];j--)
-				L->r[j+1]=L->r[j]; /* ¼ÇÂ¼ºóÒÆ */
-			L->r[j+1]=L->r[0]; /* ²åÈëµ½ÕýÈ·Î»ÖÃ */
-		}
-	}
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void BubbleSort(SqList *L) {
+    int i, j;
+    for (i = 1; i < L->length; i++) {
+        for (j = L->length - 1; j >= i; j--)  /* ×¢ï¿½ï¿½jï¿½Ç´Óºï¿½ï¿½ï¿½Ç°Ñ­ï¿½ï¿½ */
+        {
+            if (L->r[j] > L->r[j + 1]) /* ï¿½ï¿½Ç°ï¿½ß´ï¿½ï¿½Úºï¿½ï¿½ß£ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ã·¨ï¿½Ä²ï¿½ï¿½ì£©*/
+            {
+                swap(L, j, j + 1);/* ï¿½ï¿½ï¿½ï¿½L->r[j]ï¿½ï¿½L->r[j+1]ï¿½ï¿½Öµ */
+            }
+        }
+    }
 }
 
-/* ¶ÔË³Ðò±íL×÷Ï£¶ûÅÅÐò */
-void ShellSort(SqList *L)
-{
-	int i,j,k=0;
-	int increment=L->length;
-	do
-	{
-		increment=increment/3+1;/* ÔöÁ¿ÐòÁÐ */
-		for(i=increment+1;i<=L->length;i++)
-		{
-			if (L->r[i]<L->r[i-increment])/*  Ðè½«L->r[i]²åÈëÓÐÐòÔöÁ¿×Ó±í */ 
-			{ 
-				L->r[0]=L->r[i]; /*  ÔÝ´æÔÚL->r[0] */
-				for(j=i-increment;j>0 && L->r[0]<L->r[j];j-=increment)
-					L->r[j+increment]=L->r[j]; /*  ¼ÇÂ¼ºóÒÆ£¬²éÕÒ²åÈëÎ»ÖÃ */
-				L->r[j+increment]=L->r[0]; /*  ²åÈë */
-			}
-		}
-		printf("	µÚ%dÌËÅÅÐò½á¹û: ",++k);
-		print(*L);
-	}
-	while(increment>1);
-
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Ä½ï¿½Ã°ï¿½ï¿½ï¿½ã·¨ */
+void BubbleSort2(SqList *L) {
+    int i, j;
+    Status flag = TRUE;            /* flagï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ */
+    for (i = 1; i < L->length && flag; i++) /* ï¿½ï¿½flagÎªtrueËµï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£Ö¹Ñ­ï¿½ï¿½ */
+    {
+        flag = FALSE;                /* ï¿½ï¿½Ê¼ÎªFalse */
+        for (j = L->length - 1; j >= i; j--) {
+            if (L->r[j] > L->r[j + 1]) {
+                swap(L, j, j + 1);    /* ï¿½ï¿½ï¿½ï¿½L->r[j]ï¿½ï¿½L->r[j+1]ï¿½ï¿½Öµ */
+                flag = TRUE;        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½flagÎªtrue */
+            }
+        }
+    }
 }
 
 
-/* ¶ÑÅÅÐò********************************** */
-
-/* ÒÑÖªL->r[s..m]ÖÐ¼ÇÂ¼µÄ¹Ø¼ü×Ö³ýL->r[s]Ö®Íâ¾ùÂú×ã¶ÑµÄ¶¨Òå£¬ */
-/* ±¾º¯Êýµ÷ÕûL->r[s]µÄ¹Ø¼ü×Ö,Ê¹L->r[s..m]³ÉÎªÒ»¸ö´ó¶¥¶Ñ */
-void HeapAdjust(SqList *L,int s,int m)
-{ 
-	int temp,j;
-	temp=L->r[s];
-	for(j=2*s;j<=m;j*=2) /* ÑØ¹Ø¼ü×Ö½Ï´óµÄº¢×Ó½áµãÏòÏÂÉ¸Ñ¡ */
-	{
-		if(j<m && L->r[j]<L->r[j+1])
-			++j; /* jÎª¹Ø¼ü×ÖÖÐ½Ï´óµÄ¼ÇÂ¼µÄÏÂ±ê */
-		if(temp>=L->r[j])
-			break; /* rcÓ¦²åÈëÔÚÎ»ÖÃsÉÏ */
-		L->r[s]=L->r[j];
-		s=j;
-	}
-	L->r[s]=temp; /* ²åÈë */
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void SelectSort(SqList *L) {
+    int i, j, min;
+    for (i = 1; i < L->length; i++) {
+        min = i;                        /* ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Â±ê¶¨ï¿½ï¿½Îªï¿½ï¿½Ð¡Öµï¿½Â±ï¿½ */
+        for (j = i + 1; j <= L->length; j++)/* Ñ­ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        {
+            if (L->r[min] > L->r[j])    /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½Úµï¿½Ç°ï¿½ï¿½Ð¡Öµï¿½Ä¹Ø¼ï¿½ï¿½ï¿½ */
+                min = j;                /* ï¿½ï¿½ï¿½Ë¹Ø¼ï¿½ï¿½Öµï¿½ï¿½Â±ê¸³Öµï¿½ï¿½min */
+        }
+        if (i != min)                        /* ï¿½ï¿½minï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½Ëµï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+            swap(L, i, min);                /* ï¿½ï¿½ï¿½ï¿½L->r[i]ï¿½ï¿½L->r[min]ï¿½ï¿½Öµ */
+    }
 }
 
-/*  ¶ÔË³Ðò±íL½øÐÐ¶ÑÅÅÐò */
-void HeapSort(SqList *L)
-{
-	int i;
-	for(i=L->length/2;i>0;i--) /*  °ÑLÖÐµÄr¹¹½¨³ÉÒ»¸ö´ó¸ù¶Ñ */
-		 HeapAdjust(L,i,L->length);
-
-	for(i=L->length;i>1;i--)
-	{ 
-		 swap(L,1,i); /* ½«¶Ñ¶¥¼ÇÂ¼ºÍµ±Ç°Î´¾­ÅÅÐò×ÓÐòÁÐµÄ×îºóÒ»¸ö¼ÇÂ¼½»»» */
-		 HeapAdjust(L,1,i-1); /*  ½«L->r[1..i-1]ÖØÐÂµ÷ÕûÎª´ó¸ù¶Ñ */
-	}
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½Ö±ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void InsertSort(SqList *L) {
+    int i, j;
+    for (i = 2; i <= L->length; i++) {
+        if (L->r[i] < L->r[i - 1]) /* ï¿½è½«L->r[i]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ */
+        {
+            L->r[0] = L->r[i]; /* ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ */
+            for (j = i - 1; L->r[j] > L->r[0]; j--)
+                L->r[j + 1] = L->r[j]; /* ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ */
+            L->r[j + 1] = L->r[0]; /* ï¿½ï¿½ï¿½ëµ½ï¿½ï¿½È·Î»ï¿½ï¿½ */
+        }
+    }
 }
 
-/* **************************************** */
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void ShellSort(SqList *L) {
+    int i, j, k = 0;
+    int increment = L->length;
+    do {
+        increment = increment / 3 + 1;/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        for (i = increment + 1; i <= L->length; i++) {
+            if (L->r[i] < L->r[i - increment])/*  ï¿½è½«L->r[i]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ */
+            {
+                L->r[0] = L->r[i]; /*  ï¿½Ý´ï¿½ï¿½ï¿½L->r[0] */
+                for (j = i - increment; j > 0 && L->r[0] < L->r[j]; j -= increment)
+                    L->r[j + increment] = L->r[j]; /*  ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */
+                L->r[j + increment] = L->r[0]; /*  ï¿½ï¿½ï¿½ï¿½ */
+            }
+        }
+        printf("	ï¿½ï¿½%dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ", ++k);
+        print(*L);
+    } while (increment > 1);
 
-
-/* ¹é²¢ÅÅÐò********************************** */
-
-/* ½«ÓÐÐòµÄSR[i..m]ºÍSR[m+1..n]¹é²¢ÎªÓÐÐòµÄTR[i..n] */
-void Merge(int SR[],int TR[],int i,int m,int n)
-{
-	int j,k,l;
-	for(j=m+1,k=i;i<=m && j<=n;k++)	/* ½«SRÖÐ¼ÇÂ¼ÓÉÐ¡µ½´óµØ²¢ÈëTR */
-	{
-		if (SR[i]<SR[j])
-			TR[k]=SR[i++];
-		else
-			TR[k]=SR[j++];
-	}
-	if(i<=m)
-	{
-		for(l=0;l<=m-i;l++)
-			TR[k+l]=SR[i+l];		/* ½«Ê£ÓàµÄSR[i..m]¸´ÖÆµ½TR */
-	}
-	if(j<=n)
-	{
-		for(l=0;l<=n-j;l++)
-			TR[k+l]=SR[j+l];		/* ½«Ê£ÓàµÄSR[j..n]¸´ÖÆµ½TR */
-	}
 }
 
 
-/* µÝ¹é·¨ */
-/* ½«SR[s..t]¹é²¢ÅÅÐòÎªTR1[s..t] */
-void MSort(int SR[],int TR1[],int s, int t)
-{
-	int m;
-	int TR2[MAXSIZE+1];
-	if(s==t)
-		TR1[s]=SR[s];
-	else
-	{
-		m=(s+t)/2;				/* ½«SR[s..t]Æ½·ÖÎªSR[s..m]ºÍSR[m+1..t] */
-		MSort(SR,TR2,s,m);		/* µÝ¹éµØ½«SR[s..m]¹é²¢ÎªÓÐÐòµÄTR2[s..m] */
-		MSort(SR,TR2,m+1,t);	/* µÝ¹éµØ½«SR[m+1..t]¹é²¢ÎªÓÐÐòµÄTR2[m+1..t] */
-		Merge(TR2,TR1,s,m,t);	/* ½«TR2[s..m]ºÍTR2[m+1..t]¹é²¢µ½TR1[s..t] */
-	}
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½********************************** */
+
+/* ï¿½ï¿½ÖªL->r[s..m]ï¿½Ð¼ï¿½Â¼ï¿½Ä¹Ø¼ï¿½ï¿½Ö³ï¿½L->r[s]Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÑµÄ¶ï¿½ï¿½å£¬ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½L->r[s]ï¿½Ä¹Ø¼ï¿½ï¿½ï¿½,Ê¹L->r[s..m]ï¿½ï¿½ÎªÒ»ï¿½ï¿½ï¿½ó¶¥¶ï¿½ */
+void HeapAdjust(SqList *L, int s, int m) {
+    int temp, j;
+    temp = L->r[s];
+    for (j = 2 * s; j <= m; j *= 2) /* ï¿½Ø¹Ø¼ï¿½ï¿½Ö½Ï´ï¿½Äºï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¸Ñ¡ */
+    {
+        if (j < m && L->r[j] < L->r[j + 1])
+            ++j; /* jÎªï¿½Ø¼ï¿½ï¿½ï¿½ï¿½Ð½Ï´ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½Â±ï¿½ */
+        if (temp >= L->r[j])
+            break; /* rcÓ¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½sï¿½ï¿½ */
+        L->r[s] = L->r[j];
+        s = j;
+    }
+    L->r[s] = temp; /* ï¿½ï¿½ï¿½ï¿½ */
 }
 
-/* ¶ÔË³Ðò±íL×÷¹é²¢ÅÅÐò */
-void MergeSort(SqList *L)
-{ 
- 	MSort(L->r,L->r,1,L->length);
-}
+/*  ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void HeapSort(SqList *L) {
+    int i;
+    for (i = L->length / 2; i > 0; i--) /*  ï¿½ï¿½Lï¿½Ðµï¿½rï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        HeapAdjust(L, i, L->length);
 
-/* ·ÇµÝ¹é·¨ */
-/* ½«SR[]ÖÐÏàÁÚ³¤¶ÈÎªsµÄ×ÓÐòÁÐÁ½Á½¹é²¢µ½TR[] */
-void MergePass(int SR[],int TR[],int s,int n)
-{
-	int i=1;
-	int j;
-	while(i <= n-2*s+1)
-	{/* Á½Á½¹é²¢ */
-		Merge(SR,TR,i,i+s-1,i+2*s-1);
-		i=i+2*s;        
-	}
-	if(i<n-s+1) /* ¹é²¢×îºóÁ½¸öÐòÁÐ */
-		Merge(SR,TR,i,i+s-1,n);
-	else /* Èô×îºóÖ»Ê£ÏÂµ¥¸ö×ÓÐòÁÐ */
-		for(j =i;j <= n;j++)
-			TR[j] = SR[j];
-}
-
-/* ¶ÔË³Ðò±íL×÷¹é²¢·ÇµÝ¹éÅÅÐò */
-void MergeSort2(SqList *L)
-{
-	int* TR=(int*)malloc(L->length * sizeof(int));/* ÉêÇë¶îÍâ¿Õ¼ä */
-    int k=1;
-	while(k<L->length)
-	{
-		MergePass(L->r,TR,k,L->length);
-		k=2*k;/* ×ÓÐòÁÐ³¤¶È¼Ó±¶ */
-		MergePass(TR,L->r,k,L->length);
-		k=2*k;/* ×ÓÐòÁÐ³¤¶È¼Ó±¶ */       
-	}
+    for (i = L->length; i > 1; i--) {
+        swap(L, 1, i); /* ï¿½ï¿½ï¿½Ñ¶ï¿½ï¿½ï¿½Â¼ï¿½Íµï¿½Ç°Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ */
+        HeapAdjust(L, 1, i - 1); /*  ï¿½ï¿½L->r[1..i-1]ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ */
+    }
 }
 
 /* **************************************** */
 
-/* ¿ìËÙÅÅÐò******************************** */
- 
-/* ½»»»Ë³Ðò±íLÖÐ×Ó±íµÄ¼ÇÂ¼£¬Ê¹ÊàÖá¼ÇÂ¼µ½Î»£¬²¢·µ»ØÆäËùÔÚÎ»ÖÃ */
-/* ´ËÊ±ÔÚËüÖ®Ç°(ºó)µÄ¼ÇÂ¼¾ù²»´ó(Ð¡)ÓÚËü¡£ */
-int Partition(SqList *L,int low,int high)
-{ 
-	int pivotkey;
 
-	pivotkey=L->r[low]; /* ÓÃ×Ó±íµÄµÚÒ»¸ö¼ÇÂ¼×÷ÊàÖá¼ÇÂ¼ */
-	while(low<high) /*  ´Ó±íµÄÁ½¶Ë½»ÌæµØÏòÖÐ¼äÉ¨Ãè */
-	{ 
-		 while(low<high&&L->r[high]>=pivotkey)
-			high--;
-		 swap(L,low,high);/* ½«±ÈÊàÖá¼ÇÂ¼Ð¡µÄ¼ÇÂ¼½»»»µ½µÍ¶Ë */
-		 while(low<high&&L->r[low]<=pivotkey)
-			low++;
-		 swap(L,low,high);/* ½«±ÈÊàÖá¼ÇÂ¼´óµÄ¼ÇÂ¼½»»»µ½¸ß¶Ë */
-	}
-	return low; /* ·µ»ØÊàÖáËùÔÚÎ»ÖÃ */
+/* ï¿½é²¢ï¿½ï¿½ï¿½ï¿½********************************** */
+
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SR[i..m]ï¿½ï¿½SR[m+1..n]ï¿½é²¢Îªï¿½ï¿½ï¿½ï¿½ï¿½TR[i..n] */
+void Merge(int SR[], int TR[], int i, int m, int n) {
+    int j, k, l;
+    for (j = m + 1, k = i; i <= m && j <= n; k++)    /* ï¿½ï¿½SRï¿½Ð¼ï¿½Â¼ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½TR */
+    {
+        if (SR[i] < SR[j])
+            TR[k] = SR[i++];
+        else
+            TR[k] = SR[j++];
+    }
+    if (i <= m) {
+        for (l = 0; l <= m - i; l++)
+            TR[k + l] = SR[i + l];        /* ï¿½ï¿½Ê£ï¿½ï¿½ï¿½SR[i..m]ï¿½ï¿½ï¿½Æµï¿½TR */
+    }
+    if (j <= n) {
+        for (l = 0; l <= n - j; l++)
+            TR[k + l] = SR[j + l];        /* ï¿½ï¿½Ê£ï¿½ï¿½ï¿½SR[j..n]ï¿½ï¿½ï¿½Æµï¿½TR */
+    }
 }
 
-/* ¶ÔË³Ðò±íLÖÐµÄ×ÓÐòÁÐL->r[low..high]×÷¿ìËÙÅÅÐò */
-void QSort(SqList *L,int low,int high)
-{ 
-	int pivot;
-	if(low<high)
-	{
-			pivot=Partition(L,low,high); /*  ½«L->r[low..high]Ò»·ÖÎª¶þ£¬Ëã³öÊàÖáÖµpivot */
-			QSort(L,low,pivot-1);		/*  ¶ÔµÍ×Ó±íµÝ¹éÅÅÐò */
-			QSort(L,pivot+1,high);		/*  ¶Ô¸ß×Ó±íµÝ¹éÅÅÐò */
-	}
+
+/* ï¿½Ý¹é·¨ */
+/* ï¿½ï¿½SR[s..t]ï¿½é²¢ï¿½ï¿½ï¿½ï¿½ÎªTR1[s..t] */
+void MSort(int SR[], int TR1[], int s, int t) {
+    int m;
+    int TR2[MAXSIZE + 1];
+    if (s == t)
+        TR1[s] = SR[s];
+    else {
+        m = (s + t) / 2;                /* ï¿½ï¿½SR[s..t]Æ½ï¿½ï¿½ÎªSR[s..m]ï¿½ï¿½SR[m+1..t] */
+        MSort(SR, TR2, s, m);        /* ï¿½Ý¹ï¿½Ø½ï¿½SR[s..m]ï¿½é²¢Îªï¿½ï¿½ï¿½ï¿½ï¿½TR2[s..m] */
+        MSort(SR, TR2, m + 1, t);    /* ï¿½Ý¹ï¿½Ø½ï¿½SR[m+1..t]ï¿½é²¢Îªï¿½ï¿½ï¿½ï¿½ï¿½TR2[m+1..t] */
+        Merge(TR2, TR1, s, m, t);    /* ï¿½ï¿½TR2[s..m]ï¿½ï¿½TR2[m+1..t]ï¿½é²¢ï¿½ï¿½TR1[s..t] */
+    }
 }
 
-/* ¶ÔË³Ðò±íL×÷¿ìËÙÅÅÐò */
-void QuickSort(SqList *L)
-{ 
-	QSort(L,1,L->length);
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½é²¢ï¿½ï¿½ï¿½ï¿½ */
+void MergeSort(SqList *L) {
+    MSort(L->r, L->r, 1, L->length);
+}
+
+/* ï¿½ÇµÝ¹é·¨ */
+/* ï¿½ï¿½SR[]ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½Îªsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é²¢ï¿½ï¿½TR[] */
+void MergePass(int SR[], int TR[], int s, int n) {
+    int i = 1;
+    int j;
+    while (i <= n - 2 * s + 1) {/* ï¿½ï¿½ï¿½ï¿½ï¿½é²¢ */
+        Merge(SR, TR, i, i + s - 1, i + 2 * s - 1);
+        i = i + 2 * s;
+    }
+    if (i < n - s + 1) /* ï¿½é²¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        Merge(SR, TR, i, i + s - 1, n);
+    else /* ï¿½ï¿½ï¿½ï¿½ï¿½Ö»Ê£ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        for (j = i; j <= n; j++)
+            TR[j] = SR[j];
+}
+
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½é²¢ï¿½ÇµÝ¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void MergeSort2(SqList *L) {
+    int *TR = (int *) malloc(L->length * sizeof(int));/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ */
+    int k = 1;
+    while (k < L->length) {
+        MergePass(L->r, TR, k, L->length);
+        k = 2 * k;/* ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ï¿½È¼Ó±ï¿½ */
+        MergePass(TR, L->r, k, L->length);
+        k = 2 * k;/* ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ï¿½È¼Ó±ï¿½ */
+    }
 }
 
 /* **************************************** */
 
-/* ¸Ä½øºó¿ìËÙÅÅÐò******************************** */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½******************************** */
 
-/* ¿ìËÙÅÅÐòÓÅ»¯Ëã·¨ */
-int Partition1(SqList *L,int low,int high)
-{ 
-	int pivotkey;
+/* ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Ó±ï¿½Ä¼ï¿½Â¼ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */
+/* ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ö®Ç°(ï¿½ï¿½)ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Ð¡)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+int Partition(SqList *L, int low, int high) {
+    int pivotkey;
 
-	int m = low + (high - low) / 2; /* ¼ÆËãÊý×éÖÐ¼äµÄÔªËØµÄÏÂ±ê */  
-	if (L->r[low]>L->r[high])			
-		swap(L,low,high);	/* ½»»»×ó¶ËÓëÓÒ¶ËÊý¾Ý£¬±£Ö¤×ó¶Ë½ÏÐ¡ */
-	if (L->r[m]>L->r[high])
-		swap(L,high,m);		/* ½»»»ÖÐ¼äÓëÓÒ¶ËÊý¾Ý£¬±£Ö¤ÖÐ¼ä½ÏÐ¡ */
-	if (L->r[m]>L->r[low])
-		swap(L,m,low);		/* ½»»»ÖÐ¼äÓë×ó¶ËÊý¾Ý£¬±£Ö¤×ó¶Ë½ÏÐ¡ */
-	
-	pivotkey=L->r[low]; /* ÓÃ×Ó±íµÄµÚÒ»¸ö¼ÇÂ¼×÷ÊàÖá¼ÇÂ¼ */
-	L->r[0]=pivotkey;  /* ½«ÊàÖá¹Ø¼ü×Ö±¸·Ýµ½L->r[0] */
-	while(low<high) /*  ´Ó±íµÄÁ½¶Ë½»ÌæµØÏòÖÐ¼äÉ¨Ãè */
-	{ 
-		 while(low<high&&L->r[high]>=pivotkey)
-			high--;
-		 L->r[low]=L->r[high];
-		 while(low<high&&L->r[low]<=pivotkey)
-			low++;
-		 L->r[high]=L->r[low];
-	}
-	L->r[low]=L->r[0];
-	return low; /* ·µ»ØÊàÖáËùÔÚÎ»ÖÃ */
+    pivotkey = L->r[low]; /* ï¿½ï¿½ï¿½Ó±ï¿½Äµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ */
+    while (low < high) /*  ï¿½Ó±ï¿½ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½É¨ï¿½ï¿½ */
+    {
+        while (low < high && L->r[high] >= pivotkey)
+            high--;
+        swap(L, low, high);/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼Ð¡ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ */
+        while (low < high && L->r[low] <= pivotkey)
+            low++;
+        swap(L, low, high);/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ */
+    }
+    return low; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */
 }
 
-void QSort1(SqList *L,int low,int high)
-{ 
-	int pivot;
-	if((high-low)>MAX_LENGTH_INSERT_SORT)
-	{
-		while(low<high)
-		{
-			pivot=Partition1(L,low,high); /*  ½«L->r[low..high]Ò»·ÖÎª¶þ£¬Ëã³öÊàÖáÖµpivot */
-			QSort1(L,low,pivot-1);		/*  ¶ÔµÍ×Ó±íµÝ¹éÅÅÐò */
-			/* QSort(L,pivot+1,high);		/*  ¶Ô¸ß×Ó±íµÝ¹éÅÅÐò */
-			low=pivot+1;	/* Î²µÝ¹é */
-		}
-	}
-	else
-		InsertSort(L);
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½L->r[low..high]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void QSort(SqList *L, int low, int high) {
+    int pivot;
+    if (low < high) {
+        pivot = Partition(L, low, high); /*  ï¿½ï¿½L->r[low..high]Ò»ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµpivot */
+        QSort(L, low, pivot - 1);        /*  ï¿½Ôµï¿½ï¿½Ó±ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+        QSort(L, pivot + 1, high);        /*  ï¿½Ô¸ï¿½ï¿½Ó±ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+    }
 }
 
-/* ¶ÔË³Ðò±íL×÷¿ìËÙÅÅÐò */
-void QuickSort1(SqList *L)
-{ 
-	QSort1(L,1,L->length);
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void QuickSort(SqList *L) {
+    QSort(L, 1, L->length);
+}
+
+/* **************************************** */
+
+/* ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½******************************** */
+
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ã·¨ */
+int Partition1(SqList *L, int low, int high) {
+    int pivotkey;
+
+    int m = low + (high - low) / 2; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½Â±ï¿½ */
+    if (L->r[low] > L->r[high])
+        swap(L, low, high);    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ë½ï¿½Ð¡ */
+    if (L->r[m] > L->r[high])
+        swap(L, high, m);        /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Ö¤ï¿½Ð¼ï¿½ï¿½Ð¡ */
+    if (L->r[m] > L->r[low])
+        swap(L, m, low);        /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ë½ï¿½Ð¡ */
+
+    pivotkey = L->r[low]; /* ï¿½ï¿½ï¿½Ó±ï¿½Äµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ */
+    L->r[0] = pivotkey;  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½Ö±ï¿½ï¿½Ýµï¿½L->r[0] */
+    while (low < high) /*  ï¿½Ó±ï¿½ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½É¨ï¿½ï¿½ */
+    {
+        while (low < high && L->r[high] >= pivotkey)
+            high--;
+        L->r[low] = L->r[high];
+        while (low < high && L->r[low] <= pivotkey)
+            low++;
+        L->r[high] = L->r[low];
+    }
+    L->r[low] = L->r[0];
+    return low; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ */
+}
+
+void QSort1(SqList *L, int low, int high) {
+    int pivot;
+    if ((high - low) > MAX_LENGTH_INSERT_SORT) {
+        while (low < high) {
+            pivot = Partition1(L, low, high); /*  ï¿½ï¿½L->r[low..high]Ò»ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµpivot */
+            QSort1(L, low, pivot - 1);        /*  ï¿½Ôµï¿½ï¿½Ó±ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+            /* QSort(L,pivot+1,high);		/*  ï¿½Ô¸ï¿½ï¿½Ó±ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+            low = pivot + 1;    /* Î²ï¿½Ý¹ï¿½ */
+        }
+    } else
+        InsertSort(L);
+}
+
+/* ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void QuickSort1(SqList *L) {
+    QSort1(L, 1, L->length);
 }
 
 /* **************************************** */
 #define N 9
-int main()
-{
-   int i;
-   
-   /* int d[N]={9,1,5,8,3,7,4,6,2}; */
-   int d[N]={50,10,90,30,70,40,80,60,20};
-   /* int d[N]={9,8,7,6,5,4,3,2,1}; */
 
-   SqList l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10;
-   
-   for(i=0;i<N;i++)
-     l0.r[i+1]=d[i];
-   l0.length=N;
-   l1=l2=l3=l4=l5=l6=l7=l8=l9=l10=l0;
-   printf("ÅÅÐòÇ°:\n");
-   print(l0);
+int main() {
+    int i;
 
-   printf("³õ¼¶Ã°ÅÝÅÅÐò:\n");
-   BubbleSort0(&l0);
-   print(l0);
-   
-   printf("Ã°ÅÝÅÅÐò:\n");
-   BubbleSort(&l1);
-   print(l1);
-   
-   printf("¸Ä½øÃ°ÅÝÅÅÐò:\n");
-   BubbleSort2(&l2);
-   print(l2);
-   
-   printf("Ñ¡ÔñÅÅÐò:\n");
-   SelectSort(&l3);
-   print(l3);
-   
-   printf("Ö±½Ó²åÈëÅÅÐò:\n");
-   InsertSort(&l4);
-   print(l4);
+    /* int d[N]={9,1,5,8,3,7,4,6,2}; */
+    int d[N] = {50, 10, 90, 30, 70, 40, 80, 60, 20};
+    /* int d[N]={9,8,7,6,5,4,3,2,1}; */
 
-   printf("Ï£¶ûÅÅÐò:\n");
-   ShellSort(&l5);
-   print(l5);
-	
-   printf("¶ÑÅÅÐò:\n");
-   HeapSort(&l6);
-   print(l6);
+    SqList l0, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10;
 
-   printf("¹é²¢ÅÅÐò£¨µÝ¹é£©:\n");
-   MergeSort(&l7);
-   print(l7);
+    for (i = 0; i < N; i++)
+        l0.r[i + 1] = d[i];
+    l0.length = N;
+    l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = l10 = l0;
+    printf("ï¿½ï¿½ï¿½ï¿½Ç°:\n");
+    print(l0);
 
-   printf("¹é²¢ÅÅÐò£¨·ÇµÝ¹é£©:\n");
-   MergeSort2(&l8);
-   print(l8);
+    printf("ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    BubbleSort0(&l0);
+    print(l0);
 
-   printf("¿ìËÙÅÅÐò:\n");
-   QuickSort(&l9);
-   print(l9);
+    printf("Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    BubbleSort(&l1);
+    print(l1);
 
-   printf("¸Ä½ø¿ìËÙÅÅÐò:\n");
-   QuickSort1(&l10);
-   print(l10);
+    printf("ï¿½Ä½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    BubbleSort2(&l2);
+    print(l2);
+
+    printf("Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    SelectSort(&l3);
+    print(l3);
+
+    printf("Ö±ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    InsertSort(&l4);
+    print(l4);
+
+    printf("Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    ShellSort(&l5);
+    print(l5);
+
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    HeapSort(&l6);
+    print(l6);
+
+    printf("ï¿½é²¢ï¿½ï¿½ï¿½ò£¨µÝ¹é£©:\n");
+    MergeSort(&l7);
+    print(l7);
+
+    printf("ï¿½é²¢ï¿½ï¿½ï¿½ò£¨·ÇµÝ¹é£©:\n");
+    MergeSort2(&l8);
+    print(l8);
+
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    QuickSort(&l9);
+    print(l9);
+
+    printf("ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n");
+    QuickSort1(&l10);
+    print(l10);
 
 
-    /*´óÊý¾ÝÅÅÐò*/
-	/* 
-	srand(time(0));  
-	int Max=10000;
-	int d[10000];
-	int i;
-	SqList l0;
-	for(i=0;i<Max;i++)
-		d[i]=rand()%Max+1;
-	for(i=0;i<Max;i++)
-		l0.r[i+1]=d[i];
-	l0.length=Max;
-	MergeSort(l0);
-	print(l0);
-	*/
-	return 0;
+    /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    /*
+    srand(time(0));
+    int Max=10000;
+    int d[10000];
+    int i;
+    SqList l0;
+    for(i=0;i<Max;i++)
+        d[i]=rand()%Max+1;
+    for(i=0;i<Max;i++)
+        l0.r[i+1]=d[i];
+    l0.length=Max;
+    MergeSort(l0);
+    print(l0);
+    */
+    return 0;
 }

@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <string.h>
-int main(void)
-{
+
+int main(void) {
 
 //    由src所指内存区域复制count个字节到dest所指内存区域。
 //    src和dest所指内存区域可以重叠，但复制后dest内容会被更改。函数返回指向dest的指针。
@@ -18,7 +18,7 @@ int main(void)
     char s[] = "Golden Global View";
     printf("old len is %ld\n", strlen(s));
 //    memmove(s, s + 7, strlen(s) + 1 - 7);//+1是取'\0',可以去掉看下结果
-    memmove(s, s + 7, sizeof(s) -7);//+1是取'\0',可以去掉看下结果
+    memmove(s, s + 7, sizeof(s) - 7);//+1是取'\0',可以去掉看下结果
     printf("%s\n", s);
     printf("now len is %ld\n", strlen(s));
     printf("now sizeof() is %ld\n", sizeof(s));

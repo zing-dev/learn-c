@@ -2,19 +2,18 @@
  * ctime_ts - A thread-safe wrapper for ctime
  */
 #include "csapp.h"
+
 #define MAXSTR 128
 
 static sem_t mutex; /* protects calls to ctime */
 
-static void init_ctime_ts(void)
-{
+static void init_ctime_ts(void) {
     Sem_init(&mutex, 0, 1);
 }
 
 /* $begin ctime_ts */
-char *ctime_ts(const time_t *timep, char *privatep)
-{
-    char *sharedp; 
+char *ctime_ts(const time_t *timep, char *privatep) {
+    char *sharedp;
 
     P(&mutex);
     sharedp = ctime(timep);
@@ -22,10 +21,10 @@ char *ctime_ts(const time_t *timep, char *privatep)
     V(&mutex);
     return privatep;
 }
+
 /* $end ctime_ts */
 
-int main()
-{
+int main() {
     char timestr[MAXSTR];
     time_t timeval;
 

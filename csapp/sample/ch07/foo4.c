@@ -8,10 +8,9 @@ void f(void);
 
 int x;
 
-int main()
-{
-        x = 15213;
-        f();
-        printf("x = %d\n", x);
-        return 0;
+int main() {
+    x = 15213;
+    f();
+    printf("x = %d\n", x);
+    return 0;
 }

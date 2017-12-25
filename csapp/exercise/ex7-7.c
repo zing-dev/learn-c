@@ -10,19 +10,18 @@
 
 int x;
 
-void f()
-{
-        x = 15213;
+void f() {
+    x = 15213;
 }
 
 /*
  * Solution 2
  */
 double x;
-void f()
-{
-        return;
-        x = -0.0;
+
+void f() {
+    return;
+    x = -0.0;
 }
 
 /*
@@ -31,7 +30,6 @@ void f()
 
 /* double x; */
 
-void f()
-{
-        /* x = -0.0; */
+void f() {
+    /* x = -0.0; */
 }

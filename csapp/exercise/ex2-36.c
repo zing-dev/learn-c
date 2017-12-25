@@ -10,18 +10,16 @@
  *
  * overflow: 0, normal: 1
  */
-int tmult_ok(int x, int y)
-{
-        long long result = (long long)x * (long long)y;
-        int iresult = x * y;
+int tmult_ok(int x, int y) {
+    long long result = (long long) x * (long long) y;
+    int iresult = x * y;
 
-        return result == iresult;
+    return result == iresult;
 }
 
-int book_tmult_ok(int x, int y)
-{
-        /* Compute product without overflow */
-        long long pll = (long long)x * y;
-        /* See if casting to int preserves value */
-        return pll == (int)pll;
+int book_tmult_ok(int x, int y) {
+    /* Compute product without overflow */
+    long long pll = (long long) x * y;
+    /* See if casting to int preserves value */
+    return pll == (int) pll;
 }

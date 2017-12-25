@@ -8,8 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     struct in_addr inAddr;
     uint32_t addr;
     char dst[8192];

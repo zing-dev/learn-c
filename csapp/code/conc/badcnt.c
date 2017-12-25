@@ -9,15 +9,14 @@ void *thread(void *vargp);  /* Thread routine prototype */
 /* Global shared variable */
 volatile int cnt = 0; /* Counter */
 
-int main(int argc, char **argv) 
-{
+int main(int argc, char **argv) {
     int niters;
     pthread_t tid1, tid2;
 
     /* Check input argument */
-    if (argc != 2) { 
-	printf("usage: %s <niters>\n", argv[0]);
-	exit(0);
+    if (argc != 2) {
+        printf("usage: %s <niters>\n", argv[0]);
+        exit(0);
     }
     niters = atoi(argv[1]);
 
@@ -29,19 +28,18 @@ int main(int argc, char **argv)
 
     /* Check result */
     if (cnt != (2 * niters))
-	printf("BOOM! cnt=%d\n", cnt);
+        printf("BOOM! cnt=%d\n", cnt);
     else
-	printf("OK cnt=%d\n", cnt);
+        printf("OK cnt=%d\n", cnt);
     exit(0);
 }
 
 /* Thread routine */
-void *thread(void *vargp) 
-{
-    int i, niters = *((int *)vargp);
+void *thread(void *vargp) {
+    int i, niters = *((int *) vargp);
 
     for (i = 0; i < niters; i++) //line:conc:badcnt:beginloop
-	cnt++;                   //line:conc:badcnt:endloop
+        cnt++;                   //line:conc:badcnt:endloop
 
     return NULL;
 }

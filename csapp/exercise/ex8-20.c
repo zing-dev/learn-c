@@ -28,37 +28,36 @@
 
 extern char *environ[];
 
-int main(int argc, char *argv[])
-{
-        pid_t pid;
+int main(int argc, char *argv[]) {
+    pid_t pid;
 
-        pid = fork();
-        if (pid < 0) {
-                perror("fork");
-                exit(1);
-        }
+    pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        exit(1);
+    }
 
         /* child */
-        else if (pid == 0) {
-                execve("/bin/ls", argv, environ);
-                /* Never reach here */
-                perror("execve");
-                exit(2);
-        }
+    else if (pid == 0) {
+        execve("/bin/ls", argv, environ);
+        /* Never reach here */
+        perror("execve");
+        exit(2);
+    }
 
         /* parent */
-        else {
-                int status, ret;
-                ret = waitpid(pid, &status, 0);
+    else {
+        int status, ret;
+        ret = waitpid(pid, &status, 0);
 
-                /* error */
-                if (ret < 0) {
-                        perror("waitpid");
-                        exit(3);
-                }
-
-                /* nothing */
+        /* error */
+        if (ret < 0) {
+            perror("waitpid");
+            exit(3);
         }
 
-        return 0;
+        /* nothing */
+    }
+
+    return 0;
 }

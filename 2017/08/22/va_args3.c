@@ -3,6 +3,7 @@
 // Copyright (c) 2017 ZRX . All rights reserved.
 //
 #include <stdio.h>
+
 #define DEBUG 1
 //可变参数不能省略，尽管可以传一个空参数进去。
 #define LOG0(format, ...) printf(__VA_ARGS__)
@@ -20,19 +21,19 @@
 #ifdef DE
 #define LOG5(format, ...) fprintf(stdout, "---> " format " <---\n", ##__VA_ARGS__)
 #endif
-int main()
-{
-    LOG0(NULL,"what","fuck");
-    LOG("%s\n","Hello World");
+
+int main() {
+    LOG0(NULL, "what", "fuck");
+    LOG("%s\n", "Hello World");
     LOG("Hello World\n");
 
-    LOG("Hello World\n",NULL);
+    LOG("Hello World\n", NULL);
 
 
-    LOG2("%s\n","Hello World");
+    LOG2("%s\n", "Hello World");
     LOG2("Hello World\n");
 
-    LOG3("debug  --> %s","Hello World");
+    LOG3("debug  --> %s", "Hello World");
 
-    LOG5("[my debug] %s","Hello World");
+    LOG5("[my debug] %s", "Hello World");
 }

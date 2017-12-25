@@ -15,29 +15,28 @@
 typedef unsigned float_bits;
 
 /* Compute 2*f.  If f is NaN, then return f. */
-float_bits float_twice(float_bits f)
-{
-        unsigned sign = f >> 31;
-        unsigned exp = (f >> 23) & 0xFF;
-        unsigned frac = f & 0x7FFFFF;
+float_bits float_twice(float_bits f) {
+    unsigned sign = f >> 31;
+    unsigned exp = (f >> 23) & 0xFF;
+    unsigned frac = f & 0x7FFFFF;
 
-        /* NaN, +oo, -oo */
-        if (exp == 0xFF)
-                return f;
+    /* NaN, +oo, -oo */
+    if (exp == 0xFF)
+        return f;
 
-        if (exp == 0xFE) {
-                exp = 0xFF;
-                frac = 0;
-        } else if (exp > 0) {
-                exp++;
-        } else /* exp == 0 */ {
-                if ((frac & 0x400000) == 0x400000) {
-                        exp = 1;
-                        frac = (frac << 1) & 0x7FFFFF;
-                } else {
-                        frac <<= 1;
-                }
+    if (exp == 0xFE) {
+        exp = 0xFF;
+        frac = 0;
+    } else if (exp > 0) {
+        exp++;
+    } else /* exp == 0 */ {
+        if ((frac & 0x400000) == 0x400000) {
+            exp = 1;
+            frac = (frac << 1) & 0x7FFFFF;
+        } else {
+            frac <<= 1;
         }
+    }
 
-        return (sign << 31) | (exp << 23) | frac;
+    return (sign << 31) | (exp << 23) | frac;
 }

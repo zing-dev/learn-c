@@ -176,4 +176,5 @@ int getMoreLogs(void *data, int *num) {
     sqlite3_free_table(azResult);
     return 1;
 }
+
 #endif //LEARN_C_LOG_H

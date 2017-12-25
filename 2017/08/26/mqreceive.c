@@ -13,8 +13,7 @@
 
 typedef unsigned int uint_t;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int c, flags;
     mqd_t mqd;
     ssize_t n;

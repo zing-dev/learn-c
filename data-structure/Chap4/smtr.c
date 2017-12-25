@@ -1,120 +1,195 @@
 /*======================================================
-//º¯ÊýÃû£ºsmtr
-//¹¦ÄÜÃèÊö£º¾ØÕóÏàËÆ±ä»»ÎªÈý¶Ô½Ç¾ØÕó
-//ÊäÈë²ÎÊý£ºmat Ö¸Ïò´ý·Ö½âµÄ¾ØÕóµÄÖ¸Õë£¬·µ»ØÊ±´æ·ÅÈý¶Ô½ÇÕó
-            n   ¾ØÕó½×Êý
-            q   Ö¸Ïò·µ»ØQ¾ØÕóµÄÖ¸Õë
-            eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚ´ËÖµµÄÊý¾ÝÈÏÎªÊÇ0
-//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½smtr
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ä»»Îªï¿½ï¿½ï¿½Ô½Ç¾ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mat Ö¸ï¿½ï¿½ï¿½ï¿½Ö½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½
+            n   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            q   Ö¸ï¿½ò·µ»ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+            eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½Ú´ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int smtr(mat,n,q,eps)
-double *mat,*q,eps;
+int smtr(mat, n, q, eps)
+
+double *mat, *q, eps;
 int n;
-{ 
-  int i,j,k,l,m,p;
-  double u,alpha,t,*tmp;
-  if((mat==NULL)||(q==NULL))      /* ¼ì²âÖ¸ÕëÊÇ·ñÎª¿Õ*/
-  {
-    printf("The matrix pointer is NULL\n");
-    return(0);
-  }
-  tmp = (double*)malloc(n*sizeof(double));   /* ÎªÁÙÊ±±äÁ¿·ÖÅä¿Õ¼ä*/
-  for(i=0; i<n; i++)                         /* Q¾ØÕó¸³³õÖµ³Éµ¥Î»Õó*/
-  {
-    for(j=0; j<n; j++)
-      q[i*n+j] = 0.0;
-    q[i*n+i] = 1.0;
-  }
-  for(k=0; k<n-2; k++)                       /* Ñ­»·×öHouseholder±ä»»*/
-  { 
-    u = 0.0; 
-    l = (k+1)*n+k;
-    for(i=k+1; i<n; i++)                     /* Ñ¡È¡×î´óµÄÖµ×öitÖµ£¬Ê¹¼ÆËãÎÈ¶¨*/
-    { 
-      t = fabs(mat[i*n+k]);
-      if(t>u) 
-        u = t;
-    }
-    alpha = 0.0;                             /* ¼ÆËãalphaµÄÖµ*/
-    for(i=k+1; i<n; i++)
-    { 
-      t = mat[i*n+k]/u; 
-      alpha = alpha + t*t;
-    }
-    if(alpha < eps)                          /* ÅÐ¶ÏalphaÖµÊÇ·ñ½üËÆÎª0*/
-    { 
-      printf("Fail\n");                       /* ÈôalphaÖµ¹ýÐ¡£¬Ôò¼ÆËãÖÕÖ¹*/
-      free(tmp);
-      return(0);
-    }
-    t = mat[l];
-    if(t>0.0)
-      u = -u;
-    alpha = u*sqrt(alpha);                   /* Íê³ÉalphaÖµµÄ¼ÆËã*/
-    u = sqrt(2.0*alpha*(alpha-t));             /* ¼ÆËãrouÖµ*/
-    if (u > eps)                            /* ÅÐ¶ÏrouÖµÊÇ·ñ½üËÆÎª0*/
-    { 
-      mat[l] = (t-alpha)/u;                   /* ¼ÆËã³öµÄuk´æ·ÅÔÚÔ­¾ØÕóµÄ¿Õ¼äÖÐ*/
-      for(i=k+2; i<n; i++)                   /* ¼ÆËã³öµÄui´æ·ÅÔÚÔ­¾ØÕóµÄ¿Õ¼äÖÐ*/
-      { 
-        p = i*n+k; 
-        mat[p] = mat[p]/u;
-      }
-      for(j=0; j<n; j++)                     /* Hk ×ó³Ë Q*/
-      { 
-        t = 0.0;
-        for(l=k+1; l<n; l++)
-          t = t+mat[l*n+k]*q[l*n+j];
-        for(i=k+1; i<n; i++)
-        { 
-          p = i*n+j;
-          q[p] = q[p]-2.0*t*mat[i*n+k];
-        }
-      }
-      for(j=k+1; j<n; j++)                   /* Hk Í¬Ê±×ó³ËºÍÓÒ³ËÔ­¾ØÕó A*/
-      { 
-        t = 0.0;
-        for(l=k+1; l<n; l++)                 /* Çó³öÐèÒªÓÃµ½µÄ¸÷¸öti*/
-          t = t+mat[l*n+k]*mat[l*n+j];
-        tmp[j] = t;
-      }
-      t = 0.0;
-      for(m=k+1; m<n; m++)                   /* Çó³ö¼ÆËãaijÐèÒªµÄÇóºÍ²¿·Ö*/
-        t = t+tmp[m]*mat[m*n+k];
+{
+int i, j, k, l, m, p;
+double u, alpha, t, *tmp;
+if((mat==NULL)||(q==NULL))      /* ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("The matrix pointer is NULL\n");
+return(0);
+}
+tmp = (double *) malloc(n * sizeof(double));   /* Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½*/
+for(
+i = 0;
+i<n;
+i++)                         /* Qï¿½ï¿½ï¿½ó¸³³ï¿½Öµï¿½Éµï¿½Î»ï¿½ï¿½*/
+{
+for(
+j = 0;
+j<n;
+j++)
+q[
+i *n
++j] = 0.0;
+q[
+i *n
++i] = 1.0;
+}
+for(
+k = 0;
+k<n-2; k++)                       /* Ñ­ï¿½ï¿½ï¿½ï¿½Householderï¿½ä»»*/
+{
+u = 0.0;
+l = (k + 1) * n + k;
+for(
+i = k + 1;
+i<n;
+i++)                     /* Ñ¡È¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½itÖµï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½È¶ï¿½*/
+{
+t = fabs(mat[i * n + k]);
+if(t>u)
+u = t;
+}
+alpha = 0.0;                             /* ï¿½ï¿½ï¿½ï¿½alphaï¿½ï¿½Öµ*/
+for(
+i = k + 1;
+i<n;
+i++)
+{
+t = mat[i * n + k] / u;
+alpha = alpha + t * t;
+}
+if(alpha<eps)                          /* ï¿½Ð¶ï¿½alphaÖµï¿½Ç·ï¿½ï¿½ï¿½ï¿½Îª0*/
+{
+printf("Fail\n");                       /* ï¿½ï¿½alphaÖµï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹*/
+free(tmp);
+return(0);
+}
+t = mat[l];
+if(t>0.0)
+u = -u;
+alpha = u * sqrt(alpha);                   /* ï¿½ï¿½ï¿½alphaÖµï¿½Ä¼ï¿½ï¿½ï¿½*/
+u = sqrt(2.0 * alpha * (alpha - t));             /* ï¿½ï¿½ï¿½ï¿½rouÖµ*/
+if (u > eps)                            /* ï¿½Ð¶ï¿½rouÖµï¿½Ç·ï¿½ï¿½ï¿½ï¿½Îª0*/
+{
+mat[l] = (t-alpha)/
+u;                   /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ukï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Ä¿Õ¼ï¿½ï¿½ï¿½*/
+for(
+i = k + 2;
+i<n;
+i++)                   /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uiï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Ä¿Õ¼ï¿½ï¿½ï¿½*/
+{
+p = i * n + k;
+mat[p] = mat[p]/
+u;
+}
+for(
+j = 0;
+j<n;
+j++)                     /* Hk ï¿½ï¿½ï¿½ Q*/
+{
+t = 0.0;
+for(
+l = k + 1;
+l<n;
+l++)
+t = t + mat[l * n + k] * q[l * n + j];
+for(
+i = k + 1;
+i<n;
+i++)
+{
+p = i * n + j;
+q[p] = q[p]-2.0*
+t *mat[i * n + k];
+}
+}
+for(
+j = k + 1;
+j<n;
+j++)                   /* Hk Í¬Ê±ï¿½ï¿½Ëºï¿½ï¿½Ò³ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ A*/
+{
+t = 0.0;
+for(
+l = k + 1;
+l<n;
+l++)                 /* ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ãµï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ti*/
+t = t + mat[l * n + k] * mat[l * n + j];
+tmp[j] =
+t;
+}
+t = 0.0;
+for(
+m = k + 1;
+m<n;
+m++)                   /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aijï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½*/
+t = t + tmp[m] * mat[m * n + k];
 
-      for(j=k+1; j<n; j++)                   /* ¼ÆËãaij*/
-      for(i=k+1; i<j+1; i++)
-      {
-        p = i*n+j;
-        mat[p] = mat[p]-2.0*tmp[i]*mat[j*n+k]
-                  -2.0*tmp[j]*mat[i*n+k]+4.0*mat[i*n+k]*t*mat[j*n+k];
-        mat[j*n+i] = mat[p];                 /* ¸üÐÂµÃµÄ¾ØÕóaÊÇ¶Ô³Æ¾ØÕó*/
-      }
+for(
+j = k + 1;
+j<n;
+j++)                   /* ï¿½ï¿½ï¿½ï¿½aij*/
+for(
+i = k + 1;
+i<j+1; i++)
+{
+p = i * n + j;
+mat[p] = mat[p]-2.0*tmp[i]*mat[
+j *n
++k]
+-2.0*tmp[j]*mat[
+i *n
++k]+4.0*mat[
+i *n
++k]*
+t *mat[j * n + k];
+mat[
+j *n
++i] = mat[p];                 /* ï¿½ï¿½ï¿½ÂµÃµÄ¾ï¿½ï¿½ï¿½aï¿½Ç¶Ô³Æ¾ï¿½ï¿½ï¿½*/
+}
 
-      mat[(k+1)*n+k] = alpha;
-      mat[k*n+k+1] = alpha;
-      for(i=k+2; i<n; i++)                   /* ½«¾ØÕóAµÄµÚkÁÐÏÂÈý½Ç²¿·ÖÖÃÎª0*/
-      {
-        mat[i*n+k] = 0.0;
-        mat[k*n+i] = 0.0;
-      }
-    }
-  }
+mat[(k+1)*n+k] =
+alpha;
+mat[
+k *n
++k+1] =
+alpha;
+for(
+i = k + 2;
+i<n;
+i++)                   /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Äµï¿½kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½Îª0*/
+{
+mat[
+i *n
++k] = 0.0;
+mat[
+k *n
++i] = 0.0;
+}
+}
+}
 
-  for(i=0; i<n-1; i++)                        /* ×ªÖÃµÃµ½¾ØÕóQ*/
-    for(j=i+1; j<n;j++)
-    { 
-      p = i*n+j;
-      l = j*n+i;
-      t = q[p]; 
-      q[p] = q[l]; 
-      q[l] = t;
-    }
-  free(tmp);
-  return(1);
+for(
+i = 0;
+i<n-1; i++)                        /* ×ªï¿½ÃµÃµï¿½ï¿½ï¿½ï¿½ï¿½Q*/
+for(
+j = i + 1;
+j<n;
+j++)
+{
+p = i * n + j;
+l = j * n + i;
+t = q[p];
+q[p] = q[l];
+q[l] =
+t;
+}
+free(tmp);
+return(1);
 }
 

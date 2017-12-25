@@ -68,8 +68,8 @@ Status EnQueue(SqQueue *Q, QElemType e) {
     if ((Q->rear + 1) % MAXSIZE == Q->front)    /* 队列满的判断 */
         return ERROR;
     Q->data[Q->rear] = e;            /* 将元素e赋值给队尾 */
-    printf("\n--> Q->rear   %d --- %d",Q->rear,e);
-    Q->rear = (Q->rear + 1) % MAXSIZE ;/* rear指针向后移一位置， */
+    printf("\n--> Q->rear   %d --- %d", Q->rear, e);
+    Q->rear = (Q->rear + 1) % MAXSIZE;/* rear指针向后移一位置， */
     /* 若到最后则转到数组头部 */
     return OK;
 }
@@ -116,8 +116,8 @@ int main() {
     } while (i < MAXSIZE);
 
     printf("队列长度为: %d\n", QueueLength(Q));
-    printf("%d\n",Q.data[18]);
-    printf("%d\n",Q.data[19]);
+    printf("%d\n", Q.data[18]);
+    printf("%d\n", Q.data[19]);
     printf("现在队列空否？%u(1:空 0:否)\n", QueueEmpty(Q));
     QueueTraverse(Q);
     printf("连续%d次由队头删除元素,队尾插入元素:\n", MAXSIZE);

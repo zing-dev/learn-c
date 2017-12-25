@@ -43,16 +43,27 @@
 #define SERVER_STRING "Server: jdbhttpd/0.1.0\r\n"
 
 void accept_request(int);
+
 void bad_request(int);
+
 void cat(int, FILE *);
+
 void cannot_execute(int);
+
 void error_die(const char *);
+
 void execute_cgi(int, const char *, const char *, const char *);
+
 int get_line(int, char *, int);
+
 void headers(int, const char *);
+
 void not_found(int);
+
 void serve_file(int, const char *);
+
 int startup(u_short *);
+
 void unimplemented(int);
 
 /**********************************************************************/
@@ -60,8 +71,7 @@ void unimplemented(int);
  * return.  Process the request appropriately.
  * Parameters: the socket connected to the client */
 /**********************************************************************/
-void accept_request(int client)
-{
+void accept_request(int client) {
     char buf[1024];
     int numchars;
     char method[255];
@@ -141,8 +151,7 @@ void accept_request(int client)
             numchars = get_line(client, buf, sizeof(buf));
         //然后返回一个找不到文件的 response 给客户端
         not_found(client);
-    }
-    else {
+    } else {
         //文件存在，那去跟常量S_IFMT相与，相与之后的值可以用来判断该文件是什么类型的
         //S_IFMT参读《TLPI》P281，与下面的三个常量一样是包含在<sys/stat.h>
         if ((st.st_mode & S_IFMT) == S_IFDIR)
@@ -171,8 +180,7 @@ void accept_request(int client)
 /* Inform the client that a request it has made has a problem.
  * Parameters: client socket */
 /**********************************************************************/
-void bad_request(int client)
-{
+void bad_request(int client) {
     char buf[1024];
 
     sprintf(buf, "HTTP/1.0 400 BAD REQUEST\r\n");
@@ -194,8 +202,7 @@ void bad_request(int client)
  * Parameters: the client socket descriptor
  *             FILE pointer for the file to cat */
 /**********************************************************************/
-void cat(int client, FILE *resource)
-{
+void cat(int client, FILE *resource) {
     char buf[1024];
 
     //从文件文件描述符中读取指定内容
@@ -210,8 +217,7 @@ void cat(int client, FILE *resource)
 /* Inform the client that a CGI script could not be executed.
  * Parameter: the client socket descriptor. */
 /**********************************************************************/
-void cannot_execute(int client)
-{
+void cannot_execute(int client) {
     char buf[1024];
 
     sprintf(buf, "HTTP/1.0 500 Internal Server Error\r\n");
@@ -229,8 +235,7 @@ void cannot_execute(int client)
  * on value of errno, which indicates system call errors) and exit the
  * program indicating an error. */
 /**********************************************************************/
-void error_die(const char *sc)
-{
+void error_die(const char *sc) {
     //包含于<stdio.h>,基于当前的 errno 值，在标准错误上产生一条错误消息。参考《TLPI》P49
     perror(sc);
     exit(1);
@@ -243,8 +248,7 @@ void error_die(const char *sc)
  *             path to the CGI script */
 /**********************************************************************/
 void execute_cgi(int client, const char *path,
-                 const char *method, const char *query_string)
-{
+                 const char *method, const char *query_string) {
     char buf[1024];
     int cgi_output[2];
     int cgi_input[2];
@@ -327,8 +331,7 @@ void execute_cgi(int client, const char *path,
         if (strcasecmp(method, "GET") == 0) {
             sprintf(query_env, "QUERY_STRING=%s", query_string);
             putenv(query_env);
-        }
-        else {   /* POST */
+        } else {   /* POST */
             sprintf(length_env, "CONTENT_LENGTH=%d", content_length);
             putenv(length_env);
         }
@@ -338,8 +341,7 @@ void execute_cgi(int client, const char *path,
         execl(path, path, NULL);
         exit(0);
 
-    }
-    else {    /* parent */
+    } else {    /* parent */
         //父进程则关闭了 cgi_output管道的写端和 cgi_input 管道的读端
         close(cgi_output[1]);
         close(cgi_input[0]);
@@ -376,8 +378,7 @@ void execute_cgi(int client, const char *path,
  *             the size of the buffer
  * Returns: the number of bytes stored (excluding null) */
 /**********************************************************************/
-int get_line(int sock, char *buf, int size)
-{
+int get_line(int sock, char *buf, int size) {
     int i = 0;
     char c = '\0';
     int n;
@@ -399,8 +400,7 @@ int get_line(int sock, char *buf, int size)
             }
             buf[i] = c;
             i++;
-        }
-        else
+        } else
             c = '\n';
     }
     buf[i] = '\0';
@@ -413,8 +413,7 @@ int get_line(int sock, char *buf, int size)
 /* Parameters: the socket to print the headers on
  *             the name of the file */
 /**********************************************************************/
-void headers(int client, const char *filename)
-{
+void headers(int client, const char *filename) {
     char buf[1024];
     (void) filename;  /* could use filename to determine file type */
 
@@ -431,8 +430,7 @@ void headers(int client, const char *filename)
 /**********************************************************************/
 /* Give a client a 404 not found status message. */
 /**********************************************************************/
-void not_found(int client)
-{
+void not_found(int client) {
     char buf[1024];
 
     sprintf(buf, "HTTP/1.0 404 NOT FOUND\r\n");
@@ -462,8 +460,7 @@ void not_found(int client)
  *              file descriptor
  *             the name of the file to serve */
 /**********************************************************************/
-void serve_file(int client, const char *filename)
-{
+void serve_file(int client, const char *filename) {
     FILE *resource = NULL;
     int numchars = 1;
     char buf[1024];
@@ -497,8 +494,7 @@ void serve_file(int client, const char *filename)
  * Parameters: pointer to variable containing the port to connect on
  * Returns: the socket */
 /**********************************************************************/
-int startup(u_short *port)
-{
+int startup(u_short *port) {
     int httpd = 0;
     //sockaddr_in 是 IPV4的套接字地址结构。定义在<netinet/in.h>,参读《TLPI》P1202
     struct sockaddr_in name;
@@ -545,8 +541,7 @@ int startup(u_short *port)
  * implemented.
  * Parameter: the client socket */
 /**********************************************************************/
-void unimplemented(int client)
-{
+void unimplemented(int client) {
     char buf[1024];
 
     sprintf(buf, "HTTP/1.0 501 Method Not Implemented\r\n");
@@ -569,8 +564,7 @@ void unimplemented(int client)
 
 /**********************************************************************/
 
-int main(void)
-{
+int main(void) {
     int server_sock = -1;
     u_short port = 0;
     int client_sock = -1;
@@ -587,7 +581,7 @@ int main(void)
         client_sock = accept(server_sock,
                              (struct sockaddr *) &client_name,
                              &client_name_len);
-        if (client_sock == -1){
+        if (client_sock == -1) {
             error_die("accept");
             break;
         }

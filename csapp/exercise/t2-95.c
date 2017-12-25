@@ -19,19 +19,18 @@ typedef unsigned float_bits;
 extern unsigned f2u(float f);       /* ex2-89.c */
 extern float_bits float_i2f(int i); /* ex2-95.c */
 
-int main(void)
-{
-        float f;
-        unsigned u, t;
+int main(void) {
+    float f;
+    unsigned u, t;
 
-        int i = INT_MIN;
-        do {
-                f = (float) i;
-                u = f2u(f);
-                t = float_i2f(i);
-                if (u != t)
-                        printf("BAD: 0x%X, 0x%X, 0x%X\n", t, i, u);
-        } while (i++ != INT_MAX);
+    int i = INT_MIN;
+    do {
+        f = (float) i;
+        u = f2u(f);
+        t = float_i2f(i);
+        if (u != t)
+            printf("BAD: 0x%X, 0x%X, 0x%X\n", t, i, u);
+    } while (i++ != INT_MAX);
 
-        return 0;
+    return 0;
 }

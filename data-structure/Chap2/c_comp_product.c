@@ -1,10 +1,10 @@
 /*======================================================
-//º¯ÊıÃû£ºc_comp_product.c
-//¹¦ÄÜÃèÊö£ºÇó¸´ÊıµÄ³Ë·¨
-//ÊäÈë²ÎÊı£ºa1£¨µÚÒ»¸ö³ËÊıaµÄ½á¹¹Ìå£©
-//          a2£¨µÚ¶ş¸ö³ËÊıbµÄ½á¹¹Ìå£©
-//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_comp_product.c
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³Ë·ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a1ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½Ä½á¹¹ï¿½å£©
+//          a2ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½Ä½á¹¹ï¿½å£©
+//          cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£©
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
@@ -15,19 +15,22 @@
     double imz;
 }c_comp;
 */
-int c_comp_product(a1,a2,c)
-struct c_comp *a1,*a2,*c;
+int c_comp_product(a1, a2, c)
+
+struct c_comp *a1, *a2, *c;
 {
-    double p,q,s;
-    if(a1 == NULL || a2 == NULL || c == NULL)
-    {
-        printf("(c_comp_product)The c_comp pointer is NULL!\n");
-        return(0);
-    }
-    p = (a1->rmz)*(a2->rmz);
-    q = (a1->imz)*(a2->imz);
-    s = (a1->rmz + a1->imz)*(a2->rmz + a2->imz);
-    c->rmz = p - q;
-    c->imz = s - p - q;
-    return(1);
+double p, q, s;
+if(a1 == NULL || a2 == NULL || c == NULL)
+{
+printf("(c_comp_product)The c_comp pointer is NULL!\n");
+return(0);
+}
+p = (a1->rmz) * (a2->rmz);
+q = (a1->imz) * (a2->imz);
+s = (a1->rmz + a1->imz) * (a2->rmz + a2->imz);
+c->
+rmz = p - q;
+c->
+imz = s - p - q;
+return(1);
 }

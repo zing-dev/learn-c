@@ -9,19 +9,18 @@
  * 的大小时，才进行分割。
  */
 
-static void place(void *bp, size_t size)
-{
-        size_t block_size = GET_SIZE(bp);
-        size_t reserve_size = block_size - size;
+static void place(void *bp, size_t size) {
+    size_t block_size = GET_SIZE(bp);
+    size_t reserve_size = block_size - size;
 
-        if (reserve_size < WSIZE) {
-                PUT(HDRP(bp), PACK(block_size, 1));
-                PUT(FTRP(bp), PACK(block_size, 1));
-        } else if (WSIZE <= reserve_size && reserve_size < block_size) {
-                PUT(HDRP(bp), PACK(size, 1));
-                PUT(FTRP(bp), PACK(size, 1));
+    if (reserve_size < WSIZE) {
+        PUT(HDRP(bp), PACK(block_size, 1));
+        PUT(FTRP(bp), PACK(block_size, 1));
+    } else if (WSIZE <= reserve_size && reserve_size < block_size) {
+        PUT(HDRP(bp), PACK(size, 1));
+        PUT(FTRP(bp), PACK(size, 1));
 
-                PUT(HDRP(NEXT_BLKP(bp)), PACK(reserve_size, 0));
-                PUT(FTRP(NEXT_BLKP(bp)), PACK(reserve_size, 0));
-        }
+        PUT(HDRP(NEXT_BLKP(bp)), PACK(reserve_size, 0));
+        PUT(FTRP(NEXT_BLKP(bp)), PACK(reserve_size, 0));
+    }
 }

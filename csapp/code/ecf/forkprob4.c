@@ -1,16 +1,14 @@
 /* $begin forkprob4 */
 #include "csapp.h"
 
-void doit() 
-{
+void doit() {
     Fork();
     Fork();
     printf("hello\n");
     return;
 }
 
-int main() 
-{
+int main() {
     doit();
     printf("hello\n");
     exit(0);

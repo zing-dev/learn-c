@@ -1,28 +1,35 @@
 #include "math.h"
 #include "stdlib.h"
+
 /*======================================================
-// º¯ÊýÃû£ºmont1
-// ¹¦ÄÜÃèÊö£ºÃÉÌØ¿¨ÂÞ·¨ÇóÒ»Ôª»ý·Ö
-// ÊäÈë²ÎÊý£ºa »ý·ÖÏÂÏÞ£¬b »ý·ÖÉÏÏÞ,
-//           f Ö¸Ïò±»»ýº¯ÊýµÄÖ¸Õë
-// ·µ»ØÖµ£º  »ý·Ö½üËÆÖµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mont1
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Ò»Ôªï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½b ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,
+//           f Ö¸ï¿½ò±»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½  ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½Öµ
 =========================================================*/
-double mont1(a,b,f)
-double a,b;
+double mont1(a, b, f)
+
+double a, b;
+
 double (*f)();
+
 {
-  int k,n;
-  double z,p,x;
-  unsigned long r;            /* Ëæ»úÊý±äÁ¿*/
-  n = 5000;                  /* ²úÉú5000¸öËæ»úÊý*/
-  z = 0.0;
-  for(k=0; k<n; k++)
-  {
-    r = rand();               /* Éú³ÉËæ»úÊý*/
-    p = (double)r/RAND_MAX;
-    x = a+(b-a)*p;
-    z = z+(*f)(x)/n;          /* ÇóºÍ*/
-  }
-  z = z*(b-a);
-  return(z);
+int k, n;
+double z, p, x;
+unsigned long r;            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+n = 5000;                  /* ï¿½ï¿½ï¿½ï¿½5000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+z = 0.0;
+for(
+k = 0;
+k<n;
+k++)
+{
+r = rand();               /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+p = (double) r / RAND_MAX;
+x = a + (b - a) * p;
+z = z + (*f)(x) / n;          /* ï¿½ï¿½ï¿½*/
+}
+z = z * (b - a);
+return(z);
 }

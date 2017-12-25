@@ -17,10 +17,9 @@
 
 
 /* Tool function to create and populate a generic non-empty dictionary */
-static dictionary * generate_dictionary(unsigned sections, unsigned entries_per_section)
-{
-    unsigned i, j ;
-    dictionary * dic;
+static dictionary *generate_dictionary(unsigned sections, unsigned entries_per_section) {
+    unsigned i, j;
+    dictionary *dic;
     char sec_name[32];
     char key_name[64];
     char key_value[32];
@@ -44,28 +43,27 @@ static dictionary * generate_dictionary(unsigned sections, unsigned entries_per_
     return dic;
 }
 
-void Test_iniparser_strlwc(CuTest *tc)
-{
+void Test_iniparser_strlwc(CuTest *tc) {
     char out_buffer[128];
 
     /* NULL ptr as input */
     CuAssertPtrEquals(tc, NULL, strlwc(NULL, NULL, 0));
-    CuAssertPtrEquals(tc, NULL, strlwc(NULL, out_buffer, sizeof (out_buffer)));
-    CuAssertPtrEquals(tc, NULL, strlwc("", NULL, sizeof (out_buffer)));
+    CuAssertPtrEquals(tc, NULL, strlwc(NULL, out_buffer, sizeof(out_buffer)));
+    CuAssertPtrEquals(tc, NULL, strlwc("", NULL, sizeof(out_buffer)));
     CuAssertPtrEquals(tc, NULL, strlwc("", out_buffer, 0));
     CuAssertPtrEquals(tc, NULL, strlwc(NULL, NULL, 0));
 
     /* empty string */
-    CuAssertStrEquals(tc, "", strlwc("", out_buffer, sizeof (out_buffer)));
+    CuAssertStrEquals(tc, "", strlwc("", out_buffer, sizeof(out_buffer)));
 
-    CuAssertStrEquals(tc, "  ", strlwc("  ", out_buffer, sizeof (out_buffer)));
-    CuAssertStrEquals(tc, "test", strlwc("test", out_buffer, sizeof (out_buffer)));
-    CuAssertStrEquals(tc, "test", strlwc("TEST", out_buffer, sizeof (out_buffer)));
-    CuAssertStrEquals(tc, "test", strlwc("TeSt", out_buffer, sizeof (out_buffer)));
+    CuAssertStrEquals(tc, "  ", strlwc("  ", out_buffer, sizeof(out_buffer)));
+    CuAssertStrEquals(tc, "test", strlwc("test", out_buffer, sizeof(out_buffer)));
+    CuAssertStrEquals(tc, "test", strlwc("TEST", out_buffer, sizeof(out_buffer)));
+    CuAssertStrEquals(tc, "test", strlwc("TeSt", out_buffer, sizeof(out_buffer)));
     CuAssertStrEquals(tc, "test test",
-                      strlwc("TEST TEST", out_buffer, sizeof (out_buffer)));
+                      strlwc("TEST TEST", out_buffer, sizeof(out_buffer)));
     CuAssertStrEquals(tc, "very long string !!!!!!!",
-                      strlwc("very long string !!!!!!!", out_buffer, sizeof (out_buffer)));
+                      strlwc("very long string !!!!!!!", out_buffer, sizeof(out_buffer)));
     CuAssertStrEquals(tc, "cutted string", strlwc("cutted string<---here", out_buffer, 14));
 
     /* test using same buffer as input and output */
@@ -74,28 +72,27 @@ void Test_iniparser_strlwc(CuTest *tc)
     CuAssertStrEquals(tc, "overwrite me !", out_buffer);
 }
 
-void Test_iniparser_strstrip(CuTest *tc)
-{
+void Test_iniparser_strstrip(CuTest *tc) {
     /* First element in the array is the expected stripping result */
     const char *strings_empty[] = {
-        "",
-        "       ",
-        "\n\n\n\n",
-        "\t\t\t\t",
-        "\n     \t\n\t\n    "
+            "",
+            "       ",
+            "\n\n\n\n",
+            "\t\t\t\t",
+            "\n     \t\n\t\n    "
     };
     const char *strings_test[] = {
-        "test",
-        "test ",
-        "test          ",
-        " test",
-        "   test    ",
-        "\ttest\t",
-        "\ttest\n"
+            "test",
+            "test ",
+            "test          ",
+            " test",
+            "   test    ",
+            "\ttest\t",
+            "\ttest\n"
 
     };
     const char *test_with_spaces = "I am a test with\tspaces.";
-    char stripped[ASCIILINESZ+1];
+    char stripped[ASCIILINESZ + 1];
     char error_msg[128];
     unsigned i;
 
@@ -103,20 +100,20 @@ void Test_iniparser_strstrip(CuTest *tc)
     strstrip(NULL);
 
     /* empty string */
-    for (i = 0 ; i < sizeof (strings_empty) / sizeof (char *) ; ++i) {
+    for (i = 0; i < sizeof(strings_empty) / sizeof(char *); ++i) {
         strcpy(stripped, strings_empty[i]);
         strstrip(stripped);
         sprintf(error_msg, "Bad stripping : strstrip(\"%s\") ==> \"%s\"",
-            strings_empty[i], stripped);
+                strings_empty[i], stripped);
         CuAssertStrEquals_Msg(tc, error_msg, stripped, strings_empty[0]);
     }
 
     /* test string */
-    for (i = 0 ; i < sizeof (strings_test) / sizeof (char *) ; ++i) {
+    for (i = 0; i < sizeof(strings_test) / sizeof(char *); ++i) {
         strcpy(stripped, strings_test[i]);
         strstrip(stripped);
         sprintf(error_msg, "Bad stripping : strstrip(\"%s\") ==> \"%s\"",
-            strings_test[i], stripped);
+                strings_test[i], stripped);
         CuAssertStrEquals_Msg(tc, error_msg, strings_test[0], stripped);
     }
     strcpy(stripped, ".");
@@ -129,8 +126,7 @@ void Test_iniparser_strstrip(CuTest *tc)
     CuAssertStrEquals(tc, test_with_spaces, stripped);
 }
 
-void Test_iniparser_getnsec(CuTest *tc)
-{
+void Test_iniparser_getnsec(CuTest *tc) {
     int i;
     char sec_name[32];
     dictionary *dic;
@@ -161,8 +157,7 @@ void Test_iniparser_getnsec(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_getsecname(CuTest *tc)
-{
+void Test_iniparser_getsecname(CuTest *tc) {
     unsigned i;
     char sec_name[32];
     dictionary *dic;
@@ -191,13 +186,12 @@ void Test_iniparser_getsecname(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_getseckeys(CuTest *tc)
-{
+void Test_iniparser_getseckeys(CuTest *tc) {
     unsigned i;
     char key_name[64];
     dictionary *dic;
     int nkeys;
-    const char * keys[10]; /* At most 10 elements per section */
+    const char *keys[10]; /* At most 10 elements per section */
     /* NULL test */
     CuAssertPtrEquals(tc, NULL, iniparser_getseckeys(NULL, NULL, NULL));
     CuAssertPtrEquals(tc, NULL, iniparser_getseckeys(NULL, "dummy", NULL));
@@ -250,8 +244,7 @@ void Test_iniparser_getseckeys(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_getstring(CuTest *tc)
-{
+void Test_iniparser_getstring(CuTest *tc) {
     dictionary *dic;
     /* NULL test */
     CuAssertPtrEquals(tc, NULL, iniparser_getstring(NULL, NULL, NULL));
@@ -275,30 +268,32 @@ void Test_iniparser_getstring(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_getint(CuTest *tc)
-{
+void Test_iniparser_getint(CuTest *tc) {
     unsigned i;
     char key_name[64];
     dictionary *dic;
-    const struct { int num; const char *value; } good_val[] = {
-        { 0, "0" },
-        { 1, "1" },
-        { -1, "-1" },
-        { 1000, "1000" },
-        { 077, "077" },
-        { -01000, "-01000" },
-        { 0xFFFF, "0xFFFF" },
-        { -0xFFFF, "-0xFFFF" },
-        { 0x4242, "0x4242" },
-        { 0, NULL} /* must be last */
+    const struct {
+        int num;
+        const char *value;
+    } good_val[] = {
+            {0,       "0"},
+            {1,       "1"},
+            {-1,      "-1"},
+            {1000,    "1000"},
+            {077,     "077"},
+            {-01000,  "-01000"},
+            {0xFFFF,  "0xFFFF"},
+            {-0xFFFF, "-0xFFFF"},
+            {0x4242,  "0x4242"},
+            {0,       NULL} /* must be last */
     };
     const char *bad_val[] = {
-        "",
-        "notanumber",
-        "0x",
-        "k2000",
-        " ",
-        "0xG1"
+            "",
+            "notanumber",
+            "0x",
+            "k2000",
+            " ",
+            "0xG1"
     };
     /* NULL test */
     CuAssertIntEquals(tc, -42, iniparser_getint(NULL, NULL, -42));
@@ -326,11 +321,11 @@ void Test_iniparser_getint(CuTest *tc)
 
     /* Test bad names */
     dic = dictionary_new(10);
-    for (i = 0; i < sizeof (bad_val) / sizeof (char *); ++i) {
+    for (i = 0; i < sizeof(bad_val) / sizeof(char *); ++i) {
         sprintf(key_name, "int:bad%d", i);
         dictionary_set(dic, key_name, bad_val[i]);
     }
-    for (i = 0; i < sizeof (bad_val) / sizeof (char *); ++i) {
+    for (i = 0; i < sizeof(bad_val) / sizeof(char *); ++i) {
         sprintf(key_name, "int:bad%d", i);
         CuAssertIntEquals(tc, 0,
                           iniparser_getint(dic, key_name, 0));
@@ -338,30 +333,32 @@ void Test_iniparser_getint(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_getlongint(CuTest *tc)
-{
+void Test_iniparser_getlongint(CuTest *tc) {
     unsigned i;
     char key_name[64];
     dictionary *dic;
-    const struct { long int num; const char *value; } good_val[] = {
-        { 0, "0" },
-        { 1, "1" },
-        { -1, "-1" },
-        { 1000, "1000" },
-        { 077, "077" },
-        { -01000, "-01000" },
-        { 0x7FFFFFFFFFFFFFFF, "0x7FFFFFFFFFFFFFFF" },
-        { -0x7FFFFFFFFFFFFFFF, "-0x7FFFFFFFFFFFFFFF" },
-        { 0x4242, "0x4242" },
-        { 0, NULL} /* must be last */
+    const struct {
+        long int num;
+        const char *value;
+    } good_val[] = {
+            {0,                   "0"},
+            {1,                   "1"},
+            {-1,                  "-1"},
+            {1000,                "1000"},
+            {077,                 "077"},
+            {-01000,              "-01000"},
+            {0x7FFFFFFFFFFFFFFF,  "0x7FFFFFFFFFFFFFFF"},
+            {-0x7FFFFFFFFFFFFFFF, "-0x7FFFFFFFFFFFFFFF"},
+            {0x4242,              "0x4242"},
+            {0,                   NULL} /* must be last */
     };
     const char *bad_val[] = {
-        "",
-        "notanumber",
-        "0x",
-        "k2000",
-        " ",
-        "0xG1"
+            "",
+            "notanumber",
+            "0x",
+            "k2000",
+            " ",
+            "0xG1"
     };
     /* NULL test */
     CuAssertLongIntEquals(tc, -42, iniparser_getlongint(NULL, NULL, -42));
@@ -383,26 +380,25 @@ void Test_iniparser_getlongint(CuTest *tc)
     for (i = 0; good_val[i].value != NULL; ++i) {
         sprintf(key_name, "longint:value%d", i);
         CuAssertLongIntEquals(tc, good_val[i].num,
-                          iniparser_getlongint(dic, key_name, 0));
+                              iniparser_getlongint(dic, key_name, 0));
     }
     dictionary_del(dic);
 
     /* Test bad names */
     dic = dictionary_new(10);
-    for (i = 0; i < sizeof (bad_val) / sizeof (char *); ++i) {
+    for (i = 0; i < sizeof(bad_val) / sizeof(char *); ++i) {
         sprintf(key_name, "longint:bad%d", i);
         dictionary_set(dic, key_name, bad_val[i]);
     }
-    for (i = 0; i < sizeof (bad_val) / sizeof (char *); ++i) {
+    for (i = 0; i < sizeof(bad_val) / sizeof(char *); ++i) {
         sprintf(key_name, "longint:bad%d", i);
         CuAssertLongIntEquals(tc, 0,
-                          iniparser_getlongint(dic, key_name, 0));
+                              iniparser_getlongint(dic, key_name, 0));
     }
     dictionary_del(dic);
 }
 
-void Test_iniparser_getdouble(CuTest *tc)
-{
+void Test_iniparser_getdouble(CuTest *tc) {
     dictionary *dic;
 
     /* NULL test */
@@ -434,42 +430,41 @@ void Test_iniparser_getdouble(CuTest *tc)
     CuAssertDblEquals(tc, 3.1415, iniparser_getdouble(dic, "double:good3", 0xFF), 0);
     CuAssertDblEquals(tc, 6.6655957, iniparser_getdouble(dic, "double:good4", 0xFF), 0);
     CuAssertDblEquals(tc, -123456789.123456789,
-                         iniparser_getdouble(dic, "double:good5", 0xFF), 0);
+                      iniparser_getdouble(dic, "double:good5", 0xFF), 0);
 
     CuAssertDblEquals(tc, 0, iniparser_getdouble(dic, "double:bad0", 42.42), 0);
 
     dictionary_del(dic);
 }
 
-void Test_iniparser_getboolean(CuTest *tc)
-{
+void Test_iniparser_getboolean(CuTest *tc) {
     unsigned i;
     char key_name[64];
 
     dictionary *dic;
     const char *token_true[] = {
-        "1",
-        "true",
-        "t",
-        "TRUE",
-        "T",
-        "yes",
-        "y",
-        "YES"
-        "Y",
-        NULL
+            "1",
+            "true",
+            "t",
+            "TRUE",
+            "T",
+            "yes",
+            "y",
+            "YES"
+                    "Y",
+            NULL
     };
     const char *token_false[] = {
-        "0",
-        "false",
-        "f",
-        "FALSE",
-        "F",
-        "no",
-        "n",
-        "NO",
-        "N",
-        NULL
+            "0",
+            "false",
+            "f",
+            "FALSE",
+            "F",
+            "no",
+            "n",
+            "NO",
+            "N",
+            NULL
     };
 
     /* NULL test */
@@ -513,11 +508,10 @@ void Test_iniparser_getboolean(CuTest *tc)
     dictionary_del(dic);
 }
 
-void Test_iniparser_line(CuTest *tc)
-{
-    char section [ASCIILINESZ+1] ;
-    char key     [ASCIILINESZ+1] ;
-    char val     [ASCIILINESZ+1] ;
+void Test_iniparser_line(CuTest *tc) {
+    char section[ASCIILINESZ + 1];
+    char key[ASCIILINESZ + 1];
+    char val[ASCIILINESZ + 1];
 
     /* Test empty line */
     CuAssertIntEquals(tc, LINE_EMPTY, iniparser_line("", section, key, val));
@@ -589,8 +583,7 @@ void Test_iniparser_line(CuTest *tc)
 
 }
 
-void Test_iniparser_load(CuTest *tc)
-{
+void Test_iniparser_load(CuTest *tc) {
     DIR *dir;
     struct dirent *curr;
     struct stat curr_stat;
@@ -630,8 +623,7 @@ void Test_iniparser_load(CuTest *tc)
     closedir(dir);
 }
 
-void Test_dictionary_wrapper(CuTest *tc)
-{
+void Test_dictionary_wrapper(CuTest *tc) {
     dictionary *dic;
 
     dic = dictionary_new(10);
@@ -664,8 +656,8 @@ void Test_dictionary_wrapper(CuTest *tc)
 }
 
 static char _last_error[1024];
-static int _error_callback(const char *format, ...)
-{
+
+static int _error_callback(const char *format, ...) {
     int ret;
     va_list argptr;
     va_start(argptr, format);
@@ -675,8 +667,7 @@ static int _error_callback(const char *format, ...)
 
 }
 
-void Test_iniparser_error_callback(CuTest *tc)
-{
+void Test_iniparser_error_callback(CuTest *tc) {
     dictionary *dic;
 
     /* Specify our custom error_callback */

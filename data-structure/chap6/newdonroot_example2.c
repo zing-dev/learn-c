@@ -3,31 +3,34 @@
 #include<math.h>
 #include "newdonroot.c"
 
-void main()
-{
+void main() {
     double x0;
     double f(double);
     double fd(double);
     double eps;
     int max;
-    x0=0.0;                         /* ³õÖµ£¬¾«¶È£¬×î´óµü´ú´ÎÊý*/
-    eps=0.00001;
-    max=60;
+    x0 = 0.0;                         /* ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    eps = 0.00001;
+    max = 60;
     printf("  x(k)         x(k+1)        dis\n\n");
-    if(newdonroot(&x0,f,fd,eps,max))
-        printf("\n%1.7f\n",x0);
+    if (newdonroot(&x0, f, fd, eps, max))
+        printf("\n%1.7f\n", x0);
     else
         printf("failed!\n");
 }
 
-double f(x)                         /* ¼ÆËãº¯ÊýÖµ*/
+double f(x)                         /* ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Öµ*/
 double x;
 {
-     return x*x*x-3*x+1;
+return
+x *x
+*x-3*x+1;
 }
 
-double fd(x)                        /* ¼ÆËãµ¼º¯ÊýÖµ*/
+double fd(x)                        /* ï¿½ï¿½ï¿½ãµ¼ï¿½ï¿½ï¿½ï¿½Öµ*/
 double x;
 {
-    return 3*x*x-3;
+return 3*
+x *x
+-3;
 }

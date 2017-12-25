@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+
 #define PI 3.14
 
 
@@ -17,20 +18,20 @@ int main(void) {
 
 
     char ch = 'a';
-    int a = (int)ch;
+    int a = (int) ch;
     printf("%d %c\n", a, ch);
 
 
     int add = 0x123456;
     int *p = &add;
-    printf("%d\n",*p);
+    printf("%d\n", *p);
 
 
     int pi = PI;
     int pi2 = 3.14;
-    printf("PI is %f\n",PI);
-    printf("pi is %d\n",pi);
-    printf("pi2 is %d\n",pi2);
+    printf("PI is %f\n", PI);
+    printf("pi is %d\n", pi);
+    printf("pi2 is %d\n", pi2);
 
     char *string = "abcdef";
     printf("%s\n", string);

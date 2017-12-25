@@ -76,9 +76,10 @@ void PrintfStack(SqStack S) {
     printf("\n");
 }
 
-int IsEmpty(SqStack S){
+int IsEmpty(SqStack S) {
     return S.top == S.base;
 }
+
 int main() {
     int e, i;
     int TextData[6] = {9, 2, 8, 1, 7, 6};
@@ -100,18 +101,18 @@ int main() {
     printf("顶部出栈后Sa：");
     Pop(&Sa, &e);
     PrintfStack(Sa);
-    Push(&Sa,1);
-    Push(&Sa,124);
-    Push(&Sa,102);
-    Push(&Sa,12);
-    Push(&Sa,121);
+    Push(&Sa, 1);
+    Push(&Sa, 124);
+    Push(&Sa, 102);
+    Push(&Sa, 12);
+    Push(&Sa, 121);
     printf("all: ");
     PrintfStack(Sa);
     int top;
     printf("出栈: ");
-    while (!IsEmpty(Sa)){
-        Pop(&Sa,&top);
-        printf("%d ",top);
+    while (!IsEmpty(Sa)) {
+        Pop(&Sa, &top);
+        printf("%d ", top);
     }
     printf("\n");
 }

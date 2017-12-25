@@ -1,24 +1,22 @@
 #include "stdio.h"
 #include "mgst.c"
-main()
-{ 
-	int i,j,p[50];
-	printf("Data:\n");
-	for(i=0; i<5; i++)                     /* Éú³ÉÒ»Ð©ÎÞÐòÊý¾Ý*/
-	{ 
-		for(j=0; j<10; j++)
-		{
-			p[10*i+j] = 20+10*i-j ;
-			printf("%d   ",p[10*i+j]);
-		}
-		printf("\n");
-	}
-	printf("Merge Sort:\n");                /* Ö±½ÓÑ¡ÔñÅÅÐòµÄ½á¹û*/
-	mgst(p,50);
-	for(i=0; i<5; i++)
-	{ 
-		for(j=0; j<10; j++)
-			printf("%d   ",p[10*i+j]);
-		printf("\n");
-	}
+
+main() {
+    int i, j, p[50];
+    printf("Data:\n");
+    for (i = 0; i < 5; i++)                     /* ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    {
+        for (j = 0; j < 10; j++) {
+            p[10 * i + j] = 20 + 10 * i - j;
+            printf("%d   ", p[10 * i + j]);
+        }
+        printf("\n");
+    }
+    printf("Merge Sort:\n");                /* Ö±ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½*/
+    mgst(p, 50);
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 10; j++)
+            printf("%d   ", p[10 * i + j]);
+        printf("\n");
+    }
 }

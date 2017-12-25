@@ -1,75 +1,107 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
+
 /*======================================================
-// º¯ÊýÃû£ºsmcg
-// ¹¦ÄÜÃèÊö£ºÓÃ¹²éîÌÝ¶È·¨½â¶Ô³ÆÕý¶¨·½³Ì×é
-// ÊäÈë²ÎÊý£ºa ½âÏµÊý¾ØÕó£¬b ³£Êý¾ØÕó£¬x·µ»ØµÄ½âÏòÁ¿
-//           n Î´ÖªÊý¸öÊý£¬
-//           eps ¾«¶ÈÒªÇó£¬iter ×î¶àµü´ú´ÎÊý¡£
-// ·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½smcg
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½Ý¶È·ï¿½ï¿½ï¿½Ô³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½
+//           n Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//           eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½iter ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
 =========================================================*/
-int smcg(a,b,x,n,eps,iter)
-double *a,*b,*x,eps;
-int n,iter;
+int smcg(a, b, x, n, eps, iter)
+
+double *a, *b, *x, eps;
+int n, iter;
 {
-    int i,j,k,piter;
-    double *s,*r,t;
-    double ta,alpha,tb,tb2,beta;
-    if((a==NULL)||(b==NULL)||(x==NULL))            /* ¼ì²âÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
-    {
-        printf("The pointer is NULL\n");
-        return(0);
-    }
-    s = (double *)malloc(n*sizeof(double));          /* ·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
-    r = (double *)malloc(n*sizeof(double));
-    if((s==NULL)||(r==NULL))
-    {
-        printf("Memory alloc failed\n");
-        return(0);
-    }
-    for(i=0; i<n; i++)
-    {
-      r[i] = b[i];                                 /* ³õÊ¼²Ð²î*/
-      x[i] = 0.0;                                  /* ³õÊ¼½âÎª0*/
-      s[i] = b[i];                                 /* ³õÊ¼ËÑË÷·½Ïò*/
-    }
-    tb = 0.0;
-    for(k=0; k<n; k++)                             /* ³õÊ¼µÄtbÖµ*/
-      tb = tb+r[k]*r[k];
-    piter = 0;
-    while((tb > eps) && (piter<iter) && (piter<n))
-    {
-      ta = 0.0;
-      for(k=0; k<n; k++)                        /* Çó½â²½³¤µÄta'Öµ*/
-      {
-        t = 0.0;
-        for(j=0; j<n; j++)
-          t = t+a[k*n+j]*s[j];
-        ta = ta + s[k]*t;
-      }
-      alpha = tb/ta;                           /* ²½³¤alphaµÄÖµ*/
-      for(k=0; k<n; k++)                        /* ¸üÐÂµÄ½â*/
-        x[k] = x[k]+alpha*s[k];
-      for(k=0; k<n; k++)                           /* ¸üÐÂ²Ð²î*/
-      {
-        t = 0.0;
-        for(j=0; j<n; j++)
-          t = t+a[k*n+j]*x[j];
-        r[k] = b[k] - t;
-      }
-      tb2 = 0.0;
-      for(k=0; k<n; k++)                           /* ¸üÐÂËÑË÷·½Ïò*/
-        tb2 = tb2+r[k]*r[k];
-      beta = tb2/tb;
-      for(k=0; k<n; k++)
-      {
-        s[k] = r[k] + beta*s[k];
-      }
-      tb = tb2;
-      piter++;                                     /* ¸üÐÂµü´ú´ÎÊý*/
-    }
-    free(s);
-    free(r);
-    return(1);
+int i, j, k, piter;
+double *s, *r, t;
+double ta, alpha, tb, tb2, beta;
+if((a==NULL)||(b==NULL)||(x==NULL))            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
+{
+printf("The pointer is NULL\n");
+return(0);
+}
+s = (double *) malloc(n * sizeof(double));          /* ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
+r = (double *) malloc(n * sizeof(double));
+if((s==NULL)||(r==NULL))
+{
+printf("Memory alloc failed\n");
+return(0);
+}
+for(
+i = 0;
+i<n;
+i++)
+{
+r[i] = b[i];                                 /* ï¿½ï¿½Ê¼ï¿½Ð²ï¿½*/
+x[i] = 0.0;                                  /* ï¿½ï¿½Ê¼ï¿½ï¿½Îª0*/
+s[i] = b[i];                                 /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+}
+tb = 0.0;
+for(
+k = 0;
+k<n;
+k++)                             /* ï¿½ï¿½Ê¼ï¿½ï¿½tbÖµ*/
+tb = tb + r[k] * r[k];
+piter = 0;
+while((tb > eps) && (piter<iter) && (piter<n))
+{
+ta = 0.0;
+for(
+k = 0;
+k<n;
+k++)                        /* ï¿½ï¿½â²½ï¿½ï¿½ï¿½ï¿½ta'Öµ*/
+{
+t = 0.0;
+for(
+j = 0;
+j<n;
+j++)
+t = t + a[k * n + j] * s[j];
+ta = ta + s[k] * t;
+}
+alpha = tb / ta;                           /* ï¿½ï¿½ï¿½ï¿½alphaï¿½ï¿½Öµ*/
+for(
+k = 0;
+k<n;
+k++)                        /* ï¿½ï¿½ï¿½ÂµÄ½ï¿½*/
+x[k] = x[k]+
+alpha *s[k];
+for(
+k = 0;
+k<n;
+k++)                           /* ï¿½ï¿½ï¿½Â²Ð²ï¿½*/
+{
+t = 0.0;
+for(
+j = 0;
+j<n;
+j++)
+t = t + a[k * n + j] * x[j];
+r[k] = b[k] -
+t;
+}
+tb2 = 0.0;
+for(
+k = 0;
+k<n;
+k++)                           /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+tb2 = tb2 + r[k] * r[k];
+beta = tb2 / tb;
+for(
+k = 0;
+k<n;
+k++)
+{
+s[k] = r[k] +
+beta *s[k];
+}
+tb = tb2;
+piter++;                                     /* ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+}
+free(s);
+free(r);
+return(1);
 }

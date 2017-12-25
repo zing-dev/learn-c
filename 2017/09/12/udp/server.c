@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <arpa/inet.h>
+
 #define MAXBUF 256
 
 int main(int argc, char *argv[]) {
@@ -47,11 +48,11 @@ int main(int argc, char *argv[]) {
                 &sock_len
         );
 
-        if(recv < 0){
+        if (recv < 0) {
             perror("recvfrom error ... \n");
             break;
-        } else{
-            printf("receive msg from %s(port=%d) len %d: %s\n",inet_ntoa(client.sin_addr), port, recv, buf);
+        } else {
+            printf("receive msg from %s(port=%d) len %d: %s\n", inet_ntoa(client.sin_addr), port, recv, buf);
         }
     }
     return 0;

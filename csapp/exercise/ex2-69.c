@@ -7,9 +7,8 @@
  *
  * 函数应该遵循位级整数编码规则。要注意 n = 0 的情况。
  */
-unsigned rotate_right(unsigned x, int n)
-{
-        int w = sizeof(int) << 3;
-        /* 这里左移一位，解决 n = 0 的情况 */
-        return ((x << (w-n-1)) << 1) + (x >> n);
+unsigned rotate_right(unsigned x, int n) {
+    int w = sizeof(int) << 3;
+    /* 这里左移一位，解决 n = 0 的情况 */
+    return ((x << (w - n - 1)) << 1) + (x >> n);
 }

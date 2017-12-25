@@ -1,7 +1,7 @@
-#include "stdio.h"    
-#include "stdlib.h"   
-#include "io.h"  
-#include "math.h"  
+#include "stdio.h"
+#include "stdlib.h"
+#include "io.h"
+#include "math.h"
 #include "time.h"
 
 #define OK 1
@@ -9,166 +9,147 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef int Status;	/* StatusÊÇº¯ÊýµÄÀàÐÍ,ÆäÖµÊÇº¯Êý½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status;    /* Statusï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½OKï¿½ï¿½ */
 
 #define MAXEDGE 20
 #define MAXVEX 20
 #define INFINITY 65535
 
-typedef struct
-{
-	int arc[MAXVEX][MAXVEX];
-	int numVertexes, numEdges;
-}MGraph;
+typedef struct {
+    int arc[MAXVEX][MAXVEX];
+    int numVertexes, numEdges;
+} MGraph;
 
-typedef struct
-{
-	int begin;
-	int end;
-	int weight;
-}Edge;   /* ¶Ô±ß¼¯Êý×éEdge½á¹¹µÄ¶¨Òå */
+typedef struct {
+    int begin;
+    int end;
+    int weight;
+} Edge;   /* ï¿½Ô±ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Edgeï¿½á¹¹ï¿½Ä¶ï¿½ï¿½ï¿½ */
 
-/* ¹¹¼þÍ¼ */
-void CreateMGraph(MGraph *G)
-{
-	int i, j;
+/* ï¿½ï¿½ï¿½ï¿½Í¼ */
+void CreateMGraph(MGraph *G) {
+    int i, j;
 
-	/* printf("ÇëÊäÈë±ßÊýºÍ¶¥µãÊý:"); */
-	G->numEdges=15;
-	G->numVertexes=9;
+    /* printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½:"); */
+    G->numEdges = 15;
+    G->numVertexes = 9;
 
-	for (i = 0; i < G->numVertexes; i++)/* ³õÊ¼»¯Í¼ */
-	{
-		for ( j = 0; j < G->numVertexes; j++)
-		{
-			if (i==j)
-				G->arc[i][j]=0;
-			else
-				G->arc[i][j] = G->arc[j][i] = INFINITY;
-		}
-	}
+    for (i = 0; i < G->numVertexes; i++)/* ï¿½ï¿½Ê¼ï¿½ï¿½Í¼ */
+    {
+        for (j = 0; j < G->numVertexes; j++) {
+            if (i == j)
+                G->arc[i][j] = 0;
+            else
+                G->arc[i][j] = G->arc[j][i] = INFINITY;
+        }
+    }
 
-	G->arc[0][1]=10;
-	G->arc[0][5]=11; 
-	G->arc[1][2]=18; 
-	G->arc[1][8]=12; 
-	G->arc[1][6]=16; 
-	G->arc[2][8]=8; 
-	G->arc[2][3]=22; 
-	G->arc[3][8]=21; 
-	G->arc[3][6]=24; 
-	G->arc[3][7]=16;
-	G->arc[3][4]=20;
-	G->arc[4][7]=7; 
-	G->arc[4][5]=26; 
-	G->arc[5][6]=17; 
-	G->arc[6][7]=19; 
+    G->arc[0][1] = 10;
+    G->arc[0][5] = 11;
+    G->arc[1][2] = 18;
+    G->arc[1][8] = 12;
+    G->arc[1][6] = 16;
+    G->arc[2][8] = 8;
+    G->arc[2][3] = 22;
+    G->arc[3][8] = 21;
+    G->arc[3][6] = 24;
+    G->arc[3][7] = 16;
+    G->arc[3][4] = 20;
+    G->arc[4][7] = 7;
+    G->arc[4][5] = 26;
+    G->arc[5][6] = 17;
+    G->arc[6][7] = 19;
 
-	for(i = 0; i < G->numVertexes; i++)
-	{
-		for(j = i; j < G->numVertexes; j++)
-		{
-			G->arc[j][i] =G->arc[i][j];
-		}
-	}
+    for (i = 0; i < G->numVertexes; i++) {
+        for (j = i; j < G->numVertexes; j++) {
+            G->arc[j][i] = G->arc[i][j];
+        }
+    }
 
 }
 
-/* ½»»»È¨Öµ ÒÔ¼°Í·ºÍÎ² */
-void Swapn(Edge *edges,int i, int j)
-{
-	int temp;
-	temp = edges[i].begin;
-	edges[i].begin = edges[j].begin;
-	edges[j].begin = temp;
-	temp = edges[i].end;
-	edges[i].end = edges[j].end;
-	edges[j].end = temp;
-	temp = edges[i].weight;
-	edges[i].weight = edges[j].weight;
-	edges[j].weight = temp;
+/* ï¿½ï¿½ï¿½ï¿½È¨Öµ ï¿½Ô¼ï¿½Í·ï¿½ï¿½Î² */
+void Swapn(Edge *edges, int i, int j) {
+    int temp;
+    temp = edges[i].begin;
+    edges[i].begin = edges[j].begin;
+    edges[j].begin = temp;
+    temp = edges[i].end;
+    edges[i].end = edges[j].end;
+    edges[j].end = temp;
+    temp = edges[i].weight;
+    edges[i].weight = edges[j].weight;
+    edges[j].weight = temp;
 }
 
-/* ¶ÔÈ¨Öµ½øÐÐÅÅÐò */
-void sort(Edge edges[],MGraph *G)
-{
-	int i, j;
-	for ( i = 0; i < G->numEdges; i++)
-	{
-		for ( j = i + 1; j < G->numEdges; j++)
-		{
-			if (edges[i].weight > edges[j].weight)
-			{
-				Swapn(edges, i, j);
-			}
-		}
-	}
-	printf("È¨ÅÅÐòÖ®ºóµÄÎª:\n");
-	for (i = 0; i < G->numEdges; i++)
-	{
-		printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
-	}
+/* ï¿½ï¿½È¨Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void sort(Edge edges[], MGraph *G) {
+    int i, j;
+    for (i = 0; i < G->numEdges; i++) {
+        for (j = i + 1; j < G->numEdges; j++) {
+            if (edges[i].weight > edges[j].weight) {
+                Swapn(edges, i, j);
+            }
+        }
+    }
+    printf("È¨ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½Îª:\n");
+    for (i = 0; i < G->numEdges; i++) {
+        printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
+    }
 
 }
 
-/* ²éÕÒÁ¬Ïß¶¥µãµÄÎ²²¿ÏÂ±ê */
-int Find(int *parent, int f)
-{
-	while ( parent[f] > 0)
-	{
-		f = parent[f];
-	}
-	return f;
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½Â±ï¿½ */
+int Find(int *parent, int f) {
+    while (parent[f] > 0) {
+        f = parent[f];
+    }
+    return f;
 }
 
-/* Éú³É×îÐ¡Éú³ÉÊ÷ */
-void MiniSpanTree_Kruskal(MGraph G)
-{
-	int i, j, n, m;
-	int k = 0;
-	int parent[MAXVEX];/* ¶¨ÒåÒ»Êý×éÓÃÀ´ÅÐ¶Ï±ßÓë±ßÊÇ·ñÐÎ³É»·Â· */
-	
-	Edge edges[MAXEDGE];/* ¶¨Òå±ß¼¯Êý×é,edgeµÄ½á¹¹Îªbegin,end,weight,¾ùÎªÕûÐÍ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+void MiniSpanTree_Kruskal(MGraph G) {
+    int i, j, n, m;
+    int k = 0;
+    int parent[MAXVEX];/* ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï±ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Î³É»ï¿½Â· */
 
-	/* ÓÃÀ´¹¹½¨±ß¼¯Êý×é²¢ÅÅÐò********************* */
-	for ( i = 0; i < G.numVertexes-1; i++)
-	{
-		for (j = i + 1; j < G.numVertexes; j++)
-		{
-			if (G.arc[i][j]<INFINITY)
-			{
-				edges[k].begin = i;
-				edges[k].end = j;
-				edges[k].weight = G.arc[i][j];
-				k++;
-			}
-		}
-	}
-	sort(edges, &G);
-	/* ******************************************* */
+    Edge edges[MAXEDGE];/* ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½,edgeï¿½Ä½á¹¹Îªbegin,end,weight,ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ */
+
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½é²¢ï¿½ï¿½ï¿½ï¿½********************* */
+    for (i = 0; i < G.numVertexes - 1; i++) {
+        for (j = i + 1; j < G.numVertexes; j++) {
+            if (G.arc[i][j] < INFINITY) {
+                edges[k].begin = i;
+                edges[k].end = j;
+                edges[k].weight = G.arc[i][j];
+                k++;
+            }
+        }
+    }
+    sort(edges, &G);
+    /* ******************************************* */
 
 
-	for (i = 0; i < G.numVertexes; i++)
-		parent[i] = 0;	/* ³õÊ¼»¯Êý×éÖµÎª0 */
+    for (i = 0; i < G.numVertexes; i++)
+        parent[i] = 0;    /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎª0 */
 
-	printf("´òÓ¡×îÐ¡Éú³ÉÊ÷£º\n");
-	for (i = 0; i < G.numEdges; i++)	/* Ñ­»·Ã¿Ò»Ìõ±ß */
-	{
-		n = Find(parent,edges[i].begin);
-		m = Find(parent,edges[i].end);
-		if (n != m) /* ¼ÙÈçnÓëm²»µÈ£¬ËµÃ÷´Ë±ßÃ»ÓÐÓëÏÖÓÐµÄÉú³ÉÊ÷ÐÎ³É»·Â· */
-		{
-			parent[n] = m;	/* ½«´Ë±ßµÄ½áÎ²¶¥µã·ÅÈëÏÂ±êÎªÆðµãµÄparentÖÐ¡£ */
-							/* ±íÊ¾´Ë¶¥µãÒÑ¾­ÔÚÉú³ÉÊ÷¼¯ºÏÖÐ */
-			printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
-		}
-	}
+    printf("ï¿½ï¿½Ó¡ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+    for (i = 0; i < G.numEdges; i++)    /* Ñ­ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ */
+    {
+        n = Find(parent, edges[i].begin);
+        m = Find(parent, edges[i].end);
+        if (n != m) /* ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½mï¿½ï¿½ï¿½È£ï¿½Ëµï¿½ï¿½ï¿½Ë±ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î³É»ï¿½Â· */
+        {
+            parent[n] = m;    /* ï¿½ï¿½ï¿½Ë±ßµÄ½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½Îªï¿½ï¿½ï¿½ï¿½parentï¿½Ð¡ï¿½ */
+            /* ï¿½ï¿½Ê¾ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+            printf("(%d, %d) %d\n", edges[i].begin, edges[i].end, edges[i].weight);
+        }
+    }
 }
 
-int main(void)
-{
-	MGraph G;
-	CreateMGraph(&G);
-	MiniSpanTree_Kruskal(G);
-	return 0;
+int main(void) {
+    MGraph G;
+    CreateMGraph(&G);
+    MiniSpanTree_Kruskal(G);
+    return 0;
 }

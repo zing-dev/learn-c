@@ -13,26 +13,25 @@
 
 #include <stdio.h>
 
-int main(void)
-{
-        int x = 6;              /* 一个完美的数字 */
-        int t;
+int main(void) {
+    int x = 6;              /* 一个完美的数字 */
+    int t;
 
-        /* A. K=5: (1<<2) + 1 */
-        t = (x << 2) + x;
-        printf("%d * %d = %d\n", x, 5, t);
+    /* A. K=5: (1<<2) + 1 */
+    t = (x << 2) + x;
+    printf("%d * %d = %d\n", x, 5, t);
 
-        /* B. K=9: (1<<3) + 1 */
-        t = (x << 3) + x;
-        printf("%d * %d = %d\n", x, 9, t);
+    /* B. K=9: (1<<3) + 1 */
+    t = (x << 3) + x;
+    printf("%d * %d = %d\n", x, 9, t);
 
-        /* C. K=30: (1<<5) - (1<<1) */
-        t = (x << 5) - (x << 1);
-        printf("%d * %d = %d\n", x, 30, t);
+    /* C. K=30: (1<<5) - (1<<1) */
+    t = (x << 5) - (x << 1);
+    printf("%d * %d = %d\n", x, 30, t);
 
-        /* D. K=-56: (1<<3) - (1<<6) */
-        t = (x << 3) - (x << 6);
-        printf("%d * %d = %d\n", x, -56, t);
+    /* D. K=-56: (1<<3) - (1<<6) */
+    t = (x << 3) - (x << 6);
+    printf("%d * %d = %d\n", x, -56, t);
 
-        return 0;
+    return 0;
 }

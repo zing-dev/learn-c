@@ -21,8 +21,8 @@ int main(int argc, char const *argv[]) {
     char *addr = "127.0.0.1";
     char buf[MAXBUF] = {0};
 
-    if(argc == 2){
-        addr = (char *)argv[1];
+    if (argc == 2) {
+        addr = (char *) argv[1];
     }
 
     bzero(&srv, sizeof(srv));

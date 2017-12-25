@@ -1,34 +1,31 @@
 #include "stdio.h"
 #include "popo.c"
 #include "qcks.c"
-main()
-{ 
-	int i,j,p[50],p1[50];
-	printf("Data:\n");
-	for(i=0; i<5; i++)                     /* Éú³ÉÒ»Ð©ÎÞÐòÊý¾Ý*/
-	{ 
-		for(j=0; j<10; j++)
-		{
-			p[10*i+j] = 20+10*i-j ;
-			p1[10*i+j] = p[10*i+j];
-			printf("%d   ",p[10*i+j]);
-		}
-		printf("\n");
-	}
-	printf("Quick Sort:\n");                /* ¿ìËÙÅÅÐòµÄ½á¹û*/
-	qcks(p,0,49);
-	for(i=0; i<5; i++)
-	{ 
-		for(j=0; j<10; j++)
-			printf("%d   ",p[10*i+j]);
-		printf("\n");
-	}
-	printf("Bubble Sort:\n");              /* ÆøÅÝÅÅÐòµÄ½á¹û*/
-	popo(p,50);
-	for(i=0; i<5; i++)
-	{ 
-		for(j=0; j<10; j++)
-			printf("%d   ",p[10*i+j]);
-		printf("\n");
-	}
+
+main() {
+    int i, j, p[50], p1[50];
+    printf("Data:\n");
+    for (i = 0; i < 5; i++)                     /* ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    {
+        for (j = 0; j < 10; j++) {
+            p[10 * i + j] = 20 + 10 * i - j;
+            p1[10 * i + j] = p[10 * i + j];
+            printf("%d   ", p[10 * i + j]);
+        }
+        printf("\n");
+    }
+    printf("Quick Sort:\n");                /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½*/
+    qcks(p, 0, 49);
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 10; j++)
+            printf("%d   ", p[10 * i + j]);
+        printf("\n");
+    }
+    printf("Bubble Sort:\n");              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½*/
+    popo(p, 50);
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 10; j++)
+            printf("%d   ", p[10 * i + j]);
+        printf("\n");
+    }
 }

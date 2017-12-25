@@ -1,21 +1,21 @@
 #include "stdio.h"
 #include "hemt.c"
 #include "gasi.c"
-main()
- {
-   double f1(double),z;
-   printf("Hermite:\n");                      /* °£¶ûÃ×ÌØ-¸ßË¹Çó»ý·¨*/
-   z = hemt(f1);
-   printf("t=%2.8f\n",z);
-   printf("Gauss:\n");                        /* ×ÔÊÊÓ¦¸ßË¹Çó»ý·¨*/
-   z = gasi(-1.0e35,1.0e35,1.0e-9,10,f1);
-   printf("t=%2.8f\n",z);
+
+main() {
+    double f1(double), z;
+    printf("Hermite:\n");                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    z = hemt(f1);
+    printf("t=%2.8f\n", z);
+    printf("Gauss:\n");                        /* ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    z = gasi(-1.0e35, 1.0e35, 1.0e-9, 10, f1);
+    printf("t=%2.8f\n", z);
 }
 
-double f1(x)                                  /* ±»»ýº¯Êý*/
+double f1(x)                                  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 double x;
 {
-  double y;
-    y=x*x*x*x*exp(-x*x);
-  return(y);
+double y;
+y = x * x * x * x * exp(-x * x);
+return(y);
 }

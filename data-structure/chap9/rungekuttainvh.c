@@ -1,55 +1,85 @@
 /*======================================================
-//º¯ÊýÃû£ºrungekuttainvh
-//¹¦ÄÜÃèÊö£º¶¨²½³¤ËÄ½×Áú¸ñ¿âËþËã·¨Çó³£Î¢·Ö·½³Ì×éµÄ³õÖµÎÊÌâ
-//ÊäÈë²ÎÊý£º*y£¨ Ö¸Ïòº¯Êý³õÖµÒÔ¼°º¯Êý·µ»ØÖµµÄÖ¸Õën*(m+1)£©
-//          n£¨·½³Ì×é¸öÊý£©£¬f£¨Ð±ÂÊµÄ¼ÆËã£©
-//          h£¨²½³¤£©£¬m£¨²½Êý£©£¬a£¨Çø¼äÆðµã£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rungekuttainvh
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½Î¢ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Öµï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*yï¿½ï¿½ Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö¸ï¿½ï¿½n*(m+1)ï¿½ï¿½
+//          nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½Ð±ï¿½ÊµÄ¼ï¿½ï¿½ã£©
+//          hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£©
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<math.h>
 
-int rungekuttainvh(y,n,f,h,m,a)
-double *y,(*f)(),h,a;
-int n,m;
+int rungekuttainvh(y, n, f, h, m, a)
+
+double *y, (*f)(), h, a;
+int n, m;
 {
-    double *k1,*k2,*k3,*k4,*ytemp,x;
-    int k=0,i;
-    k1=(double*)malloc(sizeof(double)*n);        /* Î¢·Ö·½³ÌÐ±ÂÊ*/
-	k2=(double*)malloc(sizeof(double)*n);
-	k3=(double*)malloc(sizeof(double)*n);
-	k4=(double*)malloc(sizeof(double)*n);
-	ytemp=(double*)malloc(sizeof(double)*n);
-    if(k1==NULL||k2==NULL||k3==NULL||k4==NULL||ytemp==NULL)
-    {
-        printf("memory alloc failed.\n");
-        return(0);
-    }
-    do
-    {
-        x=a+k*h;
-        f(&y[k*n],k1,x);                           /* k1*/
-		for(i=0;i<n;i++)
-			ytemp[i]=y[k*n+i]+h*k1[i]/2.0;
-		f(ytemp,k2,x+h/2.0);                       /* k2*/		
-		for(i=0;i<n;i++)
-			ytemp[i]=y[k*n+i]+h*k2[i]/2.0;
-		f(ytemp,k3,x+h/2.0);                       /* k3*/		
-		for(i=0;i<n;i++)
-			ytemp[i]=y[k*n+i]+h*k3[i];
-		f(ytemp,k4,x+h);                           /* k4*/		
-		for(i=0;i<n;i++)						   /* ¼ÆËã´Ë´¦µÄº¯ÊýÖµ*/
-			y[(k+1)*n+i]=y[k*n+i]+h/6.0*(k1[i]+2.0*k2[i]+2.0*k3[i]+k4[i]);         
-		k++;
-    }
-    while(k<m);
-	free(k1);
-	free(k2);
-	free(k3);
-	free(k4);
-	free(ytemp);
-    return (1);
+double *k1, *k2, *k3, *k4, *ytemp, x;
+int k = 0, i;
+k1 = (double *) malloc(sizeof(double) * n);        /* Î¢ï¿½Ö·ï¿½ï¿½ï¿½Ð±ï¿½ï¿½*/
+k2 = (double *) malloc(sizeof(double) * n);
+k3 = (double *) malloc(sizeof(double) * n);
+k4 = (double *) malloc(sizeof(double) * n);
+ytemp = (double *) malloc(sizeof(double) * n);
+if(k1==NULL||k2==NULL||k3==NULL||k4==NULL||ytemp==NULL)
+{
+printf("memory alloc failed.\n");
+return(0);
+}
+do
+{
+x = a + k * h;
+f(&y[k * n], k1, x
+);                           /* k1*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=y[
+k *n
++i]+
+h *k1[i]
+/2.0;
+f(ytemp, k2, x
++h/2.0);                       /* k2*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=y[
+k *n
++i]+
+h *k2[i]
+/2.0;
+f(ytemp, k3, x
++h/2.0);                       /* k3*/
+for(
+i = 0;
+i<n;
+i++)
+ytemp[i]=y[
+k *n
++i]+
+h *k3[i];
+f(ytemp, k4, x
++h);                           /* k4*/
+for(
+i = 0;
+i<n;
+i++)                           /* ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½Äºï¿½ï¿½ï¿½Öµ*/
+y[(k+1)*n+i]=y[
+k *n
++i]+h/6.0*(k1[i]+2.0*k2[i]+2.0*k3[i]+k4[i]);
+k++;
+}
+while(k<m);
+free(k1);
+free(k2);
+free(k3);
+free(k4);
+free(ytemp);
+return (1);
 }
 
  

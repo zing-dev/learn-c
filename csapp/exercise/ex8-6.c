@@ -8,19 +8,18 @@
 
 #include <stdio.h>
 
-int main(int argc, char *argv[])
-{
-        int i;
+int main(int argc, char *argv[]) {
+    int i;
 
-        printf("Command line arguments:\n");
-        for (i = 0; i < argc; i++)
-                printf("\targv[%d]: %s\n", i, argv[i]);
-        printf("\n");
+    printf("Command line arguments:\n");
+    for (i = 0; i < argc; i++)
+        printf("\targv[%d]: %s\n", i, argv[i]);
+    printf("\n");
 
-        printf("Environment variables:\n");
-        extern char **environ;
-        for (i = 0; environ[i] != NULL; i++)
-                printf("\tenvp[%2d]: %s\n", i, environ[i]);
+    printf("Environment variables:\n");
+    extern char **environ;
+    for (i = 0; environ[i] != NULL; i++)
+        printf("\tenvp[%2d]: %s\n", i, environ[i]);
 
-        return 0;
+    return 0;
 }

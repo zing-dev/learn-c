@@ -18,16 +18,15 @@ extern int modify_file_using_mmap(int fd); /* ex9-14.c */
 
 #define HELLO_FILE "t9-14.txt"
 
-int main(void)
-{
-        int fd = open(HELLO_FILE, O_RDWR);
-        if (fd < 0) {
-                perror("open");
-                return -1;
-        }
+int main(void) {
+    int fd = open(HELLO_FILE, O_RDWR);
+    if (fd < 0) {
+        perror("open");
+        return -1;
+    }
 
-        int ret = modify_file_using_mmap(fd);
-        close(fd);
+    int ret = modify_file_using_mmap(fd);
+    close(fd);
 
-        return ret;
+    return ret;
 }

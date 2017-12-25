@@ -9,11 +9,11 @@
  * Socket address, internet style.
  */
 struct sockaddr_in {
-    __uint8_t	sin_len; //1
-    sa_family_t	sin_family; //1
-    in_port_t	sin_port;//2
-    struct	in_addr sin_addr;//4
-    char		sin_zero[8]; //8
+    __uint8_t sin_len; //1
+    sa_family_t sin_family; //1
+    in_port_t sin_port;//2
+    struct in_addr sin_addr;//4
+    char sin_zero[8]; //8
 };
 
 /*
@@ -24,11 +24,10 @@ struct in_addr {
 };
 
 
-int main()
-{
+int main() {
 
     struct sockaddr_in client_name;
     int client_name_len = sizeof(client_name);
-    printf("%d\n",client_name_len);
+    printf("%d\n", client_name_len);
 
 }

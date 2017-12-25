@@ -4,12 +4,16 @@
 //
 
 #include<stdio.h>
+
 void fun(int (*p)(int *, int *), int *pa, int *pb);
+
 int sum(int *, int *);
+
 int max(int *, int *);
+
 int min(int *, int *);
-int main(void)
-{
+
+int main(void) {
     int a, b, choice, *pa, *pb;
 
     printf("Enter two number and choose what do you want to do.\n");
@@ -33,25 +37,24 @@ int main(void)
     return 0;
 }
 
-void fun(int (*p)(int *, int *), int *pa, int *pb)
-{
+void fun(int (*p)(int *, int *), int *pa, int *pb) {
     int result;
     result = (*p)(pa, pb);
     printf("The result is:%d\n", result);
 }
-int sum(int *pa, int *pb)
-{
+
+int sum(int *pa, int *pb) {
     return *pa + *pb;
 }
-int max(int *pa, int *pb)
-{
+
+int max(int *pa, int *pb) {
     if (*pa >= *pb)
         return *pa;
     else
         return *pb;
 }
-int min(int *pa, int *pb)
-{
+
+int min(int *pa, int *pb) {
     if (*pa <= *pb)
         return *pa;
     else

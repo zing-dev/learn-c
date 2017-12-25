@@ -2,23 +2,21 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "randgsabs.c"
-void main()
-{
-    int L=100, i,j;
-    double a,b;
-    double *G=(double *)malloc(L*sizeof(double));
-    if(G==NULL)
-    {
-         printf("memory alloc failed.\n");
-         exit(0);
+
+void main() {
+    int L = 100, i, j;
+    double a, b;
+    double *G = (double *) malloc(L * sizeof(double));
+    if (G == NULL) {
+        printf("memory alloc failed.\n");
+        exit(0);
     }
-    a=3.0;                         /* ¾ùÖµ*/
-    b=2.2;                          /* ·½²î*/
-    randgsabs(L,a,b,G);        /* µ÷ÓÃº¯Êý*/
-    for(i=0;i<20;i++)
-	{
-		for(j=0; j<5; j++)
-			printf("%5.4f ",G[i*5+j]);
-		printf("\n");
-	}
+    a = 3.0;                         /* ï¿½ï¿½Öµ*/
+    b = 2.2;                          /* ï¿½ï¿½ï¿½ï¿½*/
+    randgsabs(L, a, b, G);        /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½*/
+    for (i = 0; i < 20; i++) {
+        for (j = 0; j < 5; j++)
+            printf("%5.4f ", G[i * 5 + j]);
+        printf("\n");
+    }
 }
