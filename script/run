@@ -31,7 +31,7 @@ if [[ ${count} -gt 0 ]]; then
 fi
 if [[ ${flag} -eq 1 ]]; then
     source=${source}" -o "${one}" "${lib}
-    echo ${source}
+    echo -e "\e[0;34;1mgcc${source}\e[0m"
     gcc ${source}
 else
     echo -e '\e[0;31;1m缺少原文件\e[0m'
