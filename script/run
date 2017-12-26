@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 count=$#
-source=
-lib=
-one=
+source=""
+lib=""
+one=""
 flag=
 if [[ ${count} -gt 0 ]]; then
     tmp=$1
@@ -18,20 +18,21 @@ if [[ ${count} -gt 0 ]]; then
                 fi
                 source=${source}" "${f}
                 flag=1
-            elif [[ ${f} =~ "-l" ]]; then
-                lib=${lib}" "${f}
-                flag=1
             else
                 flag=0
             fi
+        elif [[ ${f} =~ "-l" ]]; then
+            lib=${lib}" "${f}
+            flag=1
         else
             flag=0
         fi
     done
 fi
+
+source=${source}" -o "${one}" "${lib}
+echo -e "\e[0;34;1mgcc${source}\e[0m"
 if [[ ${flag} -eq 1 ]]; then
-    source=${source}" -o "${one}" "${lib}
-    echo -e "\e[0;34;1mgcc${source}\e[0m"
     gcc ${source}
 else
     echo -e '\e[0;31;1m缺少原文件\e[0m'
