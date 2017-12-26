@@ -5,61 +5,68 @@
 #include "ifft.c"
 #include "r2fft.c"
 
-void main() {
-    int i;
-    struct c_comp x[4], y[4], y1[4], y2[4];
-    double a[4], b[4];
-    for (i = 0; i < 4; i++)                                 /* ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½b*/
-    {
-        a[i] = i + 1;
-        b[i] = 2 * i;
-    }
-    printf(" a sequence\n");
-    for (i = 0; i < 4; i++)
-        printf("%3.1f ", a[i]);
-    printf("\n b sequence\n");
-    for (i = 0; i < 4; i++)
-        printf("%3.1f ", b[i]);
-    for (i = 0; i < 4; i++) {
-        x[i].rmz = a[i];
-        x[i].imz = 0;
-    }
-    i = fft(x, 4, y);                                     /*ï¿½ï¿½aï¿½ï¿½fft*/
-    if (i) {
-        printf("\n\nfft of a:\n");
-        for (i = 0; i < 4; i++)
-            printf("%3.1f+i*%3.1f ", y[i].rmz, y[i].imz);
-    }
-    for (i = 0; i < 4; i++) {
-        x[i].rmz = b[i];
-        x[i].imz = 0;
-    }
-    i = fft(x, 4, y);                                    /*ï¿½ï¿½bï¿½ï¿½fft*/
-    if (i) {
-        printf("\nfft of b:\n");
-        for (i = 0; i < 4; i++)
-            printf("%3.1f+i*%3.1f ", y[i].rmz, y[i].imz);
-    }
-    r2fft(a, b, 4, y1, y2);                               /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½fft*/
-    printf("\n\nr2fft:\n");
-    printf("fft of a:\n");
-    for (i = 0; i < 4; i++)
-        printf("%3.1f+i*%3.1f ", y1[i].rmz, y1[i].imz);
+void main()
+{
+  int i;
+  struct c_comp x[4],y[4],y1[4],y2[4];
+  double a[4],b[4];
+  for(i=0; i<4; i++)                                 /* ¸ø¶¨aºÍb*/
+  {
+	  a[i] = i+1;
+	  b[i] = 2*i;
+  }
+  printf(" a sequence\n");
+  for(i=0; i<4; i++)
+	  printf("%3.1f ",a[i]);
+  printf("\n b sequence\n");
+  for(i=0; i<4; i++)
+	  printf("%3.1f ",b[i]);
+  for(i=0; i<4; i++) 
+  {
+    x[i].rmz = a[i];
+    x[i].imz = 0;
+  } 
+  i = fft(x,4,y); 	                                 /*ÇóaµÄfft*/
+  if(i)
+  {
+    printf("\n\nfft of a:\n");
+    for(i=0; i<4; i++)
+      printf("%3.1f+i*%3.1f ",y[i].rmz,y[i].imz);
+  }
+  for(i=0; i<4; i++)       
+  {
+    x[i].rmz = b[i];
+    x[i].imz = 0;
+  } 
+  i = fft(x,4,y); 	                                /*ÇóbµÄfft*/                         
+  if(i)
+  {
     printf("\nfft of b:\n");
-    for (i = 0; i < 4; i++)
-        printf("%3.1f+i*%3.1f ", y2[i].rmz, y2[i].imz);
-    i = ifft(y1, 4, x);                                /*ï¿½ï¿½fft(a)ï¿½ï¿½ifft*/
-    if (i) {
-        printf("\n\nifft of fft(b):\n");
-        for (i = 0; i < 4; i++)
-            printf("%3.1f+i*%3.1f ", x[i].rmz, x[i].imz);
-    }
-    i = ifft(y2, 4, x);                                /*ï¿½ï¿½fft(b)ï¿½ï¿½ifft*/
-    if (i) {
-        printf("\nifft of fft(b):\n");
-        for (i = 0; i < 4; i++)
-            printf("%3.1f+i*%3.1f ", x[i].rmz, x[i].imz);
-    }
-    printf("\n");
+    for(i=0; i<4; i++)
+      printf("%3.1f+i*%3.1f ",y[i].rmz,y[i].imz);
+  }
+  r2fft(a,b,4,y1,y2);                               /* ¶ÔÁ½¸öÊµÐòÁÐÍ¬Ê±Çófft*/
+  printf("\n\nr2fft:\n");
+  printf("fft of a:\n");
+  for(i=0; i<4; i++)
+     printf("%3.1f+i*%3.1f ",y1[i].rmz,y1[i].imz);
+  printf("\nfft of b:\n");
+  for(i=0; i<4; i++)
+     printf("%3.1f+i*%3.1f ",y2[i].rmz,y2[i].imz);  
+  i = ifft(y1,4,x);                               	/*Çófft(a)µÄifft*/
+  if(i)
+  {
+    printf("\n\nifft of fft(b):\n");
+    for(i=0; i<4; i++)
+      printf("%3.1f+i*%3.1f ",x[i].rmz,x[i].imz);
+  }
+  i = ifft(y2,4,x);                               	/*Çófft(b)µÄifft*/
+  if(i)
+  {
+    printf("\nifft of fft(b):\n");
+    for(i=0; i<4; i++)
+      printf("%3.1f+i*%3.1f ",x[i].rmz,x[i].imz);
+  }
+  printf("\n");
 }
 

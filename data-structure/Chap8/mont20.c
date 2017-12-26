@@ -2,32 +2,31 @@
 #include "stdio.h"
 #include "simps2.c"
 #include "mont2.c"
-
-main() {
-    double a, b, eps, s, h0, f(double, double);
-    void fy(double, double []);
-    a = 0.0;
-    b = 4.0;
-    eps = 0.0001;
-    h0 = 1e-6;
-    s = simps2(a, b, 10, eps, h0, f, fy);        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½*/
-    printf("simps2: s=%2.5f\n", s);         /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½Ö½ï¿½ï¿½*/
-    s = mont2(a, b, a, b, f);                  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½*/
-    printf("mont2: s=%2.5f\n", s);         /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½Ö½ï¿½ï¿½*/
-    getchar();
-}
-
-double f(x, y)                            /* ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄºï¿½ï¿½ï¿½*/
-double x, y;
+main()
 {
-double z;
-z = exp(-x * y) / (1.0 + x * y);
-return(z);
+  double a,b,eps,s,h0,f(double,double);
+  void  fy(double,double []);
+  a = 0.0;
+  b = 4.0;
+  eps = 0.0001;
+  h0 = 1e-6;
+  s = simps2(a,b,10,eps,h0,f,fy);        /* µ÷ÓÃÐÁ²·Éú»ý·Ö·¨½øÐÐ»ý·Ö*/
+  printf("simps2: s=%2.5f\n",s);         /* ´òÓ¡»ý·Ö½á¹û*/
+  s = mont2(a,b,a,b,f);                  /* µ÷ÓÃÃÉÌØ¿¨Âå»ý·Ö·¨½øÐÐ»ý·Ö*/
+  printf("mont2: s=%2.5f\n",s);         /* ´òÓ¡»ý·Ö½á¹û*/
+  getchar();
 }
-void fy(x, y)                             /* ï¿½ï¿½ï¿½ï¿½Ö½ï¿½Äºï¿½ï¿½ï¿½*/
-double x, y[2];
+double f(x,y)                            /* ±»»ý·ÖµÄº¯Êý*/
+double x,y;
 {
-y[0] = 0;
-y[1] = 4.0;
-return;
+  double z;
+  z = exp(-x*y)/(1.0+x*y);
+  return(z);
+}
+void fy(x,y)                             /* Çó»ý·Ö½çµÄº¯Êý*/
+double x,y[2];
+{
+  y[0] = 0;
+  y[1] = 4.0;
+  return;
 }

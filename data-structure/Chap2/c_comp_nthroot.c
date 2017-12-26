@@ -1,16 +1,15 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_comp_nthroot.c
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½Î·ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//          nï¿½ï¿½nï¿½Î·ï¿½ï¿½ï¿½ï¿½ï¿½
-//          cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£¬ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
+//º¯ÊýÃû£ºc_comp_nthroot.c
+//¹¦ÄÜÃèÊö£ºÇó¸´ÊýµÄn´Î·½¸ù
+//ÊäÈë²ÎÊý£ºa£¨ÒÑÖª¸´Êý£©
+//          n£¨n´Î·½¸ù£©
+//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£¬ÊÇÒ»¸öÊý×é£¬¹²n¸ö£©
+//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
 =========================================================*/
 
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
-
 #define PI 3.1415926
 
 /*struct c_comp{
@@ -18,34 +17,28 @@
     double imz;
 }c_comp;*/
 
-int c_comp_nthroot(a, c, n)
-
-struct c_comp *a, *c;
+int c_comp_nthroot(a,c,n)
+struct c_comp *a,*c;
 int n;
 {
-int i;
-double R, theta;
+    int i;
+    double R,theta;
 
-if(a == NULL || c == NULL)
-{
-printf("(c_comp_nthroot)The c_comp pointer is NULL!\n");
-return(0);
-}
+    if(a == NULL || c == NULL)
+    {
+        printf("(c_comp_nthroot)The c_comp pointer is NULL!\n");
+        return(0);
+    }
 
-theta = atan2(a->imz, a->rmz);
-R = sqrt(a->rmz * a->rmz + a->imz * a->imz);
+    theta = atan2(a->imz,a->rmz);
+    R = sqrt(a->rmz*a->rmz + a->imz*a->imz);
 
-R = pow(R, 1.0 / n);
+    R = pow(R,1.0/n);
 
-for(
-i = 0;
-i<n;
-i++)
-{
-c[i].
-rmz = R * cos((theta + 2 * i * PI) / n);
-c[i].
-imz = R * sin((theta + 2 * i * PI) / n);
-}
-return(1);
+    for(i=0; i<n; i++)
+    {
+        c[i].rmz = R*cos((theta+2*i*PI)/n);
+        c[i].imz = R*sin((theta+2*i*PI)/n);
+    }
+    return(1);
 }

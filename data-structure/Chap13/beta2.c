@@ -1,105 +1,89 @@
 /*=============================================================
-// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½beta2
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²»ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Öµ
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½Ô±ï¿½ï¿½ï¿½aï¿½ï¿½Öµï¿½ï¿½Òªï¿½ï¿½a>0ï¿½ï¿½
-//           b ï¿½Ô±ï¿½ï¿½ï¿½bï¿½ï¿½Öµï¿½ï¿½Òªï¿½ï¿½b>0ï¿½ï¿½
-//           x ï¿½Ô±ï¿½ï¿½ï¿½xï¿½ï¿½Öµï¿½ï¿½Òªï¿½ï¿½0<=x<=1ï¿½ï¿½
-//         e1 ï¿½ï¿½ï¿½ï¿½Òªï¿½ó£¬µï¿½ï¿½ï¿½ï¿½Îµï¿½ï¿½Æµï¿½Öµï¿½ä»¯ï¿½ï¿½Ð¡ï¿½ï¿½e1Ê±ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ ï¿½ï¿½ Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+// º¯ Êý Ãû£ºbeta2
+// ¹¦ÄÜÃèÊö£ºÇó½â²»ÍêÈ«±´Ëþ»ý·ÖµÄÖµ
+// ÊäÈë²ÎÊý£ºa ×Ô±äÁ¿aµÄÖµ¡£ÒªÇóa>0¡£
+//           b ×Ô±äÁ¿bµÄÖµ¡£ÒªÇób>0¡£
+//           x ×Ô±äÁ¿xµÄÖµ£¬ÒªÇó0<=x<=1¡£
+//         e1 ¾«¶ÈÒªÇó£¬µ±Á½´ÎµÝÍÆµÄÖµ±ä»¯ÂÊÐ¡ÓÚe1Ê±£¬ÈÏÎªÒÑÊÕÁ²
+// ·µ »Ø Öµ£º²»ÍêÈ«±´Ëþº¯ÊýµÄÖµ
 //==============================================================*/
 #include "stdio.h"
 #include "math.h"
 #include "gammln.c"
-
-#define NMAX 100                         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+#define NMAX 100                         /* µü´úµÄ×î´ó´ÎÊý*/
 #define EULER 0.5772156649
-#define FPMIN 1.0e-30                    /* Îªï¿½ï¿½Ö¹ï¿½ï¿½0Ê¹ï¿½ÃµÄ³ï¿½ï¿½ï¿½*/
+#define FPMIN 1.0e-30                    /* Îª·ÀÖ¹³ý0Ê¹ÓÃµÄ³£Êý*/
 
-double beta2(a, b, x, e1)
-double a, b, x, e1;
+double beta2(a,b,x,e1)
+double a,b,x,e1;
 {
-double t;
+  double t;
+  double subcf();                          /* ¼ÆËãÁ¬·ÖÊ½¼¶ÊýÐèÒªµÄ±äÁ¿ºÍº¯Êý*/
+  if((x<0.0)||(x>1.0)||(a<=0.0)||(b<=0.0))
+  {
+    printf("Bad input parameter\n");
+    return(0.0);
+  }
+  else if(x == 0.0)                                /* xÎª0µÄÇé¿ö*/
+  {
+    t = 0.0;
+    return(t);
+  }
+  else if(x == 1.0)                                /* xÎª1µÄÇé¿ö*/
+  {
+    t = 1.0;
+    return(t);
+  }
+  else if(x > (a+1.0)/(a+b+2.0))
+  {
+    t = exp(gammln(a+b)-gammln(a)-gammln(b)+a*log(x)+b*log(1.0-x)); /* ÏµÊý*/
+    t = 1.0-t*subcf(b,a,1.0-x,e1)/b;               /* Ê¹ÓÃÁ¬·ÖÊ½¼¶Êý*/
+    return(t);
+  }
+  else
+  {
+    t = exp(gammln(a+b)-gammln(a)-gammln(b)+a*log(x)+b*log(1.0-x)); /* ÏµÊý*/
+    t = t*subcf(a,b,x,e1)/a;                       /* Ê¹ÓÃÁ¬·ÖÊ½¼¶Êý*/
+    return(t);  
+  }
+}
 
-double subcf();                          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ä±ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½ï¿½*/
-if((x<0.0)||(x>1.0)||(a<=0.0)||(b<=0.0))
+static double subcf(a,b,x,e1)
+double a,b,x,e1;
 {
-printf("Bad input parameter\n");
-return(0.0);
-}
-else if(x == 0.0)                                /* xÎª0ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-t = 0.0;
-return(t);
-}
-else if(x == 1.0)                                /* xÎª1ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-t = 1.0;
-return(t);
-}
-else if(x > (a+1.0)/(a+b+2.0))
-{
-t = exp(gammln(a + b) - gammln(a) - gammln(b) + a * log(x) + b * log(1.0 - x)); /* Ïµï¿½ï¿½*/
-t = 1.0 - t * subcf(b, a, 1.0 - x, e1) / b;               /* Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½*/
-return(t);
-}
-else
-{
-t = exp(gammln(a + b) - gammln(a) - gammln(b) + a * log(x) + b * log(1.0 - x)); /* Ïµï¿½ï¿½*/
-t = t * subcf(a, b, x, e1) / a;                       /* Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½*/
-return(t);
-}
-}
-
-static double subcf(a, b, x, e1)
-double a, b, x, e1;
-{
-int n;
-double t, del, an, c, d;
-c = 1.0;
-d = 1.0 - (a + b) * x / (a + 1.0);
-if(
-fabs(d)
-<FPMIN)
-d = FPMIN;
-d = 1.0 / d;
-t = d;
-for(
-n = 1;
-n<NMAX; n++)
-{
-an = n * (b - n) * x / ((a + 2.0 * n - 1.0) * (a + 2.0 * n));  /* ï¿½ï¿½2nï¿½Úµï¿½Ïµï¿½ï¿½a,ï¿½Ë½Úµï¿½Ïµï¿½ï¿½bÎª1*/
-d = an * d + 1.0;                              /* ï¿½ï¿½ï¿½ï¿½d*/
-c = 1.0 + an / c;                              /* ï¿½ï¿½ï¿½ï¿½c*/
-if(
-fabs(d)
-< FPMIN)                        /* ï¿½ï¿½ï¿½cdï¿½Ä·ï¿½Î§*/
-d = FPMIN;
-if(
-fabs(c)
-< FPMIN)
-c = FPMIN;
-d = 1.0 / d;
-del = d * c;
-t = t * del;
-an = -(a + n) * (a + b + n) * x / ((a + 2.0 * n) * (a + 1.0 + 2.0 * n));/* ï¿½ï¿½2n+1ï¿½ï¿½*/
-d = 1.0 + an * d;
-c = 1.0 + an / c;
-if(
-fabs(d)
-< FPMIN)
-d = FPMIN;
-if(
-fabs(c)
-< FPMIN)
-c = FPMIN;
-d = 1.0 / d;
-del = d * c;
-t = t * del;
-if(
-fabs(del
--1.0)<e1)                       /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½*/
-return(t);
-}
-printf("iteration not converged.");          /* Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-return(t);
+  int n;
+  double t,del,an,c,d;
+  c = 1.0;
+  d = 1.0-(a+b)*x/(a+1.0);
+  if(fabs(d)<FPMIN)
+    d = FPMIN;
+  d = 1.0/d;
+  t = d;
+  for(n=1; n<NMAX; n++)
+  {
+    an = n*(b-n)*x/((a+2.0*n-1.0)*(a+2.0*n));  /* µÚ2n½ÚµÄÏµÊýa,´Ë½ÚµÄÏµÊýbÎª1*/
+    d = an*d+1.0;                              /* ¼ÆËãd*/
+    c = 1.0+an/c;                              /* ¼ÆËãc*/
+    if(fabs(d) < FPMIN)                        /* ¼ì²écdµÄ·¶Î§*/
+      d = FPMIN;
+    if(fabs(c) < FPMIN)
+      c = FPMIN;
+    d = 1.0/d;
+    del = d*c;
+    t = t*del;
+    an = -(a+n)*(a+b+n)*x/((a+2.0*n)*(a+1.0+2.0*n));/* µÚ2n+1½Ú*/
+    d = 1.0+an*d;
+    c = 1.0+an/c;
+    if(fabs(d) < FPMIN)
+      d = FPMIN;
+    if(fabs(c) < FPMIN)
+      c = FPMIN;
+    d = 1.0/d;
+    del = d*c;
+    t = t*del;
+    if(fabs(del-1.0)<e1)                       /* ¼¶Êý²¿·ÖÒÑ¾­ÊÕÁ²*/
+      return(t);
+  }
+  printf("iteration not converged.");          /* Ã»ÓÐÊÕÁ²*/
+  return(t);
 }

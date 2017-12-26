@@ -1,20 +1,22 @@
 #include "stdio.h"
 #include "expi.c"
-
-main() {
-    int i, j, ni;
-    double xj, y;
-    double e1 = 1.0e-7;               /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½È«Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½*/
-    int n[3] = {1, 2, 3};
-    double x[3] = {0.5, 1.0, 5.0};
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            ni = n[i];                                 /* Ñ­ï¿½ï¿½È¡aï¿½ï¿½x*/
-            xj = x[j];
-            y = expi(ni, xj, e1);                      /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-            printf("E(%d,%1.1f)=%e ", ni, xj, y);
-        }
-        printf("\n");
+main()
+{
+  int i,j,ni;
+  double xj,y;
+  double e1=1.0e-7;               /* ÕâÁ½¸öÖµÓÃÓÚ²»ÍêÈ«Ù¤Âíº¯ÊýµÄ¼ÆËã*/
+  int n[3]={1,2,3};
+  double x[3]={0.5,1.0,5.0};
+  for(i=0; i<3; i++)
+  {
+    for(j=0; j<3; j++)
+    {
+      ni=n[i];                                 /* Ñ­»·È¡aºÍx*/
+      xj=x[j];
+      y = expi(ni,xj,e1);                      /* µ÷ÓÃº¯ÊýÇóÖµ²¢´òÓ¡½á¹û*/
+      printf("E(%d,%1.1f)=%e ",ni,xj,y);
     }
-    getchar();
+    printf("\n");
+  }
+  getchar();
 }

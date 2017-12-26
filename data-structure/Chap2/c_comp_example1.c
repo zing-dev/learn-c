@@ -5,19 +5,22 @@
 #include "c_comp_product.c"
 #include "c_comp_divide.c"
 
-void main() {
-    struct c_comp a, b, c, d;
-    a.rmz = 7.0;
-    a.imz = 3.0;
-    b.rmz = 2.3;
-    b.imz = -4.5;
+void main()
+{
+	struct c_comp a,b,c,d;
+	a.rmz=7.0;
+	a.imz=3.0;
+	b.rmz=2.3;
+	b.imz=-4.5;
 
-    if (c_comp_product(&a, &b, &c)) {
-        printf("ï¿½Ë·ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
-        printf("%1.5f+j%1.5f\n", c.rmz, c.imz);
-    }
-    if (c_comp_divide(&a, &b, &d)) {
-        printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
-        printf("%1.5f+j%1.5f\n", d.rmz, d.imz);
-    }
+	if(c_comp_product(&a,&b,&c))
+	{
+		printf("³Ë·¨½á¹ûÎª£º");
+		printf("%1.5f+j%1.5f\n",c.rmz,c.imz);
+	}
+	if(c_comp_divide(&a,&b,&d))
+	{
+		printf("³ý·¨½á¹ûÎª£º");
+		printf("%1.5f+j%1.5f\n",d.rmz,d.imz);
+	}
 }

@@ -2,28 +2,27 @@
 #include "leg1.c"
 #include "cheb.c"
 #include "gasi.c"
-
-main() {
-    double a, b, eps, h0, z;
-    double f1(double);
-    a = 0.0;
-    b = 4.0;
-    eps = 1e-8;
-    h0 = 1e-5;
-    z = leg1(a, b, 4, eps, h0, f1);                     /* ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½-ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("lagr: t=%7.6f\n", z);                 /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-    z = cheb(a, b, 4, eps, h0, f1);                     /* ï¿½ï¿½ï¿½Ð±ï¿½Ñ©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("cheb: t=%7.6f\n", z);
-    z = gasi(a, b, eps, 10, f1);                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("gasi: t=%7.6f\n", z);
+main()
+{
+  double a,b,eps,h0,z;
+  double f1(double);
+  a = 0.0;
+  b = 4.0;
+  eps = 1e-8;
+  h0 = 1e-5;
+  z=leg1(a,b,4,eps,h0,f1);                     /* ÓÃÀÕÈÃµÂ-¸ßË¹Çó»ý·¨»ý·Ö*/
+  printf("lagr: t=%7.6f\n",z);                 /* ´òÓ¡½á¹û*/
+  z=cheb(a,b,4,eps,h0,f1);                     /* ÓÃÇÐ±ÈÑ©·òÇó»ý·¨»ý·Ö*/
+  printf("cheb: t=%7.6f\n",z);
+  z=gasi(a,b,eps,10,f1);                     /* ÓÃ×ÔÊÊÓ¦¸ßË¹Çó»ý·¨»ý·Ö*/
+  printf("gasi: t=%7.6f\n",z);
 }
 
 #include "math.h"
-
 double f1(x)
-double x;                                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄºï¿½ï¿½ï¿½*/
+double x;                                      /* ±»»ý·ÖµÄº¯Êý*/
 {
-double y;
-y = exp(-x * x) / (1.0 + x * x);
-return(y);
+  double y;
+    y=exp(-x*x)/(1.0+x*x);
+  return(y);
 }

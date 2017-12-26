@@ -1,129 +1,90 @@
 /*=============================================================
-// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½cpmul(a,n,b,m,c)
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ä¸ï¿½Ïµï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ê½Aï¿½ï¿½Bï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½AÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	     bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½BÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	     cï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ¶ï¿½ï¿½ï¿½Ê½Cï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ ï¿½ï¿½ Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ò·µ»ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0
+// º¯ Êý Ãû£ºcpmul(a,n,b,m,c)
+// ¹¦ÄÜÃèÊö£ºÍê³ÉÏµÊý±íÊ¾µÄ¸´ÏµÊýµÄ¶àÏîÊ½AÓëBÏà³Ë£¬½á¹ûÏµÊý·ÅÔÚcÀï
+// ÊäÈë²ÎÊý£ºa£¨¶àÏîÊ½AÏµÊý£©£¬n£¨ÏµÊý¸öÊý£©
+	     b£¨¶àÏîÊ½BÏµÊý£©£¬m£¨ÏµÊý¸öÊý£©
+	     c£¨·µ»ØµÄ¶àÏîÊ½CµÄÏµÊý£©
+// ·µ »Ø Öµ£ºÕûÐÍÊý×Ö¡£¼ÆËã³É¹¦Ôò·µ»Ø1£¬·ñÔò·µ»Ø0
 //==============================================================*/
 
 #include"stdio.h"
 #include"math.h"
-#include"c_comp.c"    /*ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ä³Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½Íµï¿½ï¿½Ê¾ï¿½à»¥×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+#include"c_comp.c"	/*¸´ÏµÊý¶àÏîÊ½µÄ³Ë·¨º¯ÊýÐèÒªµ÷ÓÃÏµÊýºÍµã±íÊ¾Ïà»¥×ª»¯µÄÁ½¸öº¯Êý*/
 #include"p2c.c"
 #include"c2p.c"
 
-int cpmul(a, n, b, m, c)
-struct c_comp *a, *b, *c;
-int n, m;
+int cpmul(a,n,b,m,c)
+struct c_comp *a,*b,*c;
+int n,m;
 {
-int i, k, nn;
-struct c_comp *aa, *bb, *cc, *ya, *yb, *yc;
+  int i,k,nn;
+  struct c_comp *aa,*bb,*cc,*ya,*yb,*yc;
 
-if((a==NULL) || (b==NULL) || (c==NULL))   /* ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Îªï¿½ï¿½*/
-{
-printf("(cpmul)NULL pointer found.\n");
-return(0);
-}
+  if((a==NULL) || (b==NULL) || (c==NULL))   /* ¼ì²âÊÇ·ñÓÐÖ¸ÕëÎª¿Õ*/
+  {
+    printf("(cpmul)NULL pointer found.\n");
+    return(0);
+  }
+  
+  k = log(n+m-1-0.5)/log(2.0)+1;	/* Çó×îÐ¡µÄk£¬²¢Âú×ã2^k ²»Ð¡ÓÚ¶àÏîÊ½CµÄ½×Êý*/
+  nn = 1;				/* Çó³ö2^k*/
+  for(i=0; i<k; i++)		
+    nn = nn<<1;
+					/* ÎªÀ©Õ¹ºóµÄ¶àÏîÊ½·ÖÅä×ã¹»µÄ¿Õ¼ä*/
+  aa = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
+  bb = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
+  cc = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
+  ya = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
+  yb = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
+  yc = (struct c_comp*)malloc(nn*sizeof(struct c_comp));
 
-k = log(n + m - 1 - 0.5) / log(2.0) + 1;    /* ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2^k ï¿½ï¿½Ð¡ï¿½Ú¶ï¿½ï¿½ï¿½Ê½Cï¿½Ä½ï¿½ï¿½ï¿½*/
-nn = 1;                /* ï¿½ï¿½ï¿½2^k*/
-for(
-i = 0;
-i<k;
-i++)
-nn = nn << 1;
-/* Îªï¿½ï¿½Õ¹ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½Ä¿Õ¼ï¿½*/
-aa = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
-bb = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
-cc = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
-ya = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
-yb = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
-yc = (struct c_comp *) malloc(nn * sizeof(struct c_comp));
+  if(!(aa && bb && cc && ya && yb && yc))   /* ¼ì²âÊÇ·ñÓÐÖ¸ÕëÎª¿Õ*/
+  {
+    printf("(cpmul)memory alloc failed.\n");
+    return(0);
+  }
+  for(i=0; i<n; i++) 			 /*½«A,BÁ½¸ö¶àÏîÊ½²¹×ã³É2^k½×µÄ£¬²¢×ª´æÔÚaaÓëbbÖÐ*/
+  {
+    aa[i].rmz = a[i].rmz;
+    aa[i].imz = a[i].imz;
+  }
+  for(i=n; i<nn; i++)
+  {
+    aa[i].rmz = 0;
+    aa[i].imz = 0;
+  }
+  for(i=0; i<m; i++)
+  {
+    bb[i].rmz = b[i].rmz;
+    bb[i].imz = b[i].imz;
+  }
+  for(i=m; i<nn; i++)
+  {
+    bb[i].rmz = 0;
+    bb[i].imz = 0;
+  }
 
-if(!(
-aa &&bb
-&&
-cc &&ya
-&&
-yb &&yc
-))   /* ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Îªï¿½ï¿½*/
-{
-printf("(cpmul)memory alloc failed.\n");
-return(0);
-}
-for(
-i = 0;
-i<n;
-i++)             /*ï¿½ï¿½A,Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½2^kï¿½×µÄ£ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½aaï¿½ï¿½bbï¿½ï¿½*/
-{
-aa[i].
-rmz = a[i].rmz;
-aa[i].
-imz = a[i].imz;
-}
-for(
-i = n;
-i<nn;
-i++)
-{
-aa[i].
-rmz = 0;
-aa[i].
-imz = 0;
-}
-for(
-i = 0;
-i<m;
-i++)
-{
-bb[i].
-rmz = b[i].rmz;
-bb[i].
-imz = b[i].imz;
-}
-for(
-i = m;
-i<nn;
-i++)
-{
-bb[i].
-rmz = 0;
-bb[i].
-imz = 0;
-}
-
-i = c2p(aa, nn, ya);             /*ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Aï¿½Äµï¿½ï¿½Ê¾ï¿½ï¿½Ê½*/
-k = c2p(bb, nn, yb);             /*ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Bï¿½Äµï¿½ï¿½Ê¾ï¿½ï¿½Ê½*/
-
-if(
-i &&k
-)                 /* ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¡£ï¿½ï¿½ï¿½ò·µ»ï¿½0*/
-{
-
-for(
-i = 0;
-i<nn;
-i++)             /* ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ÏµÄ³Ë»ï¿½*/
-c_comp_product(&ya[i], &yb[i], &yc[i]
-);
-k = p2c(yc, nn, cc);             /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Cï¿½ï¿½Ïµï¿½ï¿½*/
-if(k)                 /*ï¿½Þ³ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ß½ï¿½ï¿½ï¿½ï¿½î¡£ï¿½ï¿½p2cï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ò·µ»ï¿½0*/
-{
-for(
-i = 0;
-i<m+n-1; i++)
-{
-c[i].
-rmz = cc[i].rmz;
-c[i].
-imz = cc[i].imz;
-}
-return(1);
-}
-else
-return(0);
-}
-else
-return(0);
+  i = c2p(aa,nn,ya);			 /*Çó³öÀ©Õ¹ºó¶àÏîÊ½AµÄµã±íÊ¾ÐÎÊ½*/
+  k = c2p(bb,nn,yb);			 /*Çó³öÀ©Õ¹ºó¶àÏîÊ½BµÄµã±íÊ¾ÐÎÊ½*/
+  					 
+  if(i&&k)			  	 /* Èôµã±íÊ¾Çó½â³É¹¦£¬¼ÌÐøÔËËã¡£·ñÔò·µ»Ø0*/
+  {
+  
+    for(i=0; i<nn; i++)			 /* ¼ÆËãÔÚ¸÷µãÉÏµÄ³Ë»ý*/
+      c_comp_product(&ya[i],&yb[i],&yc[i]);
+    k = p2c(yc,nn,cc);			 /*Çó³ö¶àÏîÊ½CµÄÏµÊý*/   
+    if(k)				 /*ÌÞ³ý¶àÓàµÄ¸ß½×ÁãÏî¡£Èôp2cº¯ÊýÊ§°Ü£¬Ôò·µ»Ø0*/
+    {
+      for(i=0; i<m+n-1; i++)
+      {
+        c[i].rmz = cc[i].rmz;
+        c[i].imz = cc[i].imz;
+      }
+      return(1);
+    }
+    else
+      return(0);
+  }
+  else
+    return(0);
 }

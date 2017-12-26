@@ -1,122 +1,90 @@
 /*=============================================================
-// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ifft (y,n,x)
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ä»»
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½ï¿½ï¿½ä»»ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½nï¿½ï¿½yï¿½Ä³ï¿½ï¿½È£ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ä»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½
-// ï¿½ï¿½ ï¿½ï¿½ Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ò·µ»ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0
-//==============================================================*/
+// º¯ Êý Ãû£ºifft (y,n,x)
+// ¹¦ÄÜÃèÊö£º¸µÀïÒ¶Äæ±ä»»
+// ÊäÈë²ÎÊý£ºy£¨´ý±ä»»µÄÐòÁÐ£©£¬n£¨yµÄ³¤¶È£©£¬x£¨±ä»»ºóµÄÐòÁÐ£©
+// ·µ »Ø Öµ£ºÕûÐÍÊý×Ö¡£¼ÆËã³É¹¦Ôò·µ»Ø1£¬·ñÔò·µ»Ø0
+//==============================================================*/ 
 #include"stdio.h"
 #include"math.h"
 #include"c_comp.c"
-
-int ifft(y, n, x)
+int ifft(y,n,x)
 int n;
-struct c_comp *x, *y;
+struct c_comp *x,*y;
 {
-int i, j, k, nn;
-
-int ifft1(struct c_comp *y, int n, struct c_comp *x); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Òªï¿½ï¿½ï¿½Ãµï¿½ï¿½Óºï¿½ï¿½ï¿½*/
-k = log(n - 0.5) / log(2.0) + 1;                      /* ï¿½ï¿½ï¿½log2(n)*/
-nn = 1;
-for(
-i = 0;
-i<k;
-i++)                              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-nn = nn << 1;
-if(nn != n)
-{
-printf("(ifft)n should be 2^k.\n");
-return(0);
-}
-j = ifft1(y, n, x);                               /* ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½*/
-if(j)
-{
-for(
-i = 0;
-i<n;
-i++)                               /* ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½n*/
-{
-x[i].rmz /=
-n;
-x[i].imz /=
-n;
-}
-}
-return(j);
+   int i,j,k,nn;
+   int ifft1(struct c_comp *y,int n,struct c_comp *x); /* Ê×ÏÈÉùÃ÷Ò»¸öÒªµ÷ÓÃµÄ×Óº¯Êý*/
+   k = log(n-0.5)/log(2.0)+1;	                  /* Çó³ölog2(n)*/
+   nn = 1;
+   for(i=0; i<k; i++)		                      /* ¼ì²âµã¸öÊýÊÇ·ñÊÇ2µÄÕûÊý´ÎÃÝ*/
+	   nn = nn<<1;
+   if(nn != n)
+   {
+	   printf("(ifft)n should be 2^k.\n");
+	   return(0);
+   }
+   j = ifft1(y,n,x);		                       /* µ÷ÓÃ×Óº¯ÊýÇó½âÇóºÍ·ûºÅÖÐµÄ²¿·Ö*/
+   if(j)
+   {
+     for(i=0; i<n; i++)		                       /* ½«×Óº¯Êý·µ»ØµÄ½á¹û³ýÒÔn*/
+     {
+       x[i].rmz /= n;
+       x[i].imz /= n;
+     }
+   }
+   return(j);
 }
 
-int ifft1(y, n, x)
+int ifft1(y,n,x)
 int n;
-struct c_comp *x, *y;
+struct c_comp *x,*y;
 {
-int i, j, k;
-struct c_comp wn, w, t;
-struct c_comp *x0, *x1, *y0, *y1;
-if(n==1)                                          /* n=1Ê±ï¿½ï¿½Î¨Ò»Ôªï¿½ï¿½xï¿½ï¿½yï¿½ï¿½ï¿½*/
-{
-x[0].
-rmz = y[0].rmz;
-x[0].
-imz = y[0].imz;
-return(1);
-}
-k = n >> 1;                                 /*kï¿½ï¿½nï¿½ï¿½Ò»ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½Ä´ï¿½Ð¡*/
-x0 = (struct c_comp *) malloc(k * sizeof(struct c_comp));
-x1 = (struct c_comp *) malloc(k * sizeof(struct c_comp));
-y0 = (struct c_comp *) malloc(k * sizeof(struct c_comp));
-y1 = (struct c_comp *) malloc(k * sizeof(struct c_comp));
-if((x0==NULL)||(x1==NULL)||(y0==NULL)||(y1==NULL))
-{
-printf("(ifft)memory xlloc fxiled.\n");
-return(0);
-}
-for(
-i = 0;
-i<k;
-i++)                             /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-j = 2 * i;
-y0[i].
-rmz = y[j].rmz;
-y0[i].
-imz = y[j].imz;
-y1[i].
-rmz = y[j + 1].rmz;
-y1[i].
-imz = y[j + 1].imz;
-}
-i = ifft1(y0, k, x0);                           /* ï¿½ï¿½ï¿½ï¿½ï¿½Î·Ö±ï¿½ï¿½ï¿½ï¿½*/
-j = ifft1(y1, k, x1);
-if(
-i &&j
-)                                    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ûºï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-wn.
-rmz = cos(2 * PI / n);
-wn.
-imz = sin(2 * PI / n);
-w.
-rmz = 1.0;
-w.
-imz = 0.0;
+  int i,j,k;
+  struct c_comp wn,w,t;
+  struct c_comp *x0,*x1,*y0,*y1;  
+  if(n==1)			                              /* n=1Ê±£¬Î¨Ò»ÔªËØxÓëyÏàµÈ*/
+  {
+    x[0].rmz = y[0].rmz;
+    x[0].imz = y[0].imz;
+    return(1);
+  } 
+  k = n>>1;			                     /*kÊÇnµÄÒ»°ë£¬¾ÍÊÇÁ½¸öÐ¡¹æÄ£ÎÊÌâ·ÖÅä¿Õ¼äµÄ´óÐ¡*/
+  x0 = (struct c_comp*)malloc(k*sizeof(struct c_comp));
+  x1 = (struct c_comp*)malloc(k*sizeof(struct c_comp));
+  y0 = (struct c_comp*)malloc(k*sizeof(struct c_comp));
+  y1 = (struct c_comp*)malloc(k*sizeof(struct c_comp));
+  if((x0==NULL)||(x1==NULL)||(y0==NULL)||(y1==NULL))
+  {
+    printf("(ifft)memory xlloc fxiled.\n");
+    return(0);
+  } 
+  for(i=0; i<k; i++)	                         /* ½«ÎÊÌâ·Ö³ÉÁ½¶Î*/
+  {
+    j=2*i;
+    y0[i].rmz = y[j].rmz;
+    y0[i].imz = y[j].imz;
+    y1[i].rmz = y[j+1].rmz;
+    y1[i].imz = y[j+1].imz;
+  } 
+  i = ifft1(y0,k,x0);                           /* ¶ÔÁ½¶Î·Ö±ðÇó½â*/
+  j = ifft1(y1,k,x1);  
+  if(i && j)		                            /* ÈôÁ½¶ÎÇó½â³É¹¦£¬Ôò½«Á½²¿·Ö½â×ÛºÏÆðÀ´*/
+  {
+    wn.rmz = cos(2*PI/n);
+    wn.imz = sin(2*PI/n);
+    w.rmz = 1.0;
+    w.imz = 0.0;
 
-for(
-i = 0;
-i<k;
-i++)
-{
-c_comp_product(&w, &x1[i], &t
-);
-c_comp_plus(&x0[i], &t, &x[i]
-);               /* Ò»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ûºï¿½*/
-c_comp_sub(&x0[i], &t, &x[i + k]
-);
-c_comp_product(&wn, &w, &w
-);     /* wï¿½ï¿½wnï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½Ð£ï¿½ï¿½ï¿½kï¿½ï¿½ï¿½Ûºï¿½Ê±ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½wn^k*/
-}
-}
-free(y0);
-free(y1);
-free(x0);
-free(x1);
-return(1);
+    for(i=0; i<k;i++)
+    {
+      c_comp_product(&w,&x1[i],&t);	
+      c_comp_plus(&x0[i],&t,&x[i]);	           /* Ò»¼ÓÒ»¼õ£¬Íê³ÉÁËÐòÁÐµÄ×ÛºÏ*/
+      c_comp_sub(&x0[i],&t,&x[i+k]);
+      c_comp_product(&wn,&w,&w);	 /* wÓëwnÏà³Ë£¬½á¹û·ÅÔÚwÖÐ£¬µÚk´Î×ÛºÏÊ±µÄw¾ÍÊÇwn^k*/
+    }
+  }
+  free(y0);
+  free(y1);
+  free(x0);
+  free(x1);
+  return(1);
 }

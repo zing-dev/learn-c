@@ -2,68 +2,52 @@
 #include "stdlib.h"
 #include "math.h"
 #include "r_chol.c"
-
 /*======================================================
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½r_chde
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½choleskyï¿½Ö½â·¨ï¿½ï¿½Ô³ï¿½ï¿½ï¿½ï¿½ï¿½ÊµÏµï¿½ï¿½ï¿½ï¿½ï¿½ó·½³ï¿½ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½
-//           n Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½ï¿½epsï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
+// º¯ÊýÃû£ºr_chde
+// ¹¦ÄÜÃèÊö£ºÓÃcholesky·Ö½â·¨½â¶Ô³ÆÕý¶¨ÊµÏµÊý¾ØÕó·½³Ì×é
+// ÊäÈë²ÎÊý£ºa ½âÏµÊý¾ØÕó£¬b ³£Êý¾ØÕó£¬x·µ»ØµÄ½âÏòÁ¿
+//           n Î´ÖªÊý¸öÊý£¬eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚepsµÄÖµ£¬ÈÏÎªÊÇ0¡£
+// ·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
 =========================================================*/
-int r_chde(a, b, x, n, eps)
-double *a, *b, *x, eps;
+int r_chde(a,b,x,n,eps)
+double *a,*b,*x,eps;
 int n;
 {
-int i, k;
-double *u, *y, t;
-if((a==NULL)||(b==NULL)||(x==NULL))            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
-{
-printf("The pointer is NULL\n");
-return(0);
-}
-u = (double *) malloc(n * n * sizeof(double));        /* ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
-y = (double *) malloc(n * sizeof(double));
-if((u==NULL)||(y==NULL))
-{
-printf("Memory alloc failed\n");
-return(0);
-}
-i = r_chol(a, n, u, eps);                         /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½choleskyï¿½Ö½ï¿½*/
-if(i==0)                                       /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ö½ï¿½É¹ï¿½*/
-{
-printf("Cholesky decomposition failed\n");
-return(0);
-}
-for(
-i = 0;
-i<n;
-i++)                             /* ï¿½ï¿½ï¿½y*/
-{
-t = 0.0;
-for(
-k = 0;
-k<i;
-k++)
-t = t + u[i * n + k] * y[k];
-y[i] = (b[i]-t)/u[
-i *n
-+i];
-}
-for(
-i = n - 1;
-i>=0; i--)                          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x*/
-{
-t = 0.0;
-for(
-k = i + 1;
-k<n;
-k++)
-t = t + u[k * n + i] * x[k];
-x[i] = (y[i] - t)/u[
-i *n
-+i];
-}
-free(u);                                       /* ï¿½Í·Å¿Õ¼ï¿½*/
-free(y);
-return(1);
+    int i,k;
+    double *u,*y,t;
+    if((a==NULL)||(b==NULL)||(x==NULL))            /* ¼ì²âÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
+    {
+      printf("The pointer is NULL\n");
+      return(0);
+    }
+    u = (double *)malloc(n*n*sizeof(double));        /* ·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
+    y = (double *)malloc(n*sizeof(double));
+    if((u==NULL)||(y==NULL))
+    {
+      printf("Memory alloc failed\n");
+      return(0);
+    }
+    i = r_chol(a,n,u,eps);                         /* µ÷ÓÃº¯Êý½øÐÐcholesky·Ö½â*/
+    if(i==0)                                       /* ÅÐ¶ÏÊÇ·ñ·Ö½â³É¹¦*/
+    {
+      printf("Cholesky decomposition failed\n");
+      return(0);
+    }
+    for(i=0; i<n; i++)                             /* ½â³öy*/
+    {
+      t = 0.0;
+      for(k=0; k<i; k++)
+        t = t+u[i*n+k]*y[k];
+      y[i] = (b[i]-t)/u[i*n+i];
+    }
+    for(i=n-1; i>=0; i--)                          /* Çó³ö½âÏòÁ¿x*/
+    {
+      t = 0.0;
+      for(k=i+1; k<n; k++)
+        t = t+u[k*n+i]*x[k];
+      x[i] = (y[i] - t)/u[i*n+i];
+    }
+    free(u);                                       /* ÊÍ·Å¿Õ¼ä*/
+    free(y);
+    return(1);
 }

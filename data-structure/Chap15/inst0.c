@@ -1,31 +1,34 @@
 #include "stdio.h"
 #include "inst.c"
 #include "shel.c"
-
-main() {
-    int i, j, p[50], p1[50];
-    printf("Data:\n");
-    for (i = 0; i < 5; i++)                     /* ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    {
-        for (j = 0; j < 10; j++) {
-            p[10 * i + j] = 20 + 10 * i - j;
-            p1[10 * i + j] = p[10 * i + j];
-            printf("%d   ", p[10 * i + j]);
-        }
-        printf("\n");
-    }
-    printf("Insert Sort:\n");                /* Ö±ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½*/
-    inst(p, 50);
-    for (i = 0; i < 5; i++) {
-        for (j = 0; j < 10; j++)
-            printf("%d   ", p[10 * i + j]);
-        printf("\n");
-    }
-    printf("Shell Sort:\n");                /* Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½*/
-    shel(p1, 50);
-    for (i = 0; i < 5; i++) {
-        for (j = 0; j < 10; j++)
-            printf("%d   ", p1[10 * i + j]);
-        printf("\n");
-    }
+main()
+{ 
+	int i,j,p[50],p1[50];
+	printf("Data:\n");
+	for(i=0; i<5; i++)                     /* Éú³ÉÒ»Ð©ÎÞÐòÊý¾Ý*/
+	{ 
+		for(j=0; j<10; j++)
+		{
+			p[10*i+j] = 20+10*i-j ;
+			p1[10*i+j] = p[10*i+j];
+			printf("%d   ",p[10*i+j]);
+		}
+		printf("\n");
+	}
+	printf("Insert Sort:\n");                /* Ö±½Ó²åÈëÅÅÐòµÄ½á¹û*/
+	inst(p,50);
+	for(i=0; i<5; i++)
+	{ 
+		for(j=0; j<10; j++)
+			printf("%d   ",p[10*i+j]);
+		printf("\n");
+	}
+	printf("Shell Sort:\n");                /* Ï£¶ûÅÅÐòµÄ½á¹û*/
+	shel(p1,50);
+	for(i=0; i<5; i++)
+	{ 
+		for(j=0; j<10; j++)
+			printf("%d   ",p1[10*i+j]);
+		printf("\n");
+	}
 }

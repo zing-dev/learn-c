@@ -4,24 +4,28 @@
 #include "c2p.c"
 #include "p2c.c"
 
-void main() {
-    int i;
-    struct c_comp a[4], y[4], b[4];
-    for (i = 0; i < 4; i++) {
-        a[i].rmz = i + 1;
-        a[i].imz = 0;
-    }
-    i = c2p(a, 4, y);     /*ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¾×ªï¿½ï¿½Îªï¿½ï¿½ï¿½Ê¾ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡*/
-    if (i) {
-        printf("c2p:\n");
-        for (i = 0; i < 4; i++)
-            printf("%f+i*%f\n", y[i].rmz, y[i].imz);
-    }
-    i = p2c(y, 4, b);    /*ï¿½ï¿½ï¿½Ãµï¿½ï¿½Ê¾×ªï¿½ï¿½ÎªÏµï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡*/
-    if (i) {
-        printf("p2c:\n");
-        for (i = 0; i < 4; i++)
-            printf("%f+i*%f\n", b[i].rmz, b[i].imz);
-    }
+void main()
+{
+  int i;
+  struct c_comp a[4],y[4],b[4];
+  for(i=0; i<4; i++)
+  {
+    a[i].rmz = i+1;
+    a[i].imz = 0;
+  } 
+  i = c2p(a,4,y); 	 /*µ÷ÓÃÏµÊý±íÊ¾×ª»¯Îªµã±íÊ¾µÄº¯Êý£¬²¢´òÓ¡*/
+  if(i)
+  {
+    printf("c2p:\n");
+    for(i=0; i<4; i++)
+      printf("%f+i*%f\n",y[i].rmz,y[i].imz);
+  }
+  i = p2c(y,4,b); 	/*µ÷ÓÃµã±íÊ¾×ª»¯ÎªÏµÊý±íÊ¾µÄº¯Êý£¬²¢´òÓ¡*/
+  if(i)
+  {
+    printf("p2c:\n");
+    for(i=0; i<4; i++)
+      printf("%f+i*%f\n",b[i].rmz,b[i].imz);
+  }
 }
 

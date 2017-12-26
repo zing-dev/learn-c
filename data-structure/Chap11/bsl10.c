@@ -1,24 +1,26 @@
 #include "stdio.h"
 #include "bsl1.c"
 #include "bsl2.c"
-
-main() {
-    int n, i;
-    double x, y;
-    for (i = 1; i <= 8; i++) {
-        x = 1.0 * i;
-        printf("x=%2.1f\n", x);                  /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-        for (n = 1; n <= 4; n++) {
-            y = bsl1(n, x);
-            printf("J(%d)=%1.8f ", n, y);
-        }
-        printf("\n");
-        for (n = 1; n <= 4; n++)                     /* ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-        {
-            y = bsl2(n, x);
-            printf("Y(%d)=%1.8f ", n, y);
-        }
-        printf("\n");
+main()
+{
+  int n,i;
+  double x,y;
+  for(i=1; i<=8; i++)
+  {
+    x=1.0*i;
+    printf("x=%2.1f\n",x);                  /* µÚÒ»ÀàÕûÊý½×±´Èû¶ûº¯Êý*/
+    for(n=1; n<=4; n++)
+    {
+      y=bsl1(n,x);
+      printf("J(%d)=%1.8f ",n,y);
     }
-    getchar();
+    printf("\n");
+    for(n=1; n<=4; n++)                     /* µÚ¶þÀàÕûÊý½×±´Èû¶ûº¯Êý*/
+    {
+      y=bsl2(n,x);
+      printf("Y(%d)=%1.8f ",n,y);
+    }
+    printf("\n");
+  }
+  getchar();
 }

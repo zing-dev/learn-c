@@ -1,10 +1,10 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_comp_power.c
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£©
-//          nï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½
-//          cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½á¹¹ï¿½å£©
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
+//º¯ÊıÃû£ºc_comp_power.c
+//¹¦ÄÜÃèÊö£ºÇó¸´ÊıµÄ³ËÃİ
+//ÊäÈë²ÎÊı£ºa£¨µ×ÊıµÄ½á¹¹Ìå£©
+//          n£¨Ö¸Êı£©
+//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£©
+//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
 =========================================================*/
 
 #include "stdio.h"
@@ -16,28 +16,25 @@
     double imz;
 }c_comp;
 */
-int c_comp_power(a, c, n)
-
-struct c_comp *a, *c;
+int c_comp_power(a,c,n)
+struct c_comp *a,*c;
 int n;
 {
-double R, theta;
+    double R,theta;
 
-if(a == NULL || c == NULL)
-{
-printf("(c_comp_power)The c_comp pointer is NULL!\n");
-return(0);
-}
+    if(a == NULL || c == NULL)
+    {
+        printf("(c_comp_power)The c_comp pointer is NULL!\n");
+        return(0);
+    }
 
-theta = atan2(a->imz, a->rmz);
-R = sqrt(a->rmz * a->rmz + a->imz * a->imz);
+    theta = atan2(a->imz,a->rmz);
+    R = sqrt(a->rmz*a->rmz + a->imz*a->imz);
 
-theta = n * theta;
-R = pow(R, n);
+    theta = n*theta;
+    R = pow(R,n);
 
-c->
-rmz = R * cos(theta);
-c->
-imz = R * sin(theta);
-return(1);
+    c->rmz = R*cos(theta);
+    c->imz = R*sin(theta);
+    return(1);
 }

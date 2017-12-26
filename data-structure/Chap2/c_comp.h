@@ -4,12 +4,11 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
-
 #define PI 3.1415926
 
-struct c_comp {
+struct c_comp{
     double rmz;
     double imz;
-} c_comp;
+}c_comp;
 
 #endif

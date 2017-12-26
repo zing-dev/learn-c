@@ -2,27 +2,25 @@
 #include "math.h"
 #include "powell.c"
 
-void main() {
-    double eps, fopt, x[3];
-    int itmax = 50, n = 3, it;
-    double f();
-    double ee[3][3] = {{1.0, 0.0, 0.0},
-                       {0.0, 1.0, 0.0},
-                       {0.0, 0.0, 1.0}};        /* ï¿½ï¿½Ê¼ï¿½Ä·ï¿½ï¿½ï¿½*/
-    eps = 1e-7;
-    x[0] = x[1] = x[2] = 2.0;                                                /* ï¿½ï¿½Ê¼ï¿½ï¿½*/
-    it = powell(x, ee, x, n, &fopt, f, eps, itmax);                         /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-    printf("iterations = %d:\n x0=%f,x1=%f,x2=%f\nfopt=%f\n", it, x[0], x[1], x[2], fopt);
+void main()
+{
+	double  eps,fopt,x[3];
+	int itmax = 50, n = 3,it;
+	double f();
+	double ee[3][3] = {{1.0, 0.0, 0.0},{0.0,1.0,0.0},{0.0,0.0,1.0}};        /* ³õÊ¼µÄ·½Ïò*/
+	eps = 1e-7;
+	x[0] = x[1] = x[2] =2.0;                                                /* ³õÊ¼µã*/
+	it = powell(x, ee, x, n, &fopt, f, eps, itmax);                         /* µ÷ÓÃº¯Êý£¬²¢´òÓ¡½á¹û*/
+	printf("iterations = %d:\n x0=%f,x1=%f,x2=%f\nfopt=%f\n",it,x[0],x[1],x[2],fopt);
 }
 
 double f(x, n)
 double *x;
 int n;
 {
-double y;
-if(n!=3)
-return(0.0);
-y = (x[0] - 1.0) * (x[0] - 1.0) + (x[1] - 2.0) * (x[1] - 2.0) + (x[2] - 3.0) * (x[2] - 3.0);
-return
-y;
+	double y;
+	if(n!=3)
+		return(0.0);
+	y = (x[0]-1.0)*(x[0]-1.0)+(x[1]-2.0)*(x[1]-2.0)+(x[2]-3.0)*(x[2]-3.0);
+	return y;
 }

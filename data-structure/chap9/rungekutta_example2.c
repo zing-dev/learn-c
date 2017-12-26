@@ -1,5 +1,5 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½rungekuttaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¢ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//¹¦ÄÜÃèÊö£º3ÖÖrungekutta·½·¨Çó³£Î¢·Ö·½³Ì×éµÄ³õÖµÎÊÌâµÄÀý×Ó
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
@@ -9,59 +9,69 @@
 #include "gillvh.c"
 
 
-void main() {
-    double h = 0.01, a = 0, eps = 0.000000001;
-    int n = 3, m = 10, i, j;
-    double *y;                       /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½Öµï¿½ï¿½Ö¸ï¿½ï¿½*/
-    void f(double *, double *, double);
-    y = (double *) malloc(n * (m + 1) * sizeof(double));
-    for (i = 0; i < n * (m + 1); i++)                    /* ï¿½ï¿½Ê¼ï¿½ï¿½*/
-        y[i] = 0.0;
-    y[0] = -1.0;                                /* ï¿½ï¿½Öµ*/
-    y[1] = 0.0;
-    y[2] = 1.0;
-    if (rungekuttainvh(y, n, f, h, m, a)) {
-        printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½Öµ\n");
-        for (i = 0; i <= m; i++) {
-            printf("x=%1.2f ", a + h * i);
-            for (j = 0; j < n; j++)
-                printf("y[%d]=%1.9f  ", j, y[3 * i + j]);   /* ï¿½ï¿½ï¿½*/
-            printf("\n");
-        }
-    } else
-        printf("failed!\n");
-
-    if (rungekuttavh(y, n, f, h, m, a, eps)) {
-        printf("ï¿½ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½Öµ\n");
-        for (i = 0; i <= m; i++) {
-            printf("x=%1.2f ", a + h * i);
-            for (j = 0; j < n; j++)
-                printf("y[%d]=%1.9f  ", j, y[3 * i + j]);    /* ï¿½ï¿½ï¿½*/
-            printf("\n");
-        }
-    } else
-        printf("failed!\n");
-
-    if (gillvh(y, n, f, h, m, a, eps)) {
-        printf("ï¿½ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½Öµ\n");
-        for (i = 0; i <= m; i++) {
-            printf("x=%1.2f ", a + h * i);
-            for (j = 0; j < n; j++)
-                printf("y[%d]=%1.9f  ", j, y[3 * i + j]);    /* ï¿½ï¿½ï¿½*/
-            printf("\n");
-        }
-    } else
-        printf("failed!\n");
-    free(y);
-}
-
-void f(y, F, x)
-double *y, *F, x;
+void main()
 {
-F[0]=5*x+1;
-F[1]=x+y[0];
-F[2]=-1*y[2];
-return;
+    double h=0.01,a=0,eps=0.000000001;
+    int n=3,m=10,i,j;
+    double *y;                       /* ´æ·ÅËùÓÐº¯ÊýÖµµÄÖ¸Õë*/
+    void f(double*,double*,double);
+    y=(double*)malloc(n*(m+1)*sizeof(double));
+    for(i=0;i<n*(m+1);i++)                    /* ³õÊ¼»¯*/
+	   y[i]=0.0;
+    y[0]=-1.0;                                /* ³õÖµ*/
+    y[1]=0.0;
+    y[2]=1.0;
+	if(rungekuttainvh(y,n,f,h,m,a))
+    {
+		printf("¶¨²½³¤Áú¸ñ¿âËþËã·¨ÇóÖµ\n");
+        for(i=0;i<=m;i++)
+        {
+            printf("x=%1.2f ",a+h*i);
+            for(j=0;j<n;j++)
+				printf("y[%d]=%1.9f  ",j,y[3*i+j]);   /* Êä³ö*/
+			printf("\n");
+        }
+    }
+    else
+    printf("failed!\n");
+
+    if(rungekuttavh(y,n,f,h,m,a,eps))
+    {
+		printf("±ä²½³¤Áú¸ñ-¿âËþËã·¨ÇóÖµ\n");
+        for(i=0;i<=m;i++)
+        {
+            printf("x=%1.2f ",a+h*i);
+            for(j=0;j<n;j++)
+				printf("y[%d]=%1.9f  ",j,y[3*i+j]);    /* Êä³ö*/
+			printf("\n");
+        }
+    }
+    else
+    printf("failed!\n");
+
+	if(gillvh(y,n,f,h,m,a,eps))
+    {
+		printf("±ä²½³¤»ù¶ûËã·¨ÇóÖµ\n");
+        for(i=0;i<=m;i++)
+        {
+            printf("x=%1.2f ",a+h*i);
+            for(j=0;j<n;j++)
+				printf("y[%d]=%1.9f  ",j,y[3*i+j]);    /* Êä³ö*/
+			printf("\n");
+        }
+    }
+    else
+    printf("failed!\n");
+	free(y);
+}
+ 
+void f(y,F,x)
+double *y,*F,x;
+{
+    F[0]=5*x+1;
+    F[1]=x+y[0];
+    F[2]=-1*y[2];
+    return;
 }
 
 

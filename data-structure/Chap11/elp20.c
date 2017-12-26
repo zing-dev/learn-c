@@ -1,23 +1,24 @@
 #include "stdio.h"
 #include "RF.c"
 #include "RD.c"
-
-main() {
-    int i;
-    double f, sf, cf, y, k;
-    for (i = 0; i <= 10; i++) {
-        f = i * 3.1415926 / 10.0;                           /* ï¿½ï¿½ï¿½ï¿½phi*/
-        sf = sin(f);
-        cf = cos(f);
-        k = 0.5;
-        y = sf * RD(cf * cf, (1.0 + k * sf) * (1.0 - k * sf), 1.0);
-        y = k * k * sf * sf * y / 3.0;
-        y = sf * RF(cf * cf, (1.0 + k * sf) * (1.0 - k * sf), 1.0) - y;   /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-        printf("F2(%3.2f, %6.5f)=%6.5f     ", k, f, y);
-        k = 1.0;
-        y = sf * RD(cf * cf, (1.0 + k * sf) * (1.0 - k * sf), 1.0);
-        y = k * k * sf * sf * y / 3.0;
-        y = sf * RF(cf * cf, (1.0 + k * sf) * (1.0 - k * sf), 1.0) - y;   /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-        printf("F2(%3.2f, %6.5f)=%6.5f\n", k, f, y);
-    }
+main()
+{
+	int i;
+    double f,sf,cf,y,k;
+    for(i=0; i<=10; i++)
+      { 
+		f=i*3.1415926/10.0;                           /* ¼ÆËãphi*/
+		sf = sin(f);                         
+		cf = cos(f);
+        k=0.5;
+		y = sf*RD(cf*cf,(1.0+k*sf)*(1.0-k*sf),1.0);
+		y = k*k*sf*sf*y/3.0;
+		y = sf*RF(cf*cf,(1.0+k*sf)*(1.0-k*sf),1.0)-y;   /* µ÷ÓÃº¯ÊýÇóÖµ²¢´òÓ¡½á¹û*/
+        printf("F2(%3.2f, %6.5f)=%6.5f     ",k,f,y);
+        k=1.0; 
+		y = sf*RD(cf*cf,(1.0+k*sf)*(1.0-k*sf),1.0);
+		y = k*k*sf*sf*y/3.0;
+		y = sf*RF(cf*cf,(1.0+k*sf)*(1.0-k*sf),1.0)-y;   /* µ÷ÓÃº¯ÊýÇóÖµ²¢´òÓ¡½á¹û*/
+        printf("F2(%3.2f, %6.5f)=%6.5f\n",k,f,y);
+      }
 }

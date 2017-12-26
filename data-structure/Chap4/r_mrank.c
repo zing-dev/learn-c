@@ -1,102 +1,72 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½r_mrank
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mat(ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½) m(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) p(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) eps(ï¿½ï¿½ï¿½ï¿½)
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»Ø¾ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
+//º¯ÊýÃû£ºr_mrank
+//¹¦ÄÜÃèÊö£ºÇóÊµ¾ØÕóµÄÖÈ
+//ÊäÈë²ÎÊý£ºmat(ÊäÈëµÄ¾ØÕó) m(¾ØÕóÐÐÊý) p(¾ØÕóÁÐÊý) eps(¾«¶È)
+//·µ»ØÖµ£ºÔËÐÐ³É¹¦Ôò·µ»Ø¾ØÕóµÄÖÈ£¬Ê§°ÜÔò·µ»Ø0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-int r_mrank(mat, m, n, eps)
-
+int r_mrank(mat,m, n,eps)
 double *mat, eps;
-int m, n;
+int m,n;
 {
-int i, j, k, p, is, js, l, v, rank;
-double tmp, pivot;
-double *cpmat;
-if(mat == NULL)                  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
-{
-printf("matrix pointer is Null.\n");
-return(0);
-}
-cpmat = (double *) malloc(m * n * sizeof(double));  /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Ò»ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ»ï¿½*/
-for(
-i = 0;
-i<m *n;
-i++)
-cpmat[i] = mat[i];
-p = m < n ? m : n;                  /* ï¿½ï¿½ï¿½mï¿½ï¿½nï¿½ÐµÄ½ï¿½Ð¡ï¿½ß£ï¿½ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½Öµ*/
-rank = 0;
-for(
-k = 0;
-k<p;
-k++)
-{
-pivot = 0.0;                  /* Ñ¡ï¿½ï¿½Ôª*/
-for(
-i = k;
-i<m;
-i++)
-for(
-j = k;
-j<n;
-j++)
-{
-tmp = fabs(cpmat[i * n + j]);
-if(tmp > pivot)
-{
-pivot = tmp;
-is = i;                  /* ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Î»ï¿½ï¿½*/
-js = j;
-}
-}
-if(pivot<eps)                  /* ï¿½ï¿½ÔªÐ¡ï¿½Ú¾ï¿½ï¿½ï¿½ÖµÊ±ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ë¹ï¿½ï¿½Ôªï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½*/
-return(rank);
-rank++;                      /* ï¿½ï¿½Ôªï¿½ï¿½Îªï¿½ã£¬ï¿½È¼ï¿½1*/
-if(is != k)                  /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-for(
-j = k;
-j<n;
-j++)              /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = k * n + j;
-v = is * n + j;
-tmp = cpmat[l];
-cpmat[l] = cpmat[v];
-cpmat[v] =
-tmp;
-}
-if(js != k)
-for(
-i = k;
-i<m;
-i++)              /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = i * n + k;
-v = i * n + js;
-tmp = cpmat[l];
-cpmat[l] = cpmat[v];
-cpmat[v] =
-tmp;
-}
-for(
-i = k + 1;
-i<m;
-i++)              /* ï¿½ï¿½È¥*/
-{
-tmp = cpmat[i * n + k] / cpmat[k * n + k];      /* ï¿½ï¿½ï¿½Ù³ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½*/
-for(
-j = k + 1;
-j<n;
-j++)          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥*/
-cpmat[
-i *n
-+j] -=
-tmp *cpmat[k * n + j];
-}
-}
-free(cpmat);
-return(rank);
+    int i,j,k,p,is,js,l,v,rank;
+    double tmp, pivot;
+    double *cpmat;
+    if(mat == NULL)				  /* ¼ì²éÊäÈëÖ¸ÕëÊÇ·ñÎª¿Õ*/
+    {
+      printf("matrix pointer is Null.\n");
+      return(0);
+    }
+    cpmat = (double*)malloc(m*n*sizeof(double));  /* ½«ÊäÈë¾ØÕóµÄÄÚÈÝ¿½±´Ò»·Ý£¬ÒÔÃâÆÆ»µ*/
+    for(i=0; i<m*n; i++)
+      cpmat[i] = mat[i];
+    p = m<n?m:n;				  /* Çó³ömºÍnÖÐµÄ½ÏÐ¡Õß£¬¼´ÖÈµÄ×î´óÖµ*/
+    rank = 0;
+    for(k=0; k<p; k++)
+    {
+	pivot = 0.0;				  /* Ñ¡Ö÷Ôª*/
+	for(i=k; i<m; i++)
+	  for(j=k; j<n; j++)
+	  {
+	    tmp = fabs(cpmat[i*n+j]);
+	    if(tmp > pivot)
+	    {
+	      pivot = tmp;
+	      is = i;				  /* ¼ÇÂ¼ÏÂÖ÷ÔªµÄÎ»ÖÃ*/
+	      js = j;
+	    }
+	  }
+	if(pivot < eps)				  /* Ö÷ÔªÐ¡ÓÚ¾«¶ÈÖµÊ±£¬ÈÏÎª¸ßË¹ÏûÔªÒÑ¾­Íê³É*/
+	  return(rank);
+	rank++;					  /* Ö÷Ôª²»ÎªÁã£¬ÖÈ¼Ó1*/
+	if(is != k)				  /* ÅÐ¶ÏÊÇ·ñÐèÒª½øÐÐÐÐ½»»»*/
+	  for(j=k; j<n; j++)			  /* ½øÐÐÐÐ½»»»*/
+	  {
+	    l = k*n + j;
+	    v = is*n + j;
+	    tmp = cpmat[l];
+	    cpmat[l] = cpmat[v];
+	    cpmat[v] = tmp;
+	  }
+	if(js != k)
+	  for(i=k; i<m; i++)			  /* ½øÐÐÁÐ½»»»*/
+	  {
+	    l = i*n + k;
+	    v = i*n + js;
+	    tmp = cpmat[l];
+	    cpmat[l] = cpmat[v];
+	    cpmat[v] = tmp;
+	  }
+	for(i=k+1; i<m; i++)			  /* ÏûÈ¥*/
+	{
+	    tmp = cpmat[i*n+k]/cpmat[k*n+k];	  /* ¼õÉÙ³ý·¨µÄ´ÎÊý*/
+	    for(j=k+1; j<n; j++)		  /* ½øÐÐÏûÈ¥*/
+		cpmat[i*n+j] -= tmp*cpmat[k*n+j];
+	}
+    }
+    free(cpmat);
+    return(rank);
 }

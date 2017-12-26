@@ -3,31 +3,30 @@
 #include "tzi2.c"
 #include "simps1.c"
 #include "rbg.c"
-
-main() {
-    double a, b, eps, h0, z;
-    double f1(double);
-    a = 0.0;
-    b = 4.0;
-    eps = 1e-8;
-    h0 = 1e-5;
-    z = tzi1(a, b, 4, eps, h0, f1);                     /* ï¿½Ã±ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("tzi1: t=%2.5f\n", z);                 /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-    z = tzi2(a, b, 4, eps, h0, f1);                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("tzi2: t=%2.5f\n", z);
-    z = simps1(a, b, 4, eps, h0, f1);                   /* ï¿½Ã±ä²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("simp: t=%2.5f\n", z);
-    z = rbg(a, b, 4, eps, f1);                         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    printf("robg: t=%2.5f\n", z);
-    getchar();
+main()
+{
+  double a,b,eps,h0,z;
+  double f1(double);
+  a = 0.0;
+  b = 4.0;
+  eps = 1e-8;
+  h0 = 1e-5;
+  z=tzi1(a,b,4,eps,h0,f1);                     /* ÓÃ±ä²½³¤ÌÝÐÎÇó»ý·¨»ý·Ö*/
+  printf("tzi1: t=%2.5f\n",z);                 /* ´òÓ¡½á¹û*/
+  z=tzi2(a,b,4,eps,h0,f1);                     /* ÓÃ×ÔÊÊÓ¦ÌÝÐÎÇó»ý·¨»ý·Ö*/
+  printf("tzi2: t=%2.5f\n",z);
+  z=simps1(a,b,4,eps,h0,f1);                   /* ÓÃ±ä²½³¤ÐÁ²·ÉúÇó»ý·¨»ý·Ö*/
+  printf("simp: t=%2.5f\n",z);
+  z=rbg(a,b,4,eps,f1);                         /* ÓÃÁú±´¸ñ»ý·Ö·¨»ý·Ö*/
+  printf("robg: t=%2.5f\n",z);
+  getchar();
 }
 
 #include "math.h"
-
 double f1(x)
-double x;                                      /* ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄºï¿½ï¿½ï¿½*/
+double x;                                      /* ±»»ý·ÖµÄº¯Êý*/
 {
-double y;
-y = exp(-x * x) / (1.0 + x * x);
-return(y);
+  double y;
+    y=exp(-x*x)/(1.0+x*x);
+  return(y);
 }

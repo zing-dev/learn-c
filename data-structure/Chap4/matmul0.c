@@ -1,47 +1,39 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include "c_comp.c"                              /* ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½*/
-#include "c_matmul.c"                            /* ÊµÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ËºÍ¸ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ËµÄºï¿½ï¿½ï¿½*/
+#include "c_comp.c"                              /* ÐèÒª°üº¬¸´ÊýÔËËãµÄÎÄ¼þ*/
+#include "c_matmul.c"                            /* ÊµÏµÊý¾ØÕóÏà³ËºÍ¸´ÏµÊý¾ØÕóÏà³ËµÄº¯Êý*/
 #include "r_matmul.c"
 
-void main() {
+void main()
+{
     struct c_comp c_mat1[2][2], c_mat2[2][2], c_mat3[2][2];
-
-    double r_mat1[3][2] = {{1, 2},
-                           {3, 4},
-                           {1, 4}};   /* ÎªÒªï¿½ï¿½Ëµï¿½Êµï¿½ï¿½ï¿½ó¸³³ï¿½Öµ*/
-    double r_mat2[2][2] = {{5, 6},
-                           {7, 8}};
+                                  
+    double r_mat1[3][2] = {{1,2},{3,4},{1,4}};   /* ÎªÒªÏà³ËµÄÊµ¾ØÕó¸³³õÖµ*/
+    double r_mat2[2][2] = {{5,6},{7,8}};
     double r_mat3[3][2];
-    int i, j;
-
-    r_matmul(r_mat1, r_mat2, 3, 2, 2, r_mat3);        /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ã²¢ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+    int i,j;
+                                   
+    r_matmul(r_mat1,r_mat2,3,2,2,r_mat3);        /* µ÷ÓÃº¯Êý½øÐÐ¼ÆËã²¢´òÓ¡½á¹û*/
     printf("real matmul:\n");
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 2; j++)
+    for(i=0; i<3; i++)
+    {
+        for(j=0; j<2; j++)
             printf("%2.5f ", r_mat3[i][j]);
         printf("\n");
     }
-    c_mat1[0][0].rmz = 1;
-    c_mat1[0][0].imz = 1;  /* ÎªÒªï¿½ï¿½ËµÄ¸ï¿½ï¿½ï¿½ï¿½ó¸³³ï¿½Öµ*/
-    c_mat1[0][1].rmz = 0;
-    c_mat1[0][1].imz = 1;
-    c_mat1[1][0].rmz = 1;
-    c_mat1[1][0].imz = 0;
-    c_mat1[1][1].rmz = 2;
-    c_mat1[1][1].imz = 3;
-    c_mat2[0][0].rmz = 2;
-    c_mat2[0][0].imz = 3;
-    c_mat2[0][1].rmz = 0;
-    c_mat2[0][1].imz = 2;
-    c_mat2[1][0].rmz = 2;
-    c_mat2[1][0].imz = 1;
-    c_mat2[1][1].rmz = 1;
-    c_mat2[1][1].imz = 0.5;
-    c_matmul(c_mat1, c_mat2, 2, 2, 2, c_mat3);   /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ã²¢ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+    c_mat1[0][0].rmz = 1; c_mat1[0][0].imz = 1;  /* ÎªÒªÏà³ËµÄ¸´¾ØÕó¸³³õÖµ*/
+    c_mat1[0][1].rmz = 0; c_mat1[0][1].imz = 1;
+    c_mat1[1][0].rmz = 1; c_mat1[1][0].imz = 0;
+    c_mat1[1][1].rmz = 2; c_mat1[1][1].imz = 3;
+    c_mat2[0][0].rmz = 2; c_mat2[0][0].imz = 3;
+    c_mat2[0][1].rmz = 0; c_mat2[0][1].imz = 2;
+    c_mat2[1][0].rmz = 2; c_mat2[1][0].imz = 1;
+    c_mat2[1][1].rmz = 1; c_mat2[1][1].imz = 0.5;
+    c_matmul(c_mat1, c_mat2, 2, 2, 2, c_mat3);   /* µ÷ÓÃº¯Êý½øÐÐ¼ÆËã²¢´òÓ¡½á¹û*/
     printf("complex matmul:\n");
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 2; j++)
+    for(i=0; i<2; i++)
+    {
+        for(j=0; j<2; j++)
             printf("%2.5f + (%2.5f)*i ", c_mat3[i][j].rmz, c_mat3[i][j].imz);
         printf("\n");
     }

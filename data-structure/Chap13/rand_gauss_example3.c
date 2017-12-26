@@ -2,15 +2,16 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "randgsab.c"
-
-void main() {
-    double a, b, G;
-    int i;
-    a = 3.0;                          /* ï¿½ï¿½Öµ*/
-    b = 2.2;                          /* ï¿½ï¿½ï¿½ï¿½*/
-    for (i = 0; i < 5; i++) {
-        G = randgsab(a, b);          /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½*/
-        printf("%5.4f ", G);            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    }
-    printf("\n");
+void main()
+{
+    double a,b,G;
+	int i;
+    a=3.0;                          /* ¾ùÖµ*/
+    b=2.2;                          /* ·½²î*/
+	for(i=0; i<5; i++)
+	{
+		G = randgsab(a,b);          /* µ÷ÓÃº¯Êý*/
+		printf("%5.4f ",G);            /* Êä³ö½á¹û*/
+	}
+	printf("\n");
 }

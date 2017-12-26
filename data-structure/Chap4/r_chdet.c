@@ -1,74 +1,53 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½r_chdet
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Öµ
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mat(ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½) n(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) eps(ï¿½ï¿½ï¿½ï¿½)
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Öµ
+//º¯ÊýÃû£ºr_chdet
+//¹¦ÄÜÃèÊö£ºÇó¶Ô³ÆÕý¶¨¾ØÕóµÄÐÐÁÐÊ½Öµ
+//ÊäÈë²ÎÊý£ºmat(ÊäÈëµÄ¾ØÕó) n(¾ØÕó½×Êý) eps(¾«¶È)
+//·µ»ØÖµ£º¾ØÕóµÄÐÐÁÐÊ½Öµ
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 
-double r_chdet(mat, n, eps)
-
+double r_chdet(mat,n,eps)
 int n;
 double *mat, eps;
 {
-int i, j, k, l, v;
-double det;
-double *cpmat;
-if(mat == NULL)                                /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
-{
-printf("matrix pointer is NULL.\n");
-return(0.0);
-}
-cpmat = (double *) malloc(n * n * sizeof(double));   /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Ò»ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ»ï¿½*/
-for(
-i = 0;
-i<n *n;
-i++)
-cpmat[i] = mat[i];
-det = 1.0;                                       /* ï¿½ï¿½ï¿½ï¿½Öµ*/
-for(
-k = 0;
-k<n;
-k++)
-{
-l = k * n + k;
-for(
-j = 0;
-j<k;
-j++)                           /* ï¿½ï¿½ï¿½Lkk*/
-{
-v = k * n + j;
-cpmat[l] = cpmat[l]-cpmat[v]*cpmat[v];
-}
-if(cpmat[l] < eps)                           /* ï¿½Ð¶Ï¾ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½*/
-{
-printf("matrix is Not positive definite.\n");
-return(0.0);
-}
-cpmat[l] =
-sqrt(cpmat[l]);
-det = det * cpmat[l];                              /* ï¿½ï¿½ï¿½ï¿½det*/
-for(
-i = k + 1;
-i<n;
-i++)                            /* ï¿½ï¿½ï¿½Lik*/
-{
-v = i * n + k;
-for(
-j = 0;
-j<k;
-j++)
-cpmat[v] = cpmat[v] - cpmat[
-i *n
-+j]*cpmat[
-k *n
-+j];
-cpmat[v] = cpmat[v]/cpmat[l];
-}
-}
-det = det * det;                                     /* ï¿½ï¿½ï¿½ï¿½Ê½Öµï¿½ï¿½detï¿½ï¿½Æ½ï¿½ï¿½*/
-free(cpmat);
-return(det);
+    int i,j,k,l,v;
+    double det;
+    double *cpmat;
+    if(mat == NULL)                                /* ¼ì²éÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
+    {
+      printf("matrix pointer is NULL.\n");
+      return(0.0);
+    }
+    cpmat = (double*)malloc(n*n*sizeof(double));   /* ½«ÊäÈë¾ØÕóµÄÄÚÈÝ¿½±´Ò»·Ý£¬ÒÔÃâÆÆ»µ*/
+    for(i=0; i<n*n; i++)
+      cpmat[i] = mat[i]; 
+    det = 1.0;                                       /* ¸³³õÖµ*/
+    for(k=0; k<n; k++)
+    { 
+      l = k*n+k;
+      for(j=0; j<k; j++)                           /* Çó³öLkk*/
+      { 
+      	v = k*n+j;
+      	cpmat[l] = cpmat[l]-cpmat[v]*cpmat[v];
+      }
+      if(cpmat[l] < eps)                           /* ÅÐ¶Ï¾ØÕóÊÇ·ñÎªÕý¶¨*/
+      { 
+      	printf("matrix is Not positive definite.\n"); 
+      	return(0.0);
+      }
+      cpmat[l] = sqrt(cpmat[l]);                   
+      det = det*cpmat[l];                              /* ¸üÐÂdet*/
+      for(i=k+1; i<n; i++)                            /* Çó³öLik*/
+      { 
+      	v = i*n+k;
+      	for(j=0; j<k; j++)
+      	  cpmat[v] = cpmat[v] - cpmat[i*n+j]*cpmat[k*n+j];
+      	cpmat[v] = cpmat[v]/cpmat[l];
+      }
+    }
+    det = det*det;                                     /* ÐÐÁÐÊ½ÖµÊÇdetµÄÆ½·½*/
+    free(cpmat); 
+    return(det);
 }

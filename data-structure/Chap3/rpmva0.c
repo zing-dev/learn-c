@@ -1,22 +1,23 @@
-#include "stdio.h"
-#include "rpmva.c"
-#include "rpva.c"
-
-main() {
+  #include "stdio.h"
+  #include "rpmva.c"
+  #include "rpva.c"
+  main()
+  {
     int i;
-    double y[6], tmp;
-    static double a[7] = {7.0, -7.0, 1.0, 3.0, -5.0, 2.0, 2.0};
-    static double x[6] = {1.0, 1.1, 0.3, -0.3, -1.1, -1.9};
-    rpmva(a, 7, x, 6, y);     /* ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
+    double y[6],tmp;
+    static double a[7]={7.0,-7.0,1.0,3.0,-5.0,2.0,2.0};
+    static double x[6]={1.0,1.1,0.3,-0.3,-1.1,-1.9};
+    rpmva(a,7,x,6,y);     /* µ÷ÓÃÒ»´ÎÇó¶à¸öÖµµÄº¯Êý£¬²¢´òÓ¡½á¹û*/
     printf("rpmva:\n");
-    for (i = 0; i < 6; i++)
-        printf("x(%d)=%2.5f; y(%d)=%2.5f\n", i, x[i], i, y[i]);
+    for(i=0; i<6; i++)
+      printf("x(%d)=%2.5f; y(%d)=%2.5f\n",i,x[i],i,y[i]);
     printf("\n");
-    printf("rpva:\n");    /* Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Öµï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    for (i = 0; i < 6; i++) {
-        tmp = rpva(a, 7, x[i]);
-        printf("x(%d)=%2.5f; y(%d)=%2.5f\n", i, x[i], i, tmp);
+    printf("rpva:\n");    /* Ñ­»·µ÷ÓÃÒ»´ÎÇóÒ»¸öÖµµÄº¯Êý£¬²¢´òÓ¡½á¹û¡£*/
+    for(i=0; i<6; i++)
+    {
+       tmp = rpva(a,7,x[i]);
+       printf("x(%d)=%2.5f; y(%d)=%2.5f\n",i,x[i],i,tmp);
     }
     printf("\n");
-}
+  }
 

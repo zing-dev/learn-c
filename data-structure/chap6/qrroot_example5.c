@@ -3,15 +3,16 @@
 #include "math.h"
 #include"qrroot.c"
 
-void main() {
-    int i, itmax = 60;
-    double eps = 0.000001;                             /* ï¿½ï¿½ï¿½ï¿½*/
-    static double u[5], v[5];                         /* ï¿½ï¿½Å¸ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½*/
-    static double a[6] = {3.0, 2.0, 4.5, 2.2, 1.0, 2.1};    /* ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½*/
-
-    i = qrroot(a, 5, u, v, eps, itmax);                        /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½*/
-    if (i > 0)                                         /* ï¿½É¹ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½*/
-        for (i = 0; i <= 4; i++)
-            printf("%13.7e +j %13.7e\n", u[i], v[i]);
-    printf("\n");
+void main()
+{
+	int i,itmax=60;
+	double eps=0.000001;                             /* ¾«¶È*/
+	static double u[5],v[5];                         /* ´æ·Å¸ùµÄ¾ØÕó*/
+	static double a[6]={3.0,2.0,4.5,2.2,1.0,2.1};    /* ½µÃÝÏµÊý*/
+	
+	i=qrroot(a,5,u,v,eps,itmax);                        /* µ÷ÓÃº¯Êý*/
+	if (i>0)                                         /* ³É¹¦ÇóÖµÊä³ö*/
+		for (i=0; i<=4; i++)
+			printf("%13.7e +j %13.7e\n",u[i],v[i]);
+		printf("\n");
 }

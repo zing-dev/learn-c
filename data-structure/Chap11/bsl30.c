@@ -1,26 +1,27 @@
 #include "stdio.h"
-#include "bsl1.c"                        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½à±´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½*/
+#include "bsl1.c"                        /* ÕâÁ½¸öº¯ÊýÐèÒªµÚÒ»Àà±´Èû¶ûº¯ÊýµÄÖ§³Ö*/
 #include "bsl3.c"
 #include "bsl4.c"
-
-main() {
-    int n, i;
-    double x, y;
-    for (i = 1; i <= 8; i++) {
-        x = 1.0 * i;
-        printf("x=%2.1f\n", x);
-        for (n = 1; n <= 4; n++)                        /* ï¿½ï¿½ï¿½Íµï¿½Ò»ï¿½à±´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-        {
-            y = bsl3(n, x);
-            printf("I(%d)=%e ", n, y);
-        }
-        printf("\n");
-        for (n = 1; n <= 4; n++)                       /* ï¿½ï¿½ï¿½ÍµÚ¶ï¿½ï¿½à±´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-        {
-            y = bsl4(n, x);
-            printf("K(%d)=%e ", n, y);
-        }
-        printf("\n");
+main()
+{
+  int n,i;
+  double x,y;
+  for(i=1; i<=8; i++)
+  {
+    x=1.0*i;
+    printf("x=%2.1f\n",x);
+    for(n=1; n<=4; n++)                        /* ±äÐÍµÚÒ»Àà±´Èû¶ûº¯Êý*/
+    {
+      y=bsl3(n,x);
+      printf("I(%d)=%e ",n,y);
     }
-    getchar();
+    printf("\n");
+    for(n=1; n<=4; n++)                       /* ±äÐÍµÚ¶þÀà±´Èû¶ûº¯Êý*/
+    {
+      y=bsl4(n,x);
+      printf("K(%d)=%e ",n,y);
+    }
+    printf("\n");
+  }
+  getchar();
 }

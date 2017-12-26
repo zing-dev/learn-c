@@ -3,25 +3,23 @@
 #include<math.h>
 #include"disroot.c"
 
-void main() {
+void main()
+{
     double f(double);
-    double a, b, eps, root;
-    a = 0.0;
-    b = 1.0;
-    eps = 0.00001;              /* ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½Òªï¿½ï¿½*/
+    double a,b,eps,root;
+    a=0.0;b=1.0;eps=0.00001;              /* Çø¼äºÍ¾«¶ÈÒªÇó*/
 
     printf("    a          (a+b)/2         b\n\n");
-    root = disroot(a, b, f, eps);              /* ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-    printf("\nThe root is  %1.7f\n", root);
+    root=disroot(a,b,f,eps);              /* ¶þ·Ö·¨Çó¸ù²¢´òÓ¡½á¹û*/
+    printf("\nThe root is  %1.7f\n",root);
 }
 
-double f(x)                               /* ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½*/
+double f(x)                               /* ´ý½âµÄ·½³Ì*/
 double x;
 {
-double z;
-z = x * x * x - 3 * x + 1;
-return
-z;
+    double z;
+    z=x*x*x-3*x+1;
+    return z;
 }
 
 

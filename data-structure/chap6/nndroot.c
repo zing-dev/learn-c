@@ -1,11 +1,11 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nndroot
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Êµï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*x0ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö¸ï¿½ë£©ï¿½ï¿½
-//           nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ÌµÄ¼ï¿½ï¿½ã£©
-//           epsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ó£©£ï¿½maxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//           hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Î¢Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
+//º¯ÊýÃû£ºnndroot
+//¹¦ÄÜÃèÊö£ºÇó·ÇÏßÐÔ·½³Ì×éµÄÒ»×éÊµ¸ù
+//ÊäÈë²ÎÊý£º*x0£¨Ö¸Ïòµü´ú³õÖµºÍÖÕÖµµÄÖ¸Õë£©£¬
+//           n£¨·½³Ì×é¸öÊý£©£¬f£¨ ·ÇÏßÐÔ·½³ÌµÄ¼ÆËã£©
+//           eps£¨¾«¶ÈÒªÇó£©£¬max£¨×î´óµü´ú´ÎÊý£©
+//           h£¨²îÉÌÖÐµÄÎ¢Ð¡±äÁ¿£©£¬t£¨·ÅËõÏµÊý£©
+//·µ»ØÖµ£º0£¨µü´úÊ§°Ü£©£¬1£¨µü´ú³É¹¦£©
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
@@ -13,82 +13,63 @@
 
 #include"r_gaus.c"
 
-int nndroot(x0, n, f, eps, max, h, t)
-double *x0, eps, h, t;
-
+int nndroot(x0,n,f,eps,max,h,t)
+double *x0,eps,h,t;
 void (*f)();
-
-int n, max;
+int n,max;
 {
-double *f0, *fi, *fx, *dl, dis, sum;
-int i, num = 0;
-f0 = (double *) malloc(sizeof(double) * n);
-fx = (double *) malloc(sizeof(double) * n);
-fi = (double *) malloc(sizeof(double) * n * n);
-dl = (double *) malloc(sizeof(double) * n);
+    double *f0,*fi,*fx,*dl,dis,sum;
+    int i,num=0;
+    f0=(double*)malloc(sizeof(double)*n);
+    fx=(double*)malloc(sizeof(double)*n);
+    fi=(double*)malloc(sizeof(double)*n*n);
+    dl=(double*)malloc(sizeof(double)*n);
 
-if(f0==NULL||fx==NULL||fi==NULL||dl==NULL)
-{
-printf("memory alloc failed.\n");
-return(0);
-}
+    if(f0==NULL||fx==NULL||fi==NULL||dl==NULL)
+    {
+        printf("memory alloc failed.\n");
+        return(0);
+    }
 
-do
-{
-num++;
-f(x0, f0, fi, h
-);                        /* ï¿½ï¿½ï¿½ã·½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ô¼ï¿½Æ«ï¿½ï¿½hï¿½ï¿½ï¿½Öµ*/
+    do
+    {
+        num++;
+        f(x0,f0,fi,h);                        /* ¼ÆËã·½³Ì×éÖµÒÔ¼°Æ«ÒÆhºóµÄÖµ*/
 
-dis = 0;
-for(
-i = 0;
-i<n;
-i++)
-{
-if(
-fabs(f0[i])
->dis)
-dis = fabs(f0[i]);              /* ï¿½ï¿½ï¿½ï¿½maxï¿½ï¿½ï¿½Ìµï¿½Öµ*/
-}
-if(dis>eps)                           /* ï¿½ï¿½ï¿½ï¿½ï¿½ã¾«ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-if(
-r_gaus(fi, f0, fx, n,
-1e-8)==0)    /* ï¿½ï¿½ï¿½Ã¸ï¿½Ë¹ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½*/
-return(0);
-else
-{
-sum = 0;
-for(
-i = 0;
-i<n;
-i++)
-sum = fx[i] + sum;
-sum = h / (1 - sum);
+        dis=0;
+        for(i=0;i<n;i++)
+        {
+            if(fabs(f0[i])>dis)
+                dis=fabs(f0[i]);              /* ¼ÆËãmax·½³ÌµÄÖµ*/
+        }
+        if(dis>eps)                           /* ²»Âú×ã¾«¶È£¬¼ÌÐøµü´ú*/
+        {
+            if(r_gaus(fi,f0,fx,n,1e-8)==0)    /* µ÷ÓÃ¸ßË¹ÏûÈ¥·¨£¬½âÏßÐÔ·½³Ì×é*/
+                return(0);
+            else
+            {
+                sum=0;
+                for(i=0;i<n;i++)
+                    sum=fx[i]+sum;
+                sum=h/(1-sum);
 
-for(
-i = 0;
-i<n;
-i++)
-{
-dl[i]=fx[i]*
-sum;          /* ï¿½ï¿½Öµ*/
-x0[i]=x0[i]-dl[i];        /* ï¿½ï¿½Öµ*/
-}
-h = h * t;
-}
-}
-else
-return(1);
-}
-while(num<max);
+                for(i=0;i<n;i++)
+                {
+                    dl[i]=fx[i]*sum;          /* ²îÖµ*/
+                    x0[i]=x0[i]-dl[i];        /* ÐÂÖµ*/
+                }
+                h=h*t;
+            }
+        }
+        else
+            return(1);
+    }
+    while(num<max);
 
-free(f0);
-free(fi);
-free(dl);
+    free(f0);free(fi);free(dl);
 
-if(num==max)
-return (0);                         /* ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½*/
-else
-return (1);                         /* ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½*/
+    if(num==max)
+        return (0);                         /* µü´úÊ§°Ü*/
+    else
+        return (1);                         /* µü´ú³É¹¦*/
 }

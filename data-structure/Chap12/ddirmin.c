@@ -1,103 +1,80 @@
 /*======================================================
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ddirmin
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Î¬ï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x[n] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½
-//           p[n] ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
-//           xmin[n] ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½
-//           n ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ëµï¿½
-//           f ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
-//           eps ï¿½ï¿½ï¿½ï¿½ï¿½Þ¶ï¿½
-//           itmax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ð¡Öµ
+// º¯ÊýÃû£ºddirmin
+// ¹¦ÄÜÃèÊö£º´øµ¼ÊýµÄÒ»Î¬ËÑË÷
+// ÊäÈë²ÎÊý£ºx[n] ÊäÈëËÑË÷µÄ³ö·¢µã
+//           p[n] ËÑË÷µÄ·½Ïò
+//           xmin[n] ·µ»ØÕÒµ½µÄ×îÓÅµã
+//           n ³õÊ¼Çø¼äµÄÁíÒ»¸ö¶Ëµã
+//           f ¶àÔªº¯ÊýÖ¸Õë
+//           eps ¾«¶ÈÏÞ¶È
+//           itmax ×î´óµü´ú´ÎÊý
+// ·µ»ØÖµ£º  º¯ÊýµÄ¼«Ð¡Öµ
 =========================================================*/
 #include "stdlib.h"
 #include "dbrent.c"
-#include "mnbrak.c"
+#include "mnbrak.c" 
 
 int _ndir_;
-double *_pdir_, *_xdir_, *_xtdir_, *_dxtdir_;             /* ï¿½ï¿½ÒªÈ«ï¿½Ö±ï¿½ï¿½ï¿½*/
+double *_pdir_, *_xdir_, *_xtdir_, *_dxtdir_;             /* ÐèÒªÈ«¾Ö±äÁ¿*/
 double (*_myfc_)();
-
-void (*_mydfc_)();                           /* ï¿½ï¿½ÒªÈ«ï¿½Ö±ï¿½ï¿½ï¿½*/
+void   (*_mydfc_)();                           /* ÐèÒªÈ«¾Ö±äÁ¿*/
 
 double ddirmin(x, p, xmin, n, f, df, eps, itmax)
-double *x, *xmin, *p, eps, (*f)(), (*df)();
-int n, itmax;
+double *x,*xmin,*p,eps,(*f)(),(*df)();
+int n,itmax;
 {
-int i;
+	int i;
+	double fdim(), dfdim(), ax, bx, cx, fopt, xopt; 
+	_ndir_ = n;
+	_pdir_ = (double*)malloc(_ndir_*sizeof(double));
+	_xdir_ = (double*)malloc(_ndir_*sizeof(double));
+	_xtdir_ = (double*)malloc(_ndir_*sizeof(double));	
+	_dxtdir_= (double*)malloc(_ndir_*sizeof(double));
+	_myfc_ = f;                                            /* È«¾Ö±äÁ¿Ö¸Ïòº¯Êý*/
+	_mydfc_ = df;
 
-double fdim(), dfdim(), ax, bx, cx, fopt, xopt;
-
-_ndir_ = n;
-_pdir_ = (double *) malloc(_ndir_ * sizeof(double));
-_xdir_ = (double *) malloc(_ndir_ * sizeof(double));
-_xtdir_ = (double *) malloc(_ndir_ * sizeof(double));
-_dxtdir_ = (double *) malloc(_ndir_ * sizeof(double));
-_myfc_ = f;                                            /* È«ï¿½Ö±ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½*/
-_mydfc_ = df;
-
-for(
-i = 0;
-i<n;
-i++)
-{
-_pdir_[i] = p[i];
-_xdir_[i] = x[i];
-}
-ax = 0.0;                                             /* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ë·¶Î§*/
-bx = 0.5;
-mnbrak(&ax, &bx, &cx, fdim
-);                          /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½ï¿½*/
-fopt = dbrent(ax, bx, cx, fdim, dfdim, &xopt, eps, itmax);     /* ï¿½ï¿½brentï¿½ã·¨ï¿½Ò¼ï¿½Ð¡Öµ*/
-for(
-i = 0;
-i<n;
-i++)                                    /* ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½x*/
-{
-p[i] =
-xopt *p[i];
-xmin[i] = x[i]+p[i];
-}
-free(_pdir_);
-free(_xdir_);
-free(_xtdir_);
-free(_dxtdir_);
-return(fopt);
+	for(i=0; i<n; i++)
+	{
+		_pdir_[i] = p[i];
+		_xdir_[i] = x[i];
+	}
+	ax = 0.0;                                             /* ³õÊ¼²ÂÏë·¶Î§*/
+	bx = 0.5;
+    mnbrak(&ax, &bx, &cx, fdim);                          /* ÕÒÒ»¸ö¼«Ð¡ÖµÇø¼ä*/
+	fopt = dbrent(ax, bx, cx, fdim, dfdim, &xopt, eps, itmax);     /* ÓÃbrentËã·¨ÕÒ¼«Ð¡Öµ*/
+	for(i=0; i<n; i++)                                    /* ÕÒµ½ÁË×îÓÅµãx*/
+	{
+		p[i] = xopt*p[i];
+		xmin[i] = x[i]+p[i];
+	}
+	free(_pdir_);
+	free(_xdir_);
+	free(_xtdir_);
+	free(_dxtdir_);
+	return(fopt);
 }
 
-double fdim(t)                                     /* ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½tÊ±ï¿½ï¿½Öµ*/
+double fdim(t)                                     /* ÇófÔÚÕâ¸ö·½ÏòÉÏÐÐ½øtÊ±µÄÖµ*/
 double t;
 {
-int i;
-double y;
-for(
-i = 0;
-i<_ndir_;
-i++)
-_xtdir_[i] = _xdir_[i] +
-t *_pdir_[i];
-y = _myfc_(_xtdir_, _ndir_);
-return(y);
+	int i;
+	double y;
+	for(i=0; i<_ndir_; i++)
+		_xtdir_[i] = _xdir_[i] + t*_pdir_[i];
+	y = _myfc_(_xtdir_, _ndir_);
+	return(y);
 }
 
-double dfdim(t)                                     /* ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½Öµ*/
+double dfdim(t)                                     /* ÇófÔÚÕâ¸ö·½ÏòÐÐ½øµ½t´¦µÄµ¼ÊýÖµ*/
 double t;
 {
-int i;
-double df;
-for(
-i = 0;
-i<_ndir_;
-i++)
-_xtdir_[i] = _xdir_[i] +
-t *_pdir_[i];
-_mydfc_(_xtdir_, _dxtdir_, _ndir_
-);
-df = 0.0;
-for(
-i = 0;
-i<_ndir_;
-i++)
-df = df + _dxtdir_[i] * _pdir_[i];
-return(df);
+	int i;
+	double df;
+	for(i=0; i<_ndir_; i++)
+		_xtdir_[i] = _xdir_[i] + t*_pdir_[i];
+	_mydfc_(_xtdir_, _dxtdir_, _ndir_);
+	df = 0.0;
+	for(i=0; i<_ndir_; i++)
+		df = df + _dxtdir_[i]*_pdir_[i];
+	return(df);
 }

@@ -1,126 +1,73 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jcb1
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô³Æ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a   Ö¸ï¿½ï¿½ï¿½Å¶Ô³Æ¾ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
-n   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-u   ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
-eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ôªï¿½ï¿½ï¿½Ç·ï¿½Îª0
-itmax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
+//º¯ÊýÃû£ºjcb1
+//¹¦ÄÜÃèÊö£º¶Ô³Æ¾ØÕóÇóÌØÕ÷Öµ
+//ÊäÈë²ÎÊý£ºa   Ö¸Ïò´æ·Å¶Ô³Æ¾ØÕóµÄÖ¸Õë
+n   ¾ØÕó½×Êý
+u   ·µ»ØµÄÌØÕ÷Öµ
+eps ¾«¶ÈÒªÇó£¬ÓÃÓÚÅÐ¶ÏÔªËØÊÇ·ñÎª0
+itmax ×î´óµü´ú´ÎÊý
+//·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
 =========================================================*/
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
-
-int jcb1(a, n, u, eps, itmax)
-
-double *a, *u, eps;
-int n, itmax;
-{
-int i, j, p, q, it;
-double sint, cost, sin2t, cos2t, d, tmp, t1, t2, t3;
-it = 0;
-while(it<itmax)
-{
-it++;
-d = 0.0;
-for(
-i = 1;
-i<n;
-i++)                  /* Ñ°ï¿½Ò¾ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
-for(
-j = 0;
-j<i;
-j++)
-{
-tmp = fabs(a[i * n + j]);
-if(tmp>d)
-{
-d = tmp;
-p = i;
-q = j;
-}
-}
-if(d<eps)                         /* ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¶Ô½ï¿½ï¿½ó£¬´ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-for(
-i = 0;
-i<n;
-i++)              /* È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ*/
-u[i] = a[
-i *n
-+i];
-return(it);
-}
-sint = 2 * a[p * n + q];
-cost = a[q * n + q] - a[p * n + p];
-sin2t = sint / (sqrt(sint * sint + cost * cost));
-if(cost<0.0)
-sin2t = -sin2t;                   /* ï¿½ï¿½ï¿½ï¿½sin(2 theta)*/
-cos2t = sqrt(1.0 - sin2t * sin2t);
-sint = sin2t / (sqrt(2 * (1.0 + cos2t)));     /* ï¿½ï¿½ï¿½ï¿½givensï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½*/
-cost = sqrt(1.0 - sint * sint);
-tmp = a[p * n + p];                   /* ï¿½ï¿½ï¿½Æ±ä»»*/
-t1 = tmp * cost * cost;
-t2 = a[q * n + q] * cost * cost;
-t3 = a[p * n + q] * sin2t;
-a[
-p *n
-+p] = t1 + a[
-q *n
-+q] - t2 -
-t3;
-a[
-q *n
-+q] = tmp - t1 + t2 +
-t3;
-a[
-p *n
-+q] = 0.0;
-a[
-q *n
-+p] = 0.0;
-for(
-j = 0;
-j<n;
-j++)               /* ï¿½ï¿½pï¿½ÐºÍµï¿½qï¿½ÐµÄ±ä»»*/
-if((j!=p)&&(j!=q))
-{
-tmp = a[p * n + j];
-a[
-p *n
-+j] =
-tmp *cost
--a[
-q *n
-+j]*
-sint;
-a[
-q *n
-+j] =
-tmp *sint
-+a[
-q *n
-+j]*
-cost;
-}
-for(
-i = 0;
-i<=n-1; i++)           /* ï¿½Ã¶Ô³ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½Ãµï¿½pï¿½ÐºÍµï¿½qï¿½ï¿½*/
-if((i!=p)&&(i!=q))
-{
-a[
-i *n
-+p] = a[
-p *n
-+i];
-a[
-i *n
-+q] = a[
-q *n
-+i];
-}
-}
-return(0);
+int jcb1(a,n,u,eps,itmax)
+double *a,*u,eps;
+int n,itmax;
+{ 
+	int i,j,p,q,it;
+    double sint,cost,sin2t,cos2t,d,tmp,t1,t2,t3;
+    it = 0;
+    while(it < itmax)
+	{ 
+		it++;
+		d = 0.0;
+        for(i=1; i<n; i++)                  /* Ñ°ÕÒ¾ø¶ÔÖµ×î´óµÄÔªËØ*/
+			for(j=0; j<i; j++)
+			{
+				tmp = fabs(a[i*n+j]);
+				if(tmp>d)
+				{ 
+					d = tmp; 
+					p=i; q=j;
+				}
+			}			
+		if(d < eps)                         /* ÒÑ¾­ÊÕÁ²³É¶Ô½ÇÕó£¬´ËÊ±µü´úÍê³É*/
+		{ 
+			for(i=0; i<n; i++)              /* È¡³öÌØÕ÷Öµ*/
+				u[i] = a[i*n+i];
+			return(it);
+		}
+		sint = 2*a[p*n+q];
+		cost = a[q*n+q]-a[p*n+p];
+		sin2t = sint/(sqrt(sint*sint+cost*cost));    
+		if(cost<0.0)
+			sin2t = -sin2t;                   /* ¼ÆËãsin(2 theta)*/
+		cos2t = sqrt(1.0-sin2t*sin2t);         
+		sint = sin2t/(sqrt(2*(1.0+cos2t)));     /* ¼ÆËãgivens¾ØÕóÔªËØ*/
+		cost=sqrt(1.0-sint*sint);
+		tmp = a[p*n+p];                   /* ÏàËÆ±ä»»*/
+		t1 = tmp*cost*cost;
+		t2 = a[q*n+q]*cost*cost;
+		t3 = a[p*n+q]*sin2t;
+		a[p*n+p] = t1 + a[q*n+q] - t2 - t3;
+		a[q*n+q] = tmp - t1 + t2 + t3;
+		a[p*n+q] = 0.0;
+		a[q*n+p] = 0.0;
+		for(j=0; j<n; j++)               /* µÚpÐÐºÍµÚqÐÐµÄ±ä»»*/
+			if((j!=p)&&(j!=q))
+			{ 
+				tmp = a[p*n+j];
+				a[p*n+j] = tmp*cost-a[q*n+j]*sint;
+				a[q*n+j] = tmp*sint+a[q*n+j]*cost;
+			}
+		for(i=0; i<=n-1; i++)           /* ÓÃ¶Ô³ÆÐÔ¿ÉÇóµÃµÚpÁÐºÍµÚqÁÐ*/
+			if((i!=p)&&(i!=q))
+			{ 
+				a[i*n+p] = a[p*n+i];
+				a[i*n+q] = a[q*n+i];
+			}
+	}
+    return(0);
 }
 

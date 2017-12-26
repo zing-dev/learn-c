@@ -1,31 +1,30 @@
 /*======================================================
-ï¿½Ã²ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+ÓÃ²åÖµ·¨Çó·ÇÏßÐÔ·½³Ì×éµÄÊµ¸ùµÄÊµÀý
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<math.h>
 #include "interroot.c"
 
-void main() {
-    double x, eps, ab;
+void main()
+{
+    double x,eps,ab;
     double f(double);
     double *x0 = &x;
     int max;
-    *x0 = 1.0;                             /* ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    ab = 0.0;
-    eps = 0.00001;
-    max = 60;
-    printf("  x(k)         x(k+1)        dis\n");
-    if (interroot(x0, ab, f, eps, max))
-        printf("\n%1.7f\n", *x0);
+    *x0=1.0;                             /* ³õÖµ£¬¾«¶È£¬×î´óµü´ú´ÎÊý*/
+    ab=0.0;
+    eps=0.00001;
+    max=60;
+	printf("  x(k)         x(k+1)        dis\n");
+    if(interroot(x0,ab,f,eps,max))
+        printf("\n%1.7f\n",*x0);
     else
         printf("failed!\n");
 }
 
-double f(x)                              /* ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½Öµ*/
+double f(x)                              /* ¼ÆËãº¯ÊýÖµ*/
 double x;
 {
-return
-x *x
-*x-3*x+1;
+    return x*x*x-3*x+1;
 }

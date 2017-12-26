@@ -1,17 +1,18 @@
 #include "stdio.h"
 #include "chii.c"
-
-main() {
-    int i, n;
-    double x, y;
-    for (i = 1; i < 5; i++) {
-        x = 1.0 * i;                                     /* xÖµ*/
-        for (n = 1; n < 4; n++)                           /* nÖµ*/
-        {
-            y = chii(x, n);                               /* ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½*/
-            printf("P(%2.1f,%d)=%e ", x, n, y);          /* ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-        }
-        printf("\n");
+main()
+{
+  int i,n;
+  double x,y;
+  for(i=1; i<5; i++)
+  {
+    x=1.0*i;                                     /* xÖµ*/
+    for(n=1; n<4; n++)                           /* nÖµ*/
+    {
+      y=chii(x,n);                               /* ¿¨·½·Ö²¼º¯Êý*/
+      printf("P(%2.1f,%d)=%e ",x,n,y);          /* ´òÓ¡½á¹û*/
     }
-    getchar();
+    printf("\n");
+  }
+  getchar();
 }

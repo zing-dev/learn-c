@@ -1,25 +1,28 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "randu01s.c"
-
-void main() {
+void main()
+{
     int L;
-    int flag, i, j;
+    int flag,i,j;
     double *u_rand;
-    L = 100;                                       /*ï¿½ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    u_rand = (double *) malloc(L * sizeof(double));  /*ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½*/
-    if (u_rand == NULL) {
-        printf("memory alloc failed.\n");
-        exit(0);
+    L=100;                                       /*Éú³É10¸öËæ»úÊý*/
+    u_rand=(double *)malloc(L*sizeof(double));  /*¶¯Ì¬·ÖÅä¿Õ¼ä*/
+    if(u_rand==NULL)
+    {
+         printf("memory alloc failed.\n");
+         exit(0);
     }
-    flag = randu01s(L, u_rand);                   /*ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½*/
-    if (!flag) {
+    flag=randu01s(L,u_rand);                   /*µ÷ÓÃº¯Êý*/
+    if(!flag)
+    {
         printf("ERROR!\n");
         exit(0);
     }
-    for (i = 0; i < 20; i++) {
-        for (j = 0; j < 5; j++)
-            printf("%5.4f ", u_rand[i * 5 + j]);
-        printf("\n");
-    }
+    for(i=0;i<20;i++)
+	{
+		for(j=0; j<5; j++)
+			printf("%5.4f ",u_rand[i*5+j]);
+		printf("\n");
+	}
 }

@@ -1,20 +1,22 @@
 #include "stdio.h"
 #include "gamm2.c"
-
-main() {
-    int i, j;
-    double ai, xj, y;
-    double e1 = 1.0e-7, e0 = 1.0e-30;               /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½È«Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½*/
-    static double a[3] = {0.5, 5.0, 10.0};
-    static double x[3] = {0.5, 5.0, 10.0};
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            ai = a[i];                                 /* Ñ­ï¿½ï¿½È¡aï¿½ï¿½x*/
-            xj = x[j];
-            y = gamm2(ai, xj, e1, e0);                    /* ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½*/
-            printf("gamm2(%2.1f,%2.1f)=%e\n", ai, xj, y);
-        }
-        printf("\n");
+main()
+{
+  int i,j;
+  double ai,xj,y;
+  double e1=1.0e-7,e0=1.0e-30;               /* ÕâÁ½¸öÖµÓÃÓÚ²»ÍêÈ«Ù¤Âíº¯ÊýµÄ¼ÆËã*/
+  static double a[3]={0.5,5.0,10.0};
+  static double x[3]={0.5,5.0,10.0};
+  for(i=0; i<3; i++)
+  {
+    for(j=0; j<3; j++)
+    {
+      ai=a[i];                                 /* Ñ­»·È¡aºÍx*/
+      xj=x[j];
+      y=gamm2(ai,xj,e1,e0);                    /* µ÷ÓÃº¯ÊýÇóÖµ²¢´òÓ¡½á¹û*/
+      printf("gamm2(%2.1f,%2.1f)=%e\n",ai,xj,y);
     }
-    getchar();
+    printf("\n");
+  }
+  getchar();
 }

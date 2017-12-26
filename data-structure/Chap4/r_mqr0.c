@@ -1,37 +1,39 @@
 #include "stdio.h"
 #include "r_mqr.c"
 #include "r_matmul.c"
-
-main() {
-    int i, j;
-    double q[4][4], mat[4][3] = {{1.0,  2.0,  4.0},          /* ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½Öµ*/
-                                 {-1.0, 0.0,  3.0},
-                                 {2.0,  -1.0, 0.0},
-                                 {3.0,  1.0,  2.0}};
-    double mat3[4][3];
-    i = r_mqr(mat, 4, 3, q, 1e-16);                         /* ï¿½ï¿½ï¿½ï¿½QRï¿½Ö½ï¿½*/
-    if (i != 0) {
-        printf("Q:\n");                                 /* ï¿½ï¿½Ó¡Qï¿½ï¿½ï¿½ï¿½*/
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++)
-                printf("%2.5f ", q[i][j]);
-            printf("\n");
-        }
-        printf("\n");
-        printf("R:\n");                                 /* ï¿½ï¿½Ó¡ï¿½Ö½ï¿½Ãµï¿½ï¿½ï¿½R*/
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 3; j++)
-                printf("%2.5f ", mat[i][j]);
-            printf("\n");
-        }
-        printf("\n");
+main()
+{
+  int i,j;
+  double q[4][4],mat[4][3]={{1.0,2.0,4.0},          /* ¾ØÕóA¸³Öµ*/
+  {-1.0,0.0,3.0},{2.0,-1.0,0.0},{3.0,1.0,2.0}};
+  double mat3[4][3];
+  i=r_mqr(mat,4,3,q,1e-16);                         /* ½øÐÐQR·Ö½â*/
+  if(i!=0)
+  {
+    printf("Q:\n");                                 /* ´òÓ¡Q¾ØÕó*/
+    for(i=0; i<4; i++)
+    {
+      for(j=0; j<4; j++)
+        printf("%2.5f ",q[i][j]);
+      printf("\n");
     }
-    r_matmul(q, mat, 4, 4, 3, mat3);                     /* Q*Rï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½*/
-    printf("Q*R:\n");                                 /* ï¿½ï¿½Ó¡Q*Rï¿½Ä½ï¿½ï¿½*/
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 3; j++)
-            printf("%2.5f ", mat3[i][j]);
-        printf("\n");
+    printf("\n");
+    printf("R:\n");                                 /* ´òÓ¡·Ö½âµÃµ½µÄR*/
+    for (i=0; i<4; i++)
+    {
+      for (j=0; j<3; j++)
+        printf("%2.5f ",mat[i][j]);
+      printf("\n");
     }
+    printf("\n");
+  }
+  r_matmul(q, mat,4,4,3, mat3);                     /* Q*RÒÔÑéÖ¤½á¹û*/
+  printf("Q*R:\n");                                 /* ´òÓ¡Q*RµÄ½á¹û*/
+  for (i=0; i<4; i++)
+  {
+    for (j=0; j<3; j++)
+      printf("%2.5f ",mat3[i][j]);
+    printf("\n");
+  }
 }
 

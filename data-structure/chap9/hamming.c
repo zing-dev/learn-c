@@ -1,110 +1,78 @@
 /*======================================================
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½hamming
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¢ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Öµï¿½ï¿½ï¿½ï¿½
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*yï¿½ï¿½ Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö¸ï¿½ï¿½n*(m+1)ï¿½ï¿½
-//          nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½Ð±ï¿½ÊµÄ¼ï¿½ï¿½ã£©
-//          hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£©
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½0ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
+//º¯ÊýÃû£ºhamming
+//¹¦ÄÜÃèÊö£º¹þÃ÷·½·¨Çó³£Î¢·Ö·½³Ì×éµÄ³õÖµÎÊÌâ
+//ÊäÈë²ÎÊý£º*y£¨ Ö¸Ïòº¯Êý³õÖµÒÔ¼°º¯Êý·µ»ØÖµµÄÖ¸Õën*(m+1)£©
+//          n£¨·½³Ì×é¸öÊý£©£¬f£¨Ð±ÂÊµÄ¼ÆËã£©
+//          h£¨²½³¤£©£¬m£¨²½Êý£©£¬a£¨Çø¼äÆðµã£©
+//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
 =========================================================*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<math.h>
 //#include "rungekuttainvh.c"
 
-int hamming(y, n, f, h, m, a)
+int hamming(y,n,f,h,m,a)
+double *y,(*f)(),h,a;
+int n,m;
+{
+    double *c,*f1,*f2,*f3,*f4,*temp,*ptemp,*p,x;
+    int k=3,i;
+    c=(double*)malloc(sizeof(double)*n);
+    p=(double*)malloc(sizeof(double)*n);      /* Î¢·Ö·½³ÌÐ±ÂÊ*/
+    f1=(double*)malloc(sizeof(double)*n);
+    f2=(double*)malloc(sizeof(double)*n);
+    f3=(double*)malloc(sizeof(double)*n);
+    f4=(double*)malloc(sizeof(double)*n);
+    ptemp=(double*)malloc(sizeof(double)*n);
 
-double *y, (*f)(), h, a;
-int n, m;
-{
-double *c, *f1, *f2, *f3, *f4, *temp, *ptemp, *p, x;
-int k = 3, i;
-c = (double *) malloc(sizeof(double) * n);
-p = (double *) malloc(sizeof(double) * n);      /* Î¢ï¿½Ö·ï¿½ï¿½ï¿½Ð±ï¿½ï¿½*/
-f1 = (double *) malloc(sizeof(double) * n);
-f2 = (double *) malloc(sizeof(double) * n);
-f3 = (double *) malloc(sizeof(double) * n);
-f4 = (double *) malloc(sizeof(double) * n);
-ptemp = (double *) malloc(sizeof(double) * n);
+    if(c==NULL||p==NULL||f2==NULL||f3==NULL||f4==NULL||f1==NULL||ptemp==NULL)
+    {
+        printf("memory alloc failed.\n");
+        return(0);
+    }
+    rungekuttainvh(y,n,f,h,3,a);              /* ÓÃÁú¸ñ-¿âËþ·¨¼ÆËãÇ°4¸ö³õÖµ*/
 
-if(c==NULL||p==NULL||f2==NULL||f3==NULL||f4==NULL||f1==NULL||ptemp==NULL)
-{
-printf("memory alloc failed.\n");
-return(0);
-}
-rungekuttainvh(y, n, f, h,
-3,a);              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°4ï¿½ï¿½ï¿½ï¿½Öµ*/
-
-{
-x = a + k * h;
-f(&y[(k - 2) * n], f1, x
--2*h);              /* x(k-2)ï¿½ï¿½ï¿½ï¿½f*/
-f(&y[(k - 1) * n], f2, x
--h);                /* x(k-1)ï¿½ï¿½ï¿½ï¿½f*/
-f(&y[k * n], f3, x
-);                      /* xkï¿½ï¿½ï¿½ï¿½f*/
-for(
-i = 0;
-i<n;
-i++)                      /* Ô¤ï¿½ï¿½p*/
-p[i]=y[(k-3)*n+i]+4.0*h/3.0*(2.0*f3[i]-f2[i]+2.0*f1[i]);
-f(p, f4, x
-+h);                          /* Ô¤ï¿½ï¿½x(k+1)ï¿½ï¿½ï¿½ï¿½f*/
-for(
-i = 0;
-i<n;
-i++)
-{                                     /* Ô¤ï¿½ï¿½c*/
-c[i]=1.0/8.0*(9.0*y[
-k *n
-+i]-y[(k-2)*n+i]+3.0*
-h *(f4[i]
-+2.0*f3[i]-f2[i]));
-y[(k+1)*n+i]=c[i]-9.0/121.0*(c[i]-p[i]);              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½*/
-}
-k++;
-}
-while(k<m)                                /* Ñ­ï¿½ï¿½*/
-{
-x = a + k * h;
-temp = f1;
-f1 = f2;
-f2 = f3;
-f3 = temp;
-f(&y[k * n], f3, x
-);
-
-for(
-i = 0;
-i<n;
-i++)
-{
-ptemp[i]=y[(k-3)*n+i]+4.0*h/3.0*(2.0*f3[i]-f2[i]+2.0*f1[i]);  /* Ô¤ï¿½ï¿½*/
-p[i]=ptemp[i]+112.0/121.0*(c[i]-p[i]);                        /* Ô¤ï¿½ï¿½*/
-}
-f(p, f4, x
-+h);                                               /* x(k+1)ï¿½ï¿½ï¿½ï¿½f*/
-for(
-i = 0;
-i<n;
-i++)
-{
-c[i]=1.0/8.0*(9.0*y[
-k *n
-+i]-y[(k-2)*n+i]+3.0*
-h *(f4[i]
-+2.0*f3[i]-f2[i]));
-y[(k+1)*n+i]=c[i]-9.0/121.0*(c[i]-p[i]);
-}
-k++;
-}
-free(p);
-free(f2);
-free(f3);
-free(f4);
-free(f1);
-free(ptemp);
-free(c);
-return (1);
+    {
+        x=a+k*h;
+        f(&y[(k-2)*n],f1,x-2*h);              /* x(k-2)´¦µÄf*/
+        f(&y[(k-1)*n],f2,x-h);                /* x(k-1)´¦µÄf*/
+        f(&y[k*n],f3,x);                      /* xk´¦µÄf*/		
+        for(i=0;i<n;i++)                      /* Ô¤±¨p*/
+            p[i]=y[(k-3)*n+i]+4.0*h/3.0*(2.0*f3[i]-f2[i]+2.0*f1[i]);		
+        f(p,f4,x+h);                          /* Ô¤±¨x(k+1)´¦µÄf*/
+        for(i=0;i<n;i++)
+        {                                     /* Ô¤±¨c*/
+            c[i]=1.0/8.0*(9.0*y[k*n+i]-y[(k-2)*n+i]+3.0*h*(f4[i]+2.0*f3[i]-f2[i]));
+            y[(k+1)*n+i]=c[i]-9.0/121.0*(c[i]-p[i]);              /* ¼ÆËã×îÖÕ½á¹û*/
+    	}
+        k++;
+    }
+    while(k<m)                                /* Ñ­»·*/
+    {
+        x=a+k*h;		
+        temp=f1;f1=f2;f2=f3;f3=temp;
+        f(&y[k*n],f3,x); 
+    	
+        for(i=0;i<n;i++)
+        {   ptemp[i]=y[(k-3)*n+i]+4.0*h/3.0*(2.0*f3[i]-f2[i]+2.0*f1[i]);  /* Ô¤±¨*/
+            p[i]=ptemp[i]+112.0/121.0*(c[i]-p[i]);                        /* Ô¤±¨*/
+    	}
+        f(p,f4,x+h);                        					   /* x(k+1)´¦µÄf*/
+        for(i=0;i<n;i++)
+    	{
+            c[i]=1.0/8.0*(9.0*y[k*n+i]-y[(k-2)*n+i]+3.0*h*(f4[i]+2.0*f3[i]-f2[i]));
+            y[(k+1)*n+i]=c[i]-9.0/121.0*(c[i]-p[i]);
+    	}
+        k++;
+    }   
+    free(p);
+    free(f2);
+    free(f3);
+    free(f4);
+    free(f1);
+    free(ptemp);
+    free(c);
+    return (1);
 }
 
  

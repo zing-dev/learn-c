@@ -2,88 +2,89 @@
 #include "stdlib.h"
 #include "ttest.c"
 #include "tutest.c"
-
 #define pi 3.1415926
 
-void main() {
-    int j, na, nb, nc, rtab, rtbc, rtac;
-    double *a, *b, *c;
-    double x, meana, meanb, meanc, vara, varb, varc, alpha;
-    na = 50;  /*ï¿½ï¿½ï¿½ï¿½100ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-    nb = 70;
-    nc = 60;
-    alpha = 0.05;
+void main()
+{
+    int j,na,nb,nc,rtab,rtbc,rtac;
+    double *a,*b,*c;
+    double x,meana,meanb,meanc,vara,varb,varc,alpha;
+    na=50;  /*Éú³É100¸öËæ»úÊý*/
+    nb=70;
+	nc=60;
+	alpha=0.05;
 
-    a = (double *) malloc(sizeof(double) * na);
-    b = (double *) malloc(sizeof(double) * nb);
-    c = (double *) malloc(sizeof(double) * nc);
-    if (a == NULL || b == NULL || c == NULL) {
-        printf("memory alloc failed.\n");
-        exit(0);
-    }
-
-    for (j = 0; j < na; j++)                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»
+    a=(double*)malloc(sizeof(double)*na);
+	b=(double*)malloc(sizeof(double)*nb);
+    c=(double*)malloc(sizeof(double)*nc);
+	if(a==NULL||b==NULL||c==NULL)
     {
-        x = pi * j / na;
-        a[j] = sin(x);
+         printf("memory alloc failed.\n");
+         exit(0);
     }
-    for (j = 0; j < nb; j++)              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+    for(j=0;j<na;j++)				//Ëæ»úÊýÑù±¾Ò»
     {
-        x = pi * j / nb;
-        b[j] = cos(x);
+        x=pi*j/na;    
+        a[j]=sin(x);
     }
-    for (j = 0; j < nc; j++)              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    for(j=0;j<nb;j++)              //Ëæ»úÑù±¾¶þ
     {
-        x = pi * j / nc;
-        c[j] = sin(x);
+        x=pi*j/nb;
+        b[j]=cos(x);
+    }
+	for(j=0;j<nc;j++)              //Ëæ»úÑù±¾Èý
+    {
+        x=pi*j/nc;
+        c[j]=sin(x);
     }
 
-    for (j = 0; j < na; j++)
-        meana += a[j];
-    meana = meana / na;                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Öµ
-    for (j = 0; j < nb; j++)
-        meanb += b[j];
-    meanb = meanb / nb;                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
-    for (j = 0; j < nc; j++)
-        meanc += c[j];
-    meanc = meanc / nc;                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
-    for (j = 0; j < na; j++)
-        vara += (a[j] - meana) * (a[j] - meana);
-    vara = vara / (na - 1);                        //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ä·ï¿½ï¿½ï¿½
-    for (j = 0; j < nb; j++)
-        varb += (b[j] - meanb) * (b[j] - meanb);
-    varb = varb / (nb - 1);                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
-    for (j = 0; j < nc; j++)
-        varc += (c[j] - meanc) * (c[j] - meanc);
-    varc = varc / (nc - 1);                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+	for(j=0;j<na;j++)
+		meana+=a[j];
+	meana=meana/na;							//¼ÆËãÑù±¾Ò»¾ùÖµ
+	for(j=0;j<nb;j++)
+		meanb+=b[j];
+	meanb=meanb/nb;							//¼ÆËãÑù±¾¶þ¾ùÖµ
+	for(j=0;j<nc;j++)
+		meanc+=c[j];
+	meanc=meanc/nc;							//¼ÆËãÑù±¾Èý¾ùÖµ
+	for(j=0;j<na;j++)
+		vara+=(a[j]-meana)*(a[j]-meana);
+	vara=vara/(na-1);						//Ñù±¾Ò»µÄ·½²î
+	for(j=0;j<nb;j++)
+		varb+=(b[j]-meanb)*(b[j]-meanb);
+	varb=varb/(nb-1);						//Ñù±¾¶þµÄ·½²î
+	for(j=0;j<nc;j++)
+		varc+=(c[j]-meanc)*(c[j]-meanc);
+	varc=varc/(nc-1);						//Ñù±¾ÈýµÄ·½²î
 
-    if (vara == varb)        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½ttest
-        rtab = ttest(a, na, b, nb, alpha);
-    else
-        rtab = tutest(a, na, b, nb, alpha);//ï¿½ï¿½ï¿½Ì²ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½tutest
+	if(vara==varb)        //·½²îÏàÍ¬Ê±µ÷ÓÃttest
+		rtab=ttest(a,na,b,nb,alpha);
+	else
+		rtab=tutest(a,na,b,nb,alpha);//·½³Ì²»Í¬Ê±µ÷ÓÃtutest
 
-    if (rtab)
-        printf("aï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
-    else
-        printf("aï¿½ï¿½bÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
+	if(rtab)
+	    printf("aÓëbÓÐÏÔÖøÐÔ²îÒì\n");
+	else
+		printf("aÓëbÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
 
-    if (varc == varb)
-        rtbc = ttest(c, nc, b, nb, alpha);
-    else
-        rtbc = tutest(c, nc, b, nb, alpha);
+	if(varc==varb)
+		rtbc=ttest(c,nc,b,nb,alpha);
+	else
+		rtbc=tutest(c,nc,b,nb,alpha);
 
-    if (rtbc)
-        printf("bï¿½ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
-    else
-        printf("bï¿½ï¿½cÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
-    if (vara == varc)
-        rtac = ttest(a, na, c, nc, alpha);
-    else
-        rtac = tutest(a, na, c, nc, alpha);
+	if(rtbc)
+	    printf("bÓëcÓÐÏÔÖøÐÔ²îÒì\n");
+	else
+		printf("bÓëcÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
+	if(vara==varc)
+		rtac=ttest(a,na,c,nc,alpha);
+	else
+		rtac=tutest(a,na,c,nc,alpha);
 
-    if (rtac)
-        printf("aï¿½ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
-    else
-        printf("aï¿½ï¿½cÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½\n");
+	if(rtac)
+	    printf("aÓëcÓÐÏÔÖøÐÔ²îÒì\n");
+	else
+		printf("aÓëcÃ»ÓÐÏÔÖøÐÔ²îÒì\n");
 
 }

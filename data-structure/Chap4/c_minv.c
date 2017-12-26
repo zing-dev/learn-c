@@ -3,211 +3,153 @@
 #include "c_comp.c"
 
 /*======================================================
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_minv
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½Ë¹ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mat ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//           n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//           eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½ï¿½epsï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
+// º¯ÊýÃû£ºc_minv
+// ¹¦ÄÜÃèÊö£ºÓÃ¸ßË¹£­Ô¼µ±ÏûÈ¥·¨½øÐÐ¸´¾ØÕóÔ­µØÇóÄæ
+// ÊäÈë²ÎÊý£ºmat ´ýÇóÄæµÄ¾ØÕó£¬Çó½â³É¹¦ºó´æ·ÅÄæ¾ØÕó
+//           n ¾ØÕó½×Êý
+//           eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚepsµÄÖµ£¬ÈÏÎªÊÇ0¡£
+// ·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
 =========================================================*/
-int c_minv(mat, n, eps)
+int c_minv(mat,n,eps)
 struct c_comp *mat;
 int n;
 double eps;
 {
-int *is, *js, i, j, k, l, v;
-struct c_comp c_tmp;
-double tmp, d;
+    int *is,*js,i,j,k,l,v;
+    struct c_comp c_tmp;
+    double tmp,d;
 
-if(mat == NULL)                     /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
-{
-printf("The matrix pointer is NULL\n");
-return(0);
-}
+    if(mat == NULL)                     /* ¼ì²âÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
+    {
+        printf("The matrix pointer is NULL\n");
+        return(0);
+    }
 
-is = malloc(n * sizeof(int));         /* Îªï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
-if(is == NULL)
-{
-printf("Memory alloc failed\n");
-return(0);
-}
+    is = malloc(n*sizeof(int));         /* ÎªÐÐ½»»»¼ÇÂ¼·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
+    if(is == NULL)
+    {
+        printf("Memory alloc failed\n");
+        return(0);
+    }
 
-js = malloc(n * sizeof(int));         /* Îªï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
-if(js == NULL)
-{
-free(is);
-printf("Memory alloc failed\n");
-return(0);
-}
+    js = malloc(n*sizeof(int));         /* ÎªÁÐ½»»»¼ÇÂ¼·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
+    if(js == NULL)
+    {
+        free(is);
+        printf("Memory alloc failed\n");
+        return(0);
+    }
 
-for(
-k = 0;
-k<n;
-k++)
-{
-d = 0.0;
-for(
-i = k;
-i<n;
-i++)             /* ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡È¡ï¿½ï¿½Ôª*/
-for(
-j = k;
-j<n;
-j++)
-{
-l = i * n + j;
-tmp = mat[l].rmz * mat[l].rmz + mat[l].imz * mat[l].imz;  /* ï¿½ï¿½Ôªï¿½Øµï¿½Ä£*/
-if(tmp>d)
-{
-d = tmp;
-is[k] =
-i;
-js[k] =
-j;
-}
-}
-if(d<eps)                    /* ï¿½Ð¶ï¿½ï¿½ï¿½Ôªï¿½Ç·ï¿½ï¿½Ð¡*/
-{
-free(is);                  /* ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½*/
-free(js);
-printf("Matrix inverse failed.\n");
-return(0);
-}
+    for(k=0; k<n; k++)
+      {
+        d = 0.0;
+        for(i=k; i<n; i++)             /* ´ËÑ­»·ÓÃÓÚÑ¡È¡Ö÷Ôª*/
+        for(j=k; j<n; j++)
+          {
+            l = i*n + j;
+            tmp = mat[l].rmz*mat[l].rmz + mat[l].imz*mat[l].imz;  /* ÇóÔªËØµÄÄ£*/
+            if(tmp>d)
+            {
+                d = tmp;
+                is[k] = i;
+                js[k] = j;
+            }
+          }
+        if(d < eps)                    /* ÅÐ¶ÏÖ÷ÔªÊÇ·ñ¹ýÐ¡*/
+          {
+            free(is);                  /* ÈôÖ÷Ôª¹ýÐ¡ÔòÍË³ö³ÌÐò*/
+            free(js);
+            printf("Matrix inverse failed.\n");
+            return(0);
+          }
 
-if(is[k]!=k)                   /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ð½ï¿½ï¿½ï¿½*/
-for (
-j = 0;
-j<=n-1; j++)       /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = k * n + j;
-v = is[k] * n + j;
-tmp = mat[l].rmz;
-mat[l].
-rmz = mat[v].rmz;
-mat[v].
-rmz = tmp;
-tmp = mat[l].imz;
-mat[l].
-imz = mat[v].imz;
-mat[v].
-imz = tmp;
-}
-if(js[k]!=k)                   /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ð½ï¿½ï¿½ï¿½*/
-for (
-i = 0;
-i<=n-1; i++)       /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = i * n + k;
-v = i * n + js[k];
-tmp = mat[l].rmz;
-mat[l].
-rmz = mat[v].rmz;
-mat[v].
-rmz = tmp;
-tmp = mat[l].imz;
-mat[l].
-imz = mat[v].imz;
-mat[v].
-imz = tmp;
-}
-l = k * n + k;                   /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½*/
-mat[l].
-rmz = mat[l].rmz / d;
-mat[l].
-imz = -mat[l].imz / d;
+        if(is[k]!=k)                   /* ÅÐ¶ÏÊÇ·ñÐèÒªÐÐ½»»»*/
+          for (j=0; j<=n-1; j++)       /* ½øÐÐÐÐ½»»»*/
+            {
+              l = k*n + j;
+              v = is[k]*n + j;
+              tmp = mat[l].rmz;
+              mat[l].rmz = mat[v].rmz;
+              mat[v].rmz = tmp;
+              tmp = mat[l].imz;
+              mat[l].imz = mat[v].imz;
+              mat[v].imz = tmp;
+            }
+        if(js[k]!=k)                   /* ÅÐ¶ÏÊÇ·ñÐèÒªÁÐ½»»»*/
+          for (i=0; i<=n-1; i++)       /* ½øÐÐÁÐ½»»»*/
+            {
+              l = i*n + k;
+              v = i*n +js[k];
+              tmp = mat[l].rmz;
+              mat[l].rmz = mat[v].rmz;
+              mat[v].rmz = tmp;
+              tmp = mat[l].imz;
+              mat[l].imz = mat[v].imz;
+              mat[v].imz = tmp;
+            }
+        l = k*n + k;                   /* ¹éÒ»»¯¼ÆËãµÄµÚÒ»²½*/
+        mat[l].rmz = mat[l].rmz/d;
+        mat[l].imz = -mat[l].imz/d;
 
-for(
-j = 0;
-j<=n-1; j++)          /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ä³Ë·ï¿½*/
-if(j!=k)
-{
-v = k * n + j;
-c_comp_product(&mat[v], &mat[l], &mat[v]
-);
-}
+        for(j=0; j<=n-1; j++)          /* ¹éÒ»»¯¼ÆËãµÄµÚ¶þ²½£¬ÐèÒªÊ¹ÓÃ¸´ÊýµÄ³Ë·¨*/
+          if(j!=k)
+            {
+              v = k*n + j;
+              c_comp_product(&mat[v], &mat[l], &mat[v]);
+            }
 
-for(
-i = 0;
-i<=n-1; i++)          /* ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½*/
-if(i!=k)
-{
-for (
-j = 0;
-j<=n-1; j++)
-if (j!=k)
-{
-c_comp_product(&mat[k * n + j], &mat[i * n + k], &c_tmp
-);
-mat[
-i *n
-+j].
-rmz = mat[i * n + j].rmz - c_tmp.rmz;
-mat[
-i *n
-+j].
-imz = mat[i * n + j].imz - c_tmp.imz;
-}
-}
+        for(i=0; i<=n-1; i++)          /* ÏûÔª¼ÆËãµÄµÚÒ»²½*/
+          if(i!=k)
+            {
+              for (j=0; j<=n-1; j++)
+                if (j!=k)
+                  {
+                    c_comp_product(&mat[k*n+j], &mat[i*n+k], &c_tmp);
+                    mat[i*n+j].rmz = mat[i*n+j].rmz - c_tmp.rmz;
+                    mat[i*n+j].imz = mat[i*n+j].imz - c_tmp.imz;
+                  }
+            }
 
-for(
-i = 0;
-i<=n-1; i++)          /* ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½*/
-if(i!=k)
-{
-v = i * n + k;
-c_comp_product(&mat[l], &mat[v], &mat[v]
-);
-mat[v].
-rmz = -mat[v].rmz;
-mat[v].
-imz = -mat[v].imz;
-}
-}
+        for(i=0; i<=n-1; i++)          /* ÏûÔª¼ÆËãµÄµÚ¶þ²½*/
+          if(i!=k)
+            {
+              v = i*n + k;
+              c_comp_product(&mat[l], &mat[v], &mat[v]);
+              mat[v].rmz = -mat[v].rmz;
+              mat[v].imz = -mat[v].imz;
+            }
+      }
 
-for(
-k = n - 1;
-k>=0; k--)             /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Ö¸ï¿½*/
-{
-if(js[k]!=k)                  /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ö¸ï¿½*/
-for(
-j = 0;
-j<=n-1; j++)       /* ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = k * n + j;
-v = js[k] * n + j;
-tmp = mat[l].rmz;
-mat[l].
-rmz = mat[v].rmz;
-mat[v].
-rmz = tmp;
-tmp = mat[l].imz;
-mat[l].
-imz = mat[v].imz;
-mat[v].
-imz = tmp;
-}
+    for(k=n-1; k>=0; k--)             /* ÒÀÕÕÐÐ½»»»ºÍÁÐ½»»»µÄÀúÊ·½øÐÐ½á¹û»Ö¸´*/
+      {
+        if(js[k]!=k)                  /* ÅÐ¶ÏÊÇ·ñÐèÒª»Ö¸´*/
+          for(j=0; j<=n-1; j++)       /* °´ÁÐ½»»»µÄÀúÊ·½øÐÐÐÐ½»»»*/
+            {
+              l = k*n + j;
+              v=js[k]*n + j;
+              tmp = mat[l].rmz;
+              mat[l].rmz = mat[v].rmz;
+              mat[v].rmz = tmp;
+              tmp = mat[l].imz;
+              mat[l].imz = mat[v].imz;
+              mat[v].imz = tmp;
+            }
 
-if(is[k]!=k)
-for(
-i = 0;
-i<=n-1; i++)        /* ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = i * n + k;
-v = i * n + is[k];
-tmp = mat[l].rmz;
-mat[l].
-rmz = mat[v].rmz;
-mat[v].
-rmz = tmp;
-tmp = mat[l].imz;
-mat[l].
-imz = mat[v].imz;
-mat[v].
-imz = tmp;
-}
-}
+        if(is[k]!=k)
+          for(i=0; i<=n-1; i++)        /* °´ÐÐ½»»»µÄÀúÊ·½øÐÐÁÐ½»»»*/
+            {
+              l = i*n + k;
+              v = i*n + is[k];
+              tmp = mat[l].rmz;
+              mat[l].rmz = mat[v].rmz;
+              mat[v].rmz = tmp;
+              tmp = mat[l].imz;
+              mat[l].imz = mat[v].imz;
+              mat[v].imz = tmp;
+            }
+      }
 
-free(is);                          /* ï¿½Í·Å·ï¿½ï¿½ï¿½Ä¿Õ¼ï¿½*/
-free(js);
-return(1);                         /* ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1*/
+    free(is);                          /* ÊÍ·Å·ÖÅäµÄ¿Õ¼ä*/
+    free(js);
+    return(1);                         /* Çó½â³É¹¦£¬·µ»Ø1*/
 }

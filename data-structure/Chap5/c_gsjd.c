@@ -1,190 +1,128 @@
 /*======================================================
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½c_gsjd
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½Ë¹ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½b ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½
-//           n Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eps ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð¡ï¿½ï¿½epsï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½0ï¿½ï¿½
-// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½Ð³É¹ï¿½ï¿½ò·µ»ï¿½1,Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½0
+// º¯ÊýÃû£ºc_gsjd
+// ¹¦ÄÜÃèÊö£ºÓÃ¸ßË¹ÏûÈ¥·¨½âÏßÐÔ·½³Ì×é
+// ÊäÈë²ÎÊý£ºa ½âÏµÊý¾ØÕó£¬b ³£Êý¾ØÕó£¬x·µ»ØµÄ½âÏòÁ¿
+//           n Î´ÖªÊý¸öÊý£¬eps ¾«¶ÈÒªÇó£¬Ð¡ÓÚepsµÄÖµ£¬ÈÏÎªÊÇ0¡£
+// ·µ»ØÖµ£ºÕûÐÍ¡£ÔËÐÐ³É¹¦Ôò·µ»Ø1,Ê§°ÜÔò·µ»Ø0
 =========================================================*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "c_comp.c"
 
-int c_gsjd(a, b, x, n, eps)
-struct c_comp *a, *b, *x;
+int c_gsjd(a,b,x,n,eps)
+struct c_comp *a,*b,*x;
 int n;
 double eps;
 {
-int i, j, k, l, v, exis, *exjs;
-struct c_comp c_tmp;
-double tmp, d;
-if((a==NULL)||(b==NULL)||(x==NULL))             /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½*/
-{
-printf("The pointer exis NULL\n");
-return(0);
-}
-exjs = malloc(n * sizeof(int));          /* Îªï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Õ¼ä²¢ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½*/
-if(exjs == NULL)
-{
-printf("Memory alloc failed\n");
-return(0);
-}
-for(
-k = 0;
-k<n;
-k++)
-{
-d = 0.0;
-for(
-i = k;
-i<n;
-i++)                              /* ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡È¡ï¿½ï¿½Ôª*/
-for(
-j = k;
-j<n;
-j++)
-{
-l = i * n + j;
-tmp = a[l].rmz * a[l].rmz + a[l].imz * a[l].imz;  /* ï¿½ï¿½Ôªï¿½Øµï¿½Ä£*/
-if(tmp>d)
-{
-d = tmp;
-exis = i;
-exjs[k] =
-j;
-}
-}
-if(d<eps)                                     /* ï¿½Ð¶ï¿½ï¿½ï¿½Ôªï¿½Ç·ï¿½ï¿½Ð¡*/
-{
-free(exjs);
-printf("failed.\n");
-return(0);                                    /* ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½*/
-}
-if(exis!=k)                                       /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-for (
-j = 0;
-j<n;
-j++)                           /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = k * n + j;
-v = exis * n + j;
-tmp = a[l].rmz;
-a[l].
-rmz = a[v].rmz;
-a[v].
-rmz = tmp;
-tmp = a[l].imz;
-a[l].
-imz = a[v].imz;
-a[v].
-imz = tmp;
-}
-tmp = b[k].rmz;                              /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²Òªï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-b[k].
-rmz = b[exis].rmz;
-b[exis].
-rmz = tmp;
-tmp = b[k].imz;
-b[k].
-imz = b[exis].imz;
-b[exis].
-imz = tmp;
-}
-if(exjs[k]!=k)                                   /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ð½ï¿½ï¿½ï¿½*/
-for(
-i = 0;
-i<n;
-i++)                           /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½*/
-{
-l = i * n + k;
-v = i * n + exjs[k];
-tmp = a[l].rmz;
-a[l].
-rmz = a[v].rmz;
-a[v].
-rmz = tmp;
-tmp = a[l].imz;
-a[l].
-imz = a[v].imz;
-a[v].
-imz = tmp;
-}
-l = k * n + k;                               /* È¡ï¿½ï¿½ï¿½î½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ë·ï¿½*/
-a[l].
-rmz = a[l].rmz / d;
-a[l].
-imz = -a[l].imz / d;
-for(
-j = k + 1;
-j<n;
-j++)           /* ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ä³Ë·ï¿½*/
-{
-v = k * n + j;
-c_comp_product(&a[v], &a[l], &a[v]
-);
-}
-c_comp_product(&b[k], &a[l], &b[k]
-);            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+    int i,j,k,l,v,exis,*exjs;
+    struct c_comp c_tmp;
+    double tmp,d;
+    if((a==NULL)||(b==NULL)||(x==NULL))             /* ¼ì²âÊäÈëµÄÖ¸ÕëÊÇ·ñÎª¿Õ*/
+    {
+        printf("The pointer exis NULL\n");
+        return(0);
+    }
+    exjs = malloc(n*sizeof(int));          /* ÎªÁÐ½»»»¼ÇÂ¼·ÖÅä¿Õ¼ä²¢¼ì²âÊÇ·ñ³É¹¦*/
+    if(exjs == NULL)
+    {
+        printf("Memory alloc failed\n");
+        return(0);
+    }
+    for(k=0; k<n; k++)
+    {
+      d = 0.0;
+      for(i=k; i<n; i++)                              /* ´ËÑ­»·ÓÃÓÚÑ¡È¡Ö÷Ôª*/
+      for(j=k; j<n; j++)
+      {
+        l = i*n + j;
+        tmp = a[l].rmz*a[l].rmz + a[l].imz*a[l].imz;  /* ÇóÔªËØµÄÄ£*/
+        if(tmp>d)
+        {
+          d = tmp;
+          exis = i;
+          exjs[k] = j;
+        }
+      }
+      if(d < eps)                                     /* ÅÐ¶ÏÖ÷ÔªÊÇ·ñ¹ýÐ¡*/
+      {
+        free(exjs);
+        printf("failed.\n");
+        return(0);                                    /* ÈôÖ÷Ôª¹ýÐ¡ÔòÍË³ö³ÌÐò*/
+      }
+      if(exis!=k)                                       /* ÅÐ¶ÏÊÇ·ñÐèÒªÐÐ½»»»*/
+      {
+        for (j=0; j<n; j++)                           /* ½øÐÐÐÐ½»»»*/
+        {
+          l = k*n + j;
+          v = exis*n + j;
+          tmp = a[l].rmz;
+          a[l].rmz = a[v].rmz;
+          a[v].rmz = tmp;
+          tmp = a[l].imz;
+          a[l].imz = a[v].imz;
+          a[v].imz = tmp;
+        }
+        tmp = b[k].rmz;                              /* ³£ÊýÏòÁ¿Ò²Òª½øÐÐÐÐ½»»»*/
+        b[k].rmz = b[exis].rmz;
+        b[exis].rmz = tmp;
+        tmp = b[k].imz;
+        b[k].imz = b[exis].imz;
+        b[exis].imz = tmp;
+      }
+      if(exjs[k]!=k)                                   /* ÅÐ¶ÏÊÇ·ñÐèÒªÁÐ½»»»*/
+        for(i=0; i<n; i++)                           /* ½øÐÐÁÐ½»»»*/
+        {
+          l = i*n + k;
+          v = i*n +exjs[k];
+          tmp = a[l].rmz;
+          a[l].rmz = a[v].rmz;
+          a[v].rmz = tmp;
+          tmp = a[l].imz;
+          a[l].imz = a[v].imz;
+          a[v].imz = tmp;
+        }
+      l = k*n + k;                               /* È¡¹²éî½«¸´Êý³ý·¨×ª»¯Îª³Ë·¨*/
+      a[l].rmz = a[l].rmz/d;
+      a[l].imz = -a[l].imz/d;
+      for(j=k+1; j<n; j++)           /* ¹éÒ»»¯¼ÆËãµÄµÚ¶þ²½£¬ÐèÒªÊ¹ÓÃ¸´ÊýµÄ³Ë·¨*/
+      {
+        v = k*n + j;
+        c_comp_product(&a[v],&a[l],&a[v]);
+      }
+      c_comp_product(&b[k],&a[l],&b[k]);            /* ³£ÊýÏòÁ¿µÄ¹éÒ»»¯¼ÆËã*/
 
-for(
-i = 0;
-i<n;
-i++)                          /* ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½*/
-{
-if(i!=k){
-for(
-j = k + 1;
-j<n;
-j++)
-{
-c_comp_product(&a[i * n + k], &a[k * n + j], &c_tmp
-);
-a[
-i *n
-+j].
-rmz = a[i * n + j].rmz - c_tmp.rmz;
-a[
-i *n
-+j].
-imz = a[i * n + j].imz - c_tmp.imz;
-}
-c_comp_product(&a[i * n + k], &b[k], &c_tmp
-);
-b[i].
-rmz = b[i].rmz - c_tmp.rmz;         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½*/
-b[i].
-imz = b[i].imz - c_tmp.imz;
-}
-}
-}
-for(
-i = 0;
-i<n;
-i++)                          /* ï¿½ï¿½ï¿½Úµï¿½bï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½*/
-{
-x[i].
-rmz = b[i].rmz;
-x[i].
-imz = b[i].imz;
-}
-for(
-k = n - 1;
-k>=0; k--)                      /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Ö¸ï¿½*/
-{
-if(exjs[k]!=k)                             /* ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ö¸ï¿½*/
-{
-tmp = x[k].rmz;                        /* ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½*/
-x[k].
-rmz = x[exjs[k]].rmz;
-x[exjs[k]].
-rmz = tmp;
-tmp = x[k].imz;
-x[k].
-imz = x[exjs[k]].imz;
-x[exjs[k]].
-imz = tmp;
-}
-}
-free(exjs);                                  /* ï¿½Í·Å·ï¿½ï¿½ï¿½Ä¿Õ¼ï¿½*/
-return(1);                                 /* ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1*/
+      for(i=0; i<n; i++)                          /* ÏûÔª¼ÆËã*/
+      {
+        if(i!=k){
+          for(j=k+1; j<n; j++)
+          {
+            c_comp_product(&a[i*n+k], &a[k*n+j], &c_tmp);
+            a[i*n+j].rmz = a[i*n+j].rmz - c_tmp.rmz;
+            a[i*n+j].imz = a[i*n+j].imz - c_tmp.imz;
+          }
+          c_comp_product(&a[i*n+k], &b[k], &c_tmp);
+          b[i].rmz = b[i].rmz - c_tmp.rmz;         /* ³£ÊýÏòÁ¿Ò²Òª½øÐÐÏûÔª¼ÆËã*/
+          b[i].imz = b[i].imz - c_tmp.imz;
+        }
+      }
+    }
+    for(i=0; i<n; i++)                          /* ÏÖÔÚµÄb¾ÍÊÇ½âÏòÁ¿*/
+    {
+      x[i].rmz = b[i].rmz;
+      x[i].imz = b[i].imz;
+    }
+    for(k=n-1; k>=0; k--)                      /* ÒÀÕÕÁÐ½»»»µÄÀúÊ·½øÐÐ½á¹û»Ö¸´*/
+    {
+      if(exjs[k]!=k)                             /* ÅÐ¶ÏÊÇ·ñÐèÒª»Ö¸´*/
+      {
+        tmp = x[k].rmz;                        /* »Ö¸´½âµÄË³Ðò*/
+        x[k].rmz = x[exjs[k]].rmz;
+        x[exjs[k]].rmz = tmp;
+        tmp = x[k].imz;
+        x[k].imz = x[exjs[k]].imz;
+        x[exjs[k]].imz = tmp;
+      }
+    }
+    free(exjs);                                  /* ÊÍ·Å·ÖÅäµÄ¿Õ¼ä*/
+    return(1);                                 /* Çó½â³É¹¦£¬·µ»Ø1*/
 }
