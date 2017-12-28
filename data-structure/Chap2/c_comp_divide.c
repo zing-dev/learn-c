@@ -1,30 +1,29 @@
 /*======================================================
-//º¯ÊýÃû£ºc_comp_divide.c
-//¹¦ÄÜÃèÊö£ºÇó¸´ÊýµÄ³ý·¨
-//ÊäÈë²ÎÊý£ºa1£¨±»³ýÊýaµÄ½á¹¹Ìå£©
-//          a2£¨³ýÊýbµÄ½á¹¹Ìå£©
-//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//å‡½æ•°åï¼šc_comp_divide.c
+//åŠŸèƒ½æè¿°ï¼šæ±‚å¤æ•°çš„é™¤æ³•
+//è¾“å…¥å‚æ•°ï¼ša1ï¼ˆè¢«é™¤æ•°açš„ç»“æž„ä½“ï¼‰
+//          a2ï¼ˆé™¤æ•°bçš„ç»“æž„ä½“ï¼‰
+//          cï¼ˆè®¡ç®—ç»“æžœçš„ç»“æž„ä½“ï¼‰
+//è¿”å›žå€¼ï¼š0ï¼ˆå¤±è´¥ï¼‰ï¼Œ1ï¼ˆæˆåŠŸï¼‰
 =========================================================*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "c_comp.h"
 
-int c_comp_divide(a1,a2,c)
-struct c_comp *a1,*a2,*c;
-{
+int c_comp_divide(struct c_comp *a1, struct c_comp *a2, struct c_comp *c) {
+//    struct c_comp *a1, *a2, *c;
     double R2;
-    if(a1 == NULL || a2 == NULL || c == NULL)
-    {
+    if (a1 == NULL || a2 == NULL || c == NULL) {
         printf("(c_comp_divide)The c_comp pointer is NULL!\n");
-        return(0);
+        return (0);
     }
 
-    R2 = (a2->rmz)*(a2->rmz) + (a2->imz)*(a2->imz);
-    
-    c_comp_product(a1,a2,c);
-    c->rmz = c->rmz/R2;
-    c->imz = c->imz/R2;
+    R2 = (a2->rmz) * (a2->rmz) + (a2->imz) * (a2->imz);
 
-    return(1);
+    c_comp_product(a1, a2, c);
+    c->rmz = c->rmz / R2;
+    c->imz = c->imz / R2;
+
+    return (1);
 }

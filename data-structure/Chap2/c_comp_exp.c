@@ -1,9 +1,9 @@
 /*======================================================
-//º¯ÊıÃû£ºc_comp_pow.c
-//¹¦ÄÜÃèÊö£ºÇó¸´ÊıÖ¸Êı
-//ÊäÈë²ÎÊı£ºa£¨ÊäÈëµÄ½á¹¹Ìå£©
-//          c£¨¼ÆËã½á¹ûµÄ½á¹¹Ìå£©
-//·µ»ØÖµ£º0£¨Ê§°Ü£©£¬1£¨³É¹¦£©
+//å‡½æ•°åï¼šc_comp_pow.c
+//åŠŸèƒ½æè¿°ï¼šæ±‚å¤æ•°æŒ‡æ•°
+//è¾“å…¥å‚æ•°ï¼šaï¼ˆè¾“å…¥çš„ç»“æ„ä½“ï¼‰
+//          cï¼ˆè®¡ç®—ç»“æœçš„ç»“æ„ä½“ï¼‰
+//è¿”å›å€¼ï¼š0ï¼ˆå¤±è´¥ï¼‰ï¼Œ1ï¼ˆæˆåŠŸï¼‰
 =========================================================*/
 
 #include "stdio.h"
@@ -16,21 +16,19 @@
     double imz;
 }c_comp;
 */
-int c_comp_exp(a,c)
-struct c_comp *a,*c;
-{
+int c_comp_exp(a, c) {
+    struct c_comp *a, *c;
     double R;
 
-    if(a == NULL || c == NULL)
-    {
+    if (a == NULL || c == NULL) {
         printf("(c_comp_exp)The c_comp pointer is NULL!\n");
-        return(0);
+        return (0);
     }
 
     R = exp(a->rmz);
 
-    c->rmz = R*cos(a->imz);
-    c->imz = R*sin(a->imz);
+    c->rmz = R * cos(a->imz);
+    c->imz = R * sin(a->imz);
 
-    return(1);
+    return (1);
 }

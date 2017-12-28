@@ -14,7 +14,6 @@ if [[ ${count} -gt 0 ]]; then
                     flag=1
                 else
                     flag=0
-                    break
                 fi
                 source=${source}" "${f}
                 flag=1
