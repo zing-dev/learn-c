@@ -30,7 +30,6 @@ int main(int argc, char **argv) {
                 if (ret != CL_CLEAN)
                     printf("Error: %s\n", cl_strerror(ret));
             }
-
         }
     }
 }
