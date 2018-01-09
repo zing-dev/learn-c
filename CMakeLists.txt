@@ -10,4 +10,5 @@ set(CMAKE_CXX_STANDARD 11)
 #)
 
 #add_library(2018)
+add_subdirectory(2017)
 add_subdirectory(2018)
