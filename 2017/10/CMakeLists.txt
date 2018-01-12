@@ -4,5 +4,5 @@ project(10)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(10
-#        19/iniparser/src/parse.c
-        19/iniparser/src/test.c)
+        19/iniparser/src/parse.c
+        )

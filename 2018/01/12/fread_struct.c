@@ -25,6 +25,6 @@ int main() {
     {
         printf("%d %s\n", per.age, per.name);
     }
-    return 0;
+    return 0;.
 }
 
