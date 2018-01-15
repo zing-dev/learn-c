@@ -11,5 +11,7 @@ add_executable(
 #        09/pthread.c 09/clamavtest.h
 #        11/uftp.c 11/server.c 11/client.c
 #        11/struct.c
-        12/read.c 12/fread.c 12/fwrite_int.c 12/fread_int.c 12/fwrite_struct.c 12/fread_struct.c)
+#        12/read.c 12/fread.c 12/fwrite_int.c 12/fread_int.c 12/fwrite_struct.c 12/fread_struct.c
+#        15/free.c
+        15/free2.c)
 
