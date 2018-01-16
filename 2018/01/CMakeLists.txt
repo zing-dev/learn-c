@@ -13,5 +13,7 @@ add_executable(
 #        11/struct.c
 #        12/read.c 12/fread.c 12/fwrite_int.c 12/fread_int.c 12/fwrite_struct.c 12/fread_struct.c
 #        15/free.c
-        15/free2.c)
+#        15/free2.c
+#        16/1.c 16/2.c
+        16/3.c 16/4.c 16/5.c 16/6.c 16/7.c 16/8.c 16/9.c)
 
