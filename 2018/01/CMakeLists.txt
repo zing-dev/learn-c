@@ -3,6 +3,7 @@ project(1)
 
 set(CMAKE_CXX_STANDARD 11)
 
+add_subdirectory(16/cmake)
 add_executable(
         1
         #        07/2.c
