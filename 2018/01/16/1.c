@@ -25,4 +25,4 @@ int main() {
     }
     printf("%3d %3d %3d\n", nl + 1, nw, nc);
     return 0;
-}
+

@@ -20,7 +20,7 @@ if [[ ${count} -gt 0 ]]; then
             else
                 flag=0
             fi
-        elif [[ ${f} =~ "-l" ]]; then
+        elif [[ ${f} =~ "-l" || ${f} =~ "-I" ]]; then
             lib=${lib}" "${f}
             flag=1
         else
