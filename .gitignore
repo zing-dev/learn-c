@@ -52,8 +52,8 @@ Mkfile.old
 dkms.conf
 .idea/
 cmake-build-debug/
-/udp-demo/client
-/udp-demo/server
+/socket/client
+/socket/server
 /string/1
 .vagrant/
 
