@@ -17,5 +17,7 @@ add_executable(
 #        15/free.c
 #        15/free2.c
 #        16/1.c 16/2.c
-        16/3.c 16/4.c 16/5.c 16/6.c 16/7.c 16/8.c 16/9.c)
+#        16/3.c 16/4.c 16/5.c 16/6.c 16/7.c 16/8.c 16/9.c
+#        19/struct.c
+        19/static.c 19/extern.c 19/extern.h)
 
