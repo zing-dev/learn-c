@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd /data/ftp/1000
-rm -rfv *
+sudo rm -rfv *
 cd /data/gap
 sudo rm -rfv *
 cd /data/ftp/1000

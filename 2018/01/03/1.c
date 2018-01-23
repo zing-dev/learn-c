@@ -21,14 +21,14 @@ int main(int argc, char **argv) {
 
     struct cl_engine *engine = get_clamav_engine();
     if (argc > 1) {
-        for (i = 0; i < argc; ++i) {
+        for (i = 1; i < argc; ++i) {
             ret = cl_scanfile(argv[i], &virname, NULL, engine, CL_SCAN_STDOPT);
             if (ret == CL_VIRUS) {
                 printf("Virus detected: %s\n", virname);
             } else {
                 printf("No virus detected.\n");
                 if (ret != CL_CLEAN)
-                    printf("Error: %s\n", cl_strerror(ret));
+                    printf("Error: %s -- %s \n", cl_strerror(ret),argv[i]);
             }
         }
     }
