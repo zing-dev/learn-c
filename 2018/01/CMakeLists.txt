@@ -20,5 +20,6 @@ add_executable(
 #        16/3.c 16/4.c 16/5.c 16/6.c 16/7.c 16/8.c 16/9.c
 #        19/struct.c
 #        19/static.c 19/extern.c 19/extern.h
-        22/1.c 22/2.c 22/mq/server.c 22/mq/client.c 22/mq/common.h 22/mq/attr.c 22/mq/open.c 22/mq/send.c 22/mq/receive.c 22/mq/notify.c 22/mq/server2.c)
+#        22/1.c 22/2.c 22/mq/server.c 22/mq/client.c 22/mq/common.h 22/mq/attr.c 22/mq/open.c 22/mq/send.c 22/mq/receive.c 22/mq/notify.c 22/mq/server2.c
+        23/continue.c)
 
