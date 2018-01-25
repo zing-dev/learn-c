@@ -21,5 +21,9 @@ add_executable(
 #        19/struct.c
 #        19/static.c 19/extern.c 19/extern.h
 #        22/1.c 22/2.c 22/mq/server.c 22/mq/client.c 22/mq/common.h 22/mq/attr.c 22/mq/open.c 22/mq/send.c 22/mq/receive.c 22/mq/notify.c 22/mq/server2.c
-        23/continue.c 24/md5.c 24/md52.c 24/md5_file.c 24/md5_src.h 24/md5_src.c)
+#        23/continue.c 24/md5.c 24/md52.c 24/md5_file.c 24/md5_src.h 24/md5_src.c
+#        25/or.c
+#        25/pthread.c
+#        25/timeval.c
+        25/volatile.c)
 
