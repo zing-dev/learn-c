@@ -61,3 +61,5 @@ int main(void)
   }
   return 0;
 }
+
+//gcc demo.c -o demo.out  -lcrypto -lcurl
