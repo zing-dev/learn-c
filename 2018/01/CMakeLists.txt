@@ -25,5 +25,7 @@ add_executable(
 #        25/or.c
 #        25/pthread.c
 #        25/timeval.c
-        25/volatile.c)
+#        25/volatile.c
+        30/printenv.c
+        30/getlines.c)
 
