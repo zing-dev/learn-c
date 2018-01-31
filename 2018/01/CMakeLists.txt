@@ -26,6 +26,11 @@ add_executable(
 #        25/pthread.c
 #        25/timeval.c
 #        25/volatile.c
-        30/printenv.c
-        30/getlines.c)
+#        30/printenv.c
+#        30/getlines.c
+#        31/pthread_create.c
+#        31/pthread_join.c
+#        31/stack_management.c
+#        31/using_mutexes.c
+        "31/condition_variables.c")
 
