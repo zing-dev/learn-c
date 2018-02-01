@@ -10,3 +10,4 @@ set(CMAKE_CXX_STANDARD 11)
 #)
 
 add_subdirectory(01)
+add_subdirectory(02)
