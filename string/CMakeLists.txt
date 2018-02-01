@@ -3,5 +3,5 @@ project(string)
 
 add_executable(str
 #        strcmp.c
-        isalnum.c
-        )
+#        isalnum.c
+        iscntrl.c)
