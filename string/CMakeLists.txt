@@ -5,4 +5,5 @@ add_executable(str
 #        strcmp.c
 #        isalnum.c
 #        iscntrl.c
-        strncpy.c strcpy.c)
+#        strncpy.c strcpy.c
+        strcat.c)
