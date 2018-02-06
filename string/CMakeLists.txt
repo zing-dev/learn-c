@@ -8,4 +8,4 @@ add_executable(str
 #        strncpy.c strcpy.c
 #        strcat.c
 #        strstr.c
-        strspn.c)
+        strspn.c strrchr.c strpbrk.c)
