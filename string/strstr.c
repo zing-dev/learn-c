@@ -12,7 +12,7 @@
 void find_str(char const *str, char const *substr) {
     char *pos = strstr(str, substr);
     if (pos) {
-        printf("found the string '%s' in '%s' at position: %ld; result: %s\n", substr, str, pos - str,pos);
+        printf("found the string '%s' in '%s' at position: %ld; result: %s\n", substr, str, pos - str, pos);
     } else {
         printf("the string '%s' was not found in '%s'\n", substr, str);
     }
@@ -32,10 +32,17 @@ int main() {
         printf("NotFound!\n");
 
     char *str = "one two three";
-    find_str(str, "two");
-    find_str(str, "");
-    find_str(str, "nine");
-    find_str(str, "n");
+    find_str(str, "two"); //found the string 'two' in 'one two three' at position: 4; result: two three
+    find_str(str, ""); // found the string '' in 'one two three' at position: 0; result: one two three
+    find_str(str, "nine");// the string 'nine' was not found in 'one two three'
+    find_str(str, "n"); // found the string 'n' in 'one two three' at position: 1; result: ne two three
+
+    char str2[] = "This is a simple string";
+    char *pch;
+    pch = strstr(str2, "simple");
+    strncpy (pch, "sample", 6);
+    puts(str2);//This is a sample string
+    puts(pch);//sample string
 
     return 0;
 }

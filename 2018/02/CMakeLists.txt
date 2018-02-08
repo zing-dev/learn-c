@@ -7,5 +7,6 @@ add_executable(
         02
 #        01/tsd.c
 #        01/mutex.c 01/server.c 01/client.c 01/isalpha.c 01/tcp/server.c 01/tcp/client.c 01/udp/client.c 01/udp/server.c
-        02/md5.c
-        02/md5.h 02/main.c)
+#        02/md5.c
+#        02/md5.h 02/main.c
+        05/1.c)
