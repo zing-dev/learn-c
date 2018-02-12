@@ -10,9 +10,19 @@ int main() {
     char src[50], dest[50];
     strcpy(src, "This is source");
     strcpy(dest, "This is destination");
-    char *str = strncat(dest, src, 15);
-    printf("%s\n", dest);
-    printf("%s\n", str);
-    printf("%d\n",str == dest);
+    printf("%d\n", (int) strlen(src));//14
+    int old = (int) strlen(dest);//19
+    printf("%d\n", old);
+    if (dest[old] == '\0'){
+        printf("NULL\n");//true
+    }
+    char *str = strncat(dest, src, strlen(src));
+    printf("%s\n", dest);//This is destinationThis is source
+    printf("%s\n", str);//This is destinationThis is source
+    printf("%d\n", str == dest);//1
+    //33 == 33 == 33
+    printf("%d == %d == %d\n", (int) strlen(dest), (int) strlen(str), (int) (old + strlen(src)));
+    printf("%c\n", str[old]);//T
+    printf("%s\n", &str[old]);//This is source
     return 0;
 }
