@@ -4,19 +4,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 int main() {
-    int val;
-    char str[20];
-
-    strcpy(str, "98993489");
-    val = atoi(str);
-    printf("字符串值 = %s, 整型值 = %d\n", str, val);
-
-    strcpy(str, "github.com");
-    val = atoi(str);
-    printf("字符串值 = %s, 整型值 = %d\n", str, val);
-
+    printf("%i\n", atoi("-123zing"));//-123
+    printf("%i\n", atoi("0"));//0
+    printf("%i\n", atoi("zing")); //0        // 无可进行的转换
+    printf("%i\n", atoi("2147483648"));   // UB ：在 int 范围外-2147483648
     return 0;
 }

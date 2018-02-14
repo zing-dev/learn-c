@@ -14,6 +14,16 @@ int main() {
     double ret;
     ret = strtod(str2, &ptr);
     printf("%lf\n", ret);
-    printf("%s", ptr);
+    printf("%s\n", ptr);
+    /////////////////////////////////////
+    printf("%g\n", atof("  -0.0000000123junk")); //-1.23e-08
+    printf("%g\n", atof("0.012"));//0.012
+    printf("%g\n", atof("15e16"));//1.5e+17
+    printf("%g\n", atof("-0x1afp-2"));//-107.75
+    printf("%g\n", atof("inF"));//inf
+    printf("%g\n", atof("Nan"));//nan
+    printf("%g\n", atof("1.0e+309"));   // UB ：超出 double 范围 //inf
+    printf("%g\n", atof("0.0"));//0
+    printf("%g\n", atof("junk"));       // 无可进行的转换 //0
     return 0;
 }
