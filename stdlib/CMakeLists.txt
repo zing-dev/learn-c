@@ -3,4 +3,4 @@ project(stdlib)
 
 add_executable(stdlib
         atof.c
-        atoi.c atol.c strtod.c)
+        atoi.c atol.c strtod.c strtol.c)
