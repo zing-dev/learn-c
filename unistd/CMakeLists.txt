@@ -3,4 +3,4 @@ project(unistd)
 
 add_executable(unistd
         chown.c
-        chown2.c chown3.c)
+        chown2.c chown3.c access.c alarm.c)
