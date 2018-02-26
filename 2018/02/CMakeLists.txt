@@ -10,4 +10,4 @@ add_executable(
 #        02/md5.c
 #        02/md5.h 02/main.c
         05/1.c
-        22/getpwnam.c 22/argv.c 22/dir.c 22/flag.c 22/attribute.c 22/attribute2.c 22/attribute3.c 22/attribute4.c 22/version.c 22/getpwuid.c 22/getpwnam_r.c 22/stat.c 23/main.c 23/1.c)
+        22/getpwnam.c 22/argv.c 22/dir.c 22/flag.c 22/attribute.c 22/attribute2.c 22/attribute3.c 22/attribute4.c 22/version.c 22/getpwuid.c 22/getpwnam_r.c 22/stat.c 23/main.c 23/1.c 26/pow.c 26/scanf.c 26/scanf2.c 26/errno.c 26/creat.c)
