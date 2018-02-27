@@ -3,8 +3,8 @@ project(2018)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(demo
+add_executable(socket
         demo/client.c demo/server.c
         demo/printSocketOptions.c
-        )
+        inet_aton.c)
 
