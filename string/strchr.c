@@ -3,7 +3,7 @@
 //
 
 #include <string.h>
-#include <printf.h>
+#include <stdio.h>
 int main() {
     char str[] = "I love this world!";
     char *p = strchr(str, 'I');

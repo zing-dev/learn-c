@@ -3,4 +3,4 @@ project(stdlib)
 
 add_executable(stdlib
         atof.c
-        atoi.c atol.c strtod.c strtol.c div.c drand48.c ecvt.c system.c)
+        atoi.c atol.c strtod.c strtol.c div.c drand48.c ecvt.c system.c getenv.c)
