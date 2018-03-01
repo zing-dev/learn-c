@@ -7,6 +7,5 @@ add_executable(
         3.c
         log.c log.h
         main.c
-        sqlite3.h
-        sqlite3ext.h
-        sql.c sqlite.c)
+        sql.c
+        sqlite.c)
