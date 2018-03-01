@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<mysql/mysql.h>
+#include <mysql/mysql.h>
 
 
 int main(int argc, const char *argv[]) {

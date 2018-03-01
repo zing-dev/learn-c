@@ -3,7 +3,8 @@
 // Copyright (c) 2017 ZRX . All rights reserved.
 //
 
-#include <database.h>
+#include <mysql/mysql.h>
+#include "database.h"
 
 int database_init_and_connect(MYSQL *mysql) {
     const char *host = "localhost";
