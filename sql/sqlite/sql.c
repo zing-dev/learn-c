@@ -215,7 +215,7 @@ int main() {
     Student stu;
     stu.id = 68;
     char *address = "jiangsu-xuzhou";
-    memcpy(stu.address, address, strlen(address));
+    memcpy(stu.address, address, (size_t) strlen(address));
     update(db, stu);
     queryTable(db, student, 0, 10);
     for (i = 0; i < count; ++i) {
@@ -230,7 +230,7 @@ int main() {
     }
     address = "jiangsu-suzhou";
     stu.id = 70;
-    memcpy(stu.address, address, strlen(address));
+    memcpy(stu.address, address, (size_t) strlen(address));
     update3(db, &stu);
     if (queryTable(db, student, 0, 10)) {
         for (i = 0; i < count; ++i) {

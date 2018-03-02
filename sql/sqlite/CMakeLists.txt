@@ -9,4 +9,4 @@ add_executable(
         main.c
         sqlite3.h
         sqlite3ext.h
-        sql.c sqlite.c)
+        sql.c sqlite.c sql2.c)
