@@ -12,7 +12,7 @@ int main() {
 //    const char *host = "192.168.33.13";
     const char *host = "localhost";
     const char *user = "root";
-    const char *passwd = "root";
+    const char *passwd = "root1";
     const char *db = "fgap_config";
     unsigned int port = 3306;
     const char *unix_socket = "/var/run/mysqld/mysqld.sock";
@@ -20,10 +20,12 @@ int main() {
     mysql = mysql_init(mysql);
     if (mysql == NULL) {
         perror("mysql_init error ");
+        exit(EXIT_FAILURE);
     }
     mysql = mysql_real_connect(mysql, host, user, passwd, db, port, unix_socket, 0);
-    if (mysql == NULL) {
+    if (!mysql) {
         perror("mysql_real_connect error");
+        exit(EXIT_FAILURE);
     } else {
         printf("mysql_real_connect success\n");
     }

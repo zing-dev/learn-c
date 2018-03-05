@@ -8,4 +8,4 @@ add_executable(
         database.c
         database.h
         select.c
-        conn3.c)
+        conn3.c main.c)
