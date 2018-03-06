@@ -1,4 +1,3 @@
-
 create table if not exists `student` (
     `id` int auto_increment,
     `name` varchar(16) not null,

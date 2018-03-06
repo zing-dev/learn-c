@@ -19,7 +19,12 @@ int main() {
     const char *unix_socket = "/var/run/mysqld/mysqld.sock";
     int flag = 0, i = 0;
     const char *db2 = "test";
+    char sql[1024] = {0};
 
+    if (mysql_library_init(0, NULL, NULL)) {
+        fprintf(stderr, "could not initialize MySQL client library\n");
+        exit(EXIT_FAILURE);
+    }
     mysql = mysql_init(mysql);
     if (mysql == NULL) {
         perror("mysql_init error");
@@ -35,6 +40,8 @@ int main() {
     int ping = mysql_ping(mysql);
     if (ping == 0) {
         printf("mysql is active !\n");
+    } else {
+        return EXIT_FAILURE;
     }
 
     //////////////////////////////////////////////////////////////////
@@ -68,6 +75,7 @@ int main() {
     printf("mysql_info : %s\n", mysqlInfo);
 
     const char *stat = mysql_stat(mysql);
+    //mysql_stat : Uptime: 70217  Threads: 2  Questions: 824  Slow queries: 0  Opens: 69  Flush tables: 1  Open tables: 59  Queries per second avg: 0.011
     printf("mysql_stat : %s\n", stat);
     //////////////////////////////////////////////////////////////////
 
@@ -116,38 +124,41 @@ int main() {
             flag = 0;
             MYSQL_ROW fetchRow = NULL;
             while ((fetchRow = mysql_fetch_row(tables)) != NULL) {
-                flag = 1;
+                if (strcmp(fetchRow[fields - 1], "student") == 0)
+                    flag = 1;
                 printf("table : %-10s\n", fetchRow[fields - 1]);
             }
             if (!flag) {
+                FILE *file = NULL;
+                file = fopen("student.sql", "r");
+                if (file) {
+                    while (!feof(file)) {
+                        char str[64] = {0};
+                        fgets(str, sizeof(str), file);
+                        strcat(sql, str);
+                    }
+                    printf("%s\n", sql);
+                } else {
+                    fprintf(stderr, "fopen student.sql error\n");
+                    exit(EXIT_FAILURE);
+                }
+                fclose(file);
+                int r = mysql_real_query(mysql, sql, (unsigned long) strlen(sql));
+                if (r == 0) {
+                    printf("table student was created success !! \n");
+                } else {
+                    printf("table student was created error !! \n");
+                    exit(EXIT_FAILURE);
+                }
+            } else {
+                printf("table student already exists !! \n");
             }
         } else {
-            printf("none\n");
+            printf("something wrong\n");
         }
     }
 
     /////////////////////////////////////////////////////////////////
-    FILE *file = NULL;
-    file = fopen("student.sql", "r");
-    char sql[1024] = {0};
-    if (file) {
-        while (!feof(file)) {
-            char str[64] = {0};
-            fgets(str, sizeof(str), file);
-            strcat(sql, str);
-        }
-        printf("%s\n", sql);
-    } else {
-        fprintf(stderr, "fopen student.sql erroe\n");
-        exit(EXIT_FAILURE);
-    }
-    int r = mysql_real_query(mysql, sql, (unsigned long) strlen(sql));
-    if (r == 0) {
-        printf("table student was created success !! \n");
-    } else {
-        printf("table student was created error !! \n");
-        exit(EXIT_FAILURE);
-    }
 
     memset(sql, 0, sizeof(sql));
     sprintf(sql, "select count(id) from student");
@@ -159,6 +170,7 @@ int main() {
         MYSQL_ROW fetchRow = mysql_fetch_row(result);
         count = atoi(fetchRow[fields - 1]);
         printf("count %d\n", count);
+        mysql_free_result(result);
     }
     if (count < 50) {
         memset(sql, 0, sizeof(sql));
@@ -176,18 +188,41 @@ int main() {
         }
     }
     memset(sql, 0, sizeof(sql));
-    sprintf(sql, "select * from student");
+    sprintf(sql, "select * from student order by id asc limit 0,20");
     if (mysql_real_query(mysql, sql, (unsigned int) strlen(sql)) == 0) {
         MYSQL_RES *result = mysql_store_result(mysql);
         unsigned int fields = mysql_num_fields(result);
         printf("fields %d\n", fields);
         MYSQL_ROW fetchRow;
         while ((fetchRow = mysql_fetch_row(result)) != NULL) {
-            i = 0;
-            printf("id:%s name:%s age:%s address:%s \n", fetchRow[i++], fetchRow[i++], fetchRow[i++], fetchRow[i]);
-//            printf("%s - %s - %s - %s \n", fetchRow[0], fetchRow[1], fetchRow[2], fetchRow[3]);
+            printf("id:%s name:%s age:%s address:%s \n", fetchRow[0], fetchRow[1], fetchRow[2], fetchRow[3]);
         }
+        mysql_free_result(result);
     }
+    ///////////////////////////////////////////////////////////////////////////////////////
+    memset(sql, 0, sizeof(sql));
+    sprintf(sql, "update student set name='%s',age=%d,address='%s' where id between %d and %d;", "zhangrongxiang", 24,
+            "jiangsu-xuzhou-1", 1, 10);
+    if (mysql_real_query(mysql, sql, (int) strlen(sql)) == 0) {
+        printf("mysql_affected_rows : %d\n", (int) mysql_affected_rows(mysql));
+    }
+
     mysql_close(mysql);
+    mysql_library_end();
     return EXIT_SUCCESS;
 }
+
+/*
+ *
+ * Initialize the MySQL client library by calling mysql_library_init().
+ * This function exists in both the libmysqlclient C client library and the libmysqld embedded server library,
+ * so it is used whether you build a regular client program by linking with the -libmysqlclient flag, or an embedded server application by linking with the -libmysqld flag.
+ *
+ * Initialize a connection handler by calling mysql_init() and connect to the server by calling mysql_real_connect().
+ *
+ * Issue SQL statements and process their results. (The following discussion provides more information about how to do this.)
+ *
+ * Close the connection to the MySQL server by calling mysql_close().
+ *
+ * End use of the MySQL client library by calling mysql_library_end().
+ */

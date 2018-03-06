@@ -14,25 +14,25 @@ int main() {
     database_init_and_connect(mysql);
     MYSQL_RES *rs;
     MYSQL_ROW row;
-    char *sql = "SELECT * FROM `stu`";
+    char *sql = "SELECT * FROM `student`";
     printf("-------------------------------\n");
-    if (mysql_real_query(mysql, sql, strlen(sql))) {// 如果失败
+    if (mysql_real_query(mysql, sql, (int) strlen(sql))) {// 如果失败
         printf("%d: %s\n", mysql_errno(mysql), mysql_error(mysql));
         exit(-1); // 表示失败
     }
     rs = mysql_store_result(mysql);
-    printf("%-7s\t%7s\t%7s\t%7s\n", "id", "name", "age", "qq");
+    printf("%-7s\t%7s\t%7s\t%7s\n", "id", "name", "age", "address");
     while ((row = mysql_fetch_row(rs))) { // 打印结果集
         printf("%-7s\t %7s\t %7s\t %7s\n", row[0], row[1], row[2], row[3]); // 第一，第二字段
     }
     sql = "DELETE FROM `stu` WHERE (`id` > '50')";
-    if (mysql_real_query(mysql, sql, strlen(sql))) {
+    if (mysql_real_query(mysql, sql, (int) strlen(sql))) {
         printf("%d: %s\n", mysql_errno(mysql), mysql_error(mysql));
     }
     printf("delete......\n");
 
     sql = "SELECT `name` FROM `stu` WHERE `id` = 1";
-    if (mysql_real_query(mysql, sql, strlen(sql))) {
+    if (mysql_real_query(mysql, sql, (int) strlen(sql))) {
         printf("%d: %s\n", mysql_errno(mysql), mysql_error(mysql));
     }
     rs = mysql_store_result(mysql);
@@ -43,5 +43,6 @@ int main() {
 
     mysql_free_result(rs); // 释放结果集
     mysql_close(mysql); // 关闭链接
+    free(mysql);
 
 }
