@@ -16,5 +16,8 @@ add_executable(
         15/4.c
         15/5.c
         15/6.c
-        15/7.c)
+        15/7.c
+        25/constant.c
+        25/constant2.c
+        25/constant3.c 25/constant4.c 25/constant5.c 25/constant6.c)
 
