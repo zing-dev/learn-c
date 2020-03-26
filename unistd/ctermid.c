@@ -11,7 +11,7 @@ int main() {
     char string[16];
     char *rs = ctermid(string);
     if (rs) {
-        printf("%s\n", rs);.//  /dev/tty
+        printf("%s\n", rs);//  /dev/tty
         printf("%s\n", string);// /dev/tty
     }
     return 0;

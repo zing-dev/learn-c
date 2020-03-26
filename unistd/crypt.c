@@ -6,6 +6,7 @@
 #define _XOPEN_SOURCE       /* See feature_test_macros(7) */
 #include <unistd.h>
 #include <stdio.h>
+#include <memory.h>
 #include <errno.h>
 
 int main(){
