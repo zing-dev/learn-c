@@ -1,6 +1,3 @@
-[submodule "2018/01/17/parson"]
-	path = 2018/01/17/parson
-	url = https://github.com/kgabis/parson.git
 [submodule "sql/redis/sql/redis/hiredis"]
 	path = sql/redis/hiredis
 	url = https://github.com/redis/hiredis.git

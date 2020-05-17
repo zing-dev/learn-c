@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 3.7.2)
-project(unistd)
-
-add_executable(unistd
-        chown.c
-        chown2.c chown3.c access.c alarm.c chdir.c getcwd.c chroot.c confstr.c crypt.c ctermid.c cuserid.c getdtablesize.c getegid.c geteuid.c getgid.c gethostid.c getlogin.c)

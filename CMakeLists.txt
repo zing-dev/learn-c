@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.7.2)
-project(learc-c)
+project(learn-c)
 set(CMAKE_CXX_STANDARD 11)
-add_subdirectory(2020)
+add_executable(main main.c)
+add_subdirectory(linux)
