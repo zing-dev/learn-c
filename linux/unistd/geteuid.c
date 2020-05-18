@@ -4,7 +4,6 @@
 //
 #include <unistd.h>
 #include <stdio.h>
-#include <sys/types.h>
 //geteuid - get the effective user ID
 
 int main() {

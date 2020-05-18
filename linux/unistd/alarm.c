@@ -8,6 +8,7 @@
 #include <signal.h>
 
 void handler();
+
 int main() {
     int i;
     handler();
@@ -18,7 +19,8 @@ int main() {
 }
 
 void handler() {
-    printf("Hello\n");
+    printf("接收到SIGALRM信号\n");
     signal(SIGALRM, handler); //让内核做好准备，一旦接受到SIGALARM信号,就执行 handler
     alarm(5);
+    printf("over\n");
 }

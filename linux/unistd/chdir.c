@@ -7,11 +7,11 @@
 #include <stdio.h>
 
 int main() {
-    char path[64];
+    char path[128] = {};
     getcwd(path, sizeof(path));
-    printf("now path is %s\n", path);//now path is /home/vagrant/devspace/learn-c/unistd
+    printf("now path is %s\n", path);// /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux/unistd
     chdir("../");
     getcwd(path, sizeof(path));
-    printf("now path is %s\n", path);//now path is /home/vagrant/devspace/learn-c
+    printf("now path is %s\n", path);// /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux
     return 0;
 }

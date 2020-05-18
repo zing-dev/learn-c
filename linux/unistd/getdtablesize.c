@@ -3,11 +3,14 @@
 // File getdtablesize
 //
 
-
+#include <unistd.h>
 #include <stdio.h>
 //getdtablesize - get the file descriptor table size (LEGACY)
-int main(){
+
+/* Return the maximum number of file descriptors
+   the current process could possibly have.  */
+int main() {
     int size = getdtablesize();
-    printf("%d\n",size);//65536
+    printf("%d\n", size);//1024
     return 0;
 }
