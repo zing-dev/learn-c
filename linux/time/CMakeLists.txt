@@ -1,0 +1,6 @@
+add_executable(difftime difftime.c)
+add_executable(gmtime gmtime.c)
+add_executable(localtime localtime.c)
+add_executable(mktime mktime.c)
+add_executable(strftime strftime.c)
+add_executable(time time.c)
