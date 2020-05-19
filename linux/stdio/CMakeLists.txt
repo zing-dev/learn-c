@@ -1,3 +1,8 @@
 add_executable(fgetc fgetc.c)
 add_executable(printf printf.c)
 add_executable(sprintf sprintf.c)
+add_executable(remove remove.c)
+add_executable(rename rename.c)
+add_executable(tmpfile tmpfile.c)
+add_executable(fopen fopen.c)
+add_executable(fread fread.c)
