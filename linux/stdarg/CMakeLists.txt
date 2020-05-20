@@ -1,0 +1,1 @@
+add_executable(va_arg va_arg.c)
