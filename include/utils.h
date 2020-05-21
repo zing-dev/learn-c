@@ -40,17 +40,32 @@ extern void print_char_arr(const char *arr, int length) {
     ln();
 }
 
-extern void str_lower(char *str){
+extern void str_lower(char *str) {
     for (int i = 0; i < strlen(str); i++) {
-        str[i] = (char)tolower((int)str[i]);
+        str[i] = (char) tolower((int) str[i]);
     }
 }
 
-extern void str_upper(char *str){
+extern void str_upper(char *str) {
     for (int i = 0; i < strlen(str); i++) {
-        str[i] = (char)toupper((int)str[i]);
+        str[i] = (char) toupper((int) str[i]);
     }
 }
 
+/**
+ * @param arr
+ * @param len
+ * @return
+ *
+ * todo check ??
+ */
+extern char *arr_net_addr(const int *arr, int len) {
+    struct in_addr addr;
+    addr.s_addr = 0;
+    for (int i = 0; i < len; i++) {
+        addr.s_addr += arr[i] << i * 8;
+    }
+    return inet_ntoa(addr);
+}
 
 #endif //LEARN_C_UTILS_H
