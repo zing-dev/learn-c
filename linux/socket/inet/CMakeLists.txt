@@ -1,3 +1,6 @@
 add_executable(inet_aton inet_aton.c)
 add_executable(inet_ntoa inet_ntoa.c)
 add_executable(endian endian.c)
+add_executable(inet_addr inet_addr.c)
+add_executable(inet_lnaof inet_lnaof.c)
+add_executable(inet_netof inet_netof.c)

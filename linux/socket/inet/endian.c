@@ -21,9 +21,9 @@ int main(void) {
     unsigned char ge;
     ge = ((unsigned char *) &tt)[0];
     if (ge == 0x12) {
-        printf("Big endpoint\r\n");
+        printf("Big endpoint\n");
     } else if (ge == 0x34) {
-        printf("small endpoint\r\n");
+        printf("small endpoint\n");
     }
     return 0;
 }
