@@ -1,0 +1,26 @@
+./1.c: OK
+./1.out: OK
+./2.c: OK
+./2.out: OK
+./3.c: OK
+./3.out: OK
+./4.c: OK
+./4.out: OK
+./5.c: OK
+./5.out: OK
+./6.c: OK
+./6.out: OK
+./7.c: OK
+./7.out: OK
+./clamscan.h: OK
+./scan.txt: OK
+
+----------- SCAN SUMMARY -----------
+Known viruses: 6377752
+Engine version: 0.99.2
+Scanned directories: 1
+Scanned files: 16
+Infected files: 0
+Data scanned: 0.04 MB
+Data read: 0.04 MB (ratio 1.00:1)
+Time: 21.487 sec (0 m 21 s)

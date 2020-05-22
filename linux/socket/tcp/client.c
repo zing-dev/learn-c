@@ -14,7 +14,7 @@
 
 int main() {
     struct sockaddr_in client;
-    client.sin_addr.s_addr = inet_addr("192.168.0.111");
+    client.sin_addr.s_addr = inet_addr("127.0.0.1");
     client.sin_family = AF_INET;
     client.sin_port = htons(1234);
     socklen_t client_len = sizeof(client);

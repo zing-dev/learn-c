@@ -78,5 +78,4 @@ server
 2017/10/26/WriteLog.log
 *.db
 /cmake-build-debug-mingw/
-
-*.txt
+test.txt
