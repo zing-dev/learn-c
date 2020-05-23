@@ -3,9 +3,6 @@
 //
 #include <pthread.h>
 
-#define _GNU_SOURCE     /* To get pthread_getattr_np() declaration */
-#define __USE_GNU 1
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
