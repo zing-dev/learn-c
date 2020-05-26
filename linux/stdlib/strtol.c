@@ -1,5 +1,5 @@
 //
-// Created by 张荣响 on 2018/2/15.
+// Created by zing on 2018/2/15.
 //
 
 #include <stdio.h>
@@ -31,11 +31,10 @@ int main() {
     char *end;
     for (long i = strtol(p, &end, 10);
          p != end;
-         i = strtol(p, &end, 10))
-    {
-        printf("'%.*s' -> ", (int)(end-p), p);
+         i = strtol(p, &end, 10)) {
+        printf("'%.*s' -> ", (int) (end - p), p);
         p = end;
-        if (errno == ERANGE){
+        if (errno == ERANGE) {
             printf("range error, got ");
             errno = 0;
         }
@@ -43,12 +42,12 @@ int main() {
     }
 
     // 不带错误处理的剖析
-    printf("\"1010\" in binary  --> %ld\n", strtol("1010",NULL,2));
-    printf("\"12\" in octal     --> %ld\n", strtol("12",NULL,8));
-    printf("\"A\"  in hex       --> %ld\n", strtol("A",NULL,16));
-    printf("\"junk\" in base-36 --> %ld\n", strtol("junk",NULL,36));
-    printf("\"012\" in auto-detected base  --> %ld\n", strtol("012",NULL,0));
-    printf("\"0xA\" in auto-detected base  --> %ld\n", strtol("0xA",NULL,0));
-    printf("\"junk\" in auto-detected base -->  %ld\n", strtol("junk",NULL,0));
+    printf("\"1010\" in binary  --> %ld\n", strtol("1010", NULL, 2));
+    printf("\"12\" in octal     --> %ld\n", strtol("12", NULL, 8));
+    printf("\"A\"  in hex       --> %ld\n", strtol("A", NULL, 16));
+    printf("\"junk\" in base-36 --> %ld\n", strtol("junk", NULL, 36));
+    printf("\"012\" in auto-detected base  --> %ld\n", strtol("012", NULL, 0));
+    printf("\"0xA\" in auto-detected base  --> %ld\n", strtol("0xA", NULL, 0));
+    printf("\"junk\" in auto-detected base -->  %ld\n", strtol("junk", NULL, 0));
     return 0;
 }
