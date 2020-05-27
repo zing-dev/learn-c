@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     struct tm *info;
     time(&rawtime);
     info = localtime(&rawtime);
-    char buffer[8];
+    char buffer[20];
     strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", info);
     printf("%s\n", buffer);
     return (0);
