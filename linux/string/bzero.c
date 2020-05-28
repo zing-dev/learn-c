@@ -4,7 +4,7 @@
 
 
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 
 //置字节字符串前n个字节为零且包括‘\0’。
 
