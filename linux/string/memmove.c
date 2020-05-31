@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Copy N bytes of SRC to DEST, guaranteeing correct behavior for overlapping strings.  */
 int main() {
     char str[32] = "I am your GOD";
     char str2[32] = "Hello World";
@@ -30,5 +31,15 @@ int main() {
     memmove(p, arr, 3 * sizeof(int));     // 分配的内存现在拥有有效类型
     printf("%d%d%d\n", p[0], p[1], p[2]);//123
     printf("%d%d%d\n", *p, *(p + 1), *(p + 2));//123
+
+    char s1[] = "hello";
+    char s2[] = "hello world";
+    memmove(s1, s2, strlen(s2));
+    printf("%s\n", s1);
+    printf("%lu\n", sizeof(s1)); //6
+    printf("%lu\n", strlen(s1)); //11
+    printf("%s\n", s2);
+    printf("%lu\n", sizeof(s2)); //12
+    printf("%lu\n", strlen(s2)); //11
     return 0;
 }

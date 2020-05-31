@@ -4,6 +4,8 @@
 
 #include <string.h>
 #include <stdio.h>
+
+/* Set N bytes of S to C.  */
 int main() {
     char str[] = "i am the god";
     char str2[sizeof(str)];

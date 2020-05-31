@@ -12,12 +12,13 @@ typedef struct {
     char *name;
 } Stu;
 
+/* Compare N bytes of S1 and S2.  */
 int main() {
     char *str = "abc";
     char *str2 = "abC";
     int cmp = memcmp(str, str2, strlen(str) > strlen(str2) ? strlen(str) : strlen(str2));
     printf("%d\n", cmp); // windows mingw -> 1  linux gcc 32
-
+    printf("%d\n", 'c' - 'C');
     int i = 0;
     int i2 = 10;
     cmp = memcmp(&i, &i2, sizeof(int));
@@ -51,5 +52,10 @@ int main() {
     printf("%d\n", cmp);//-32
     printf("a -> %d;A -> %d \n", 'a', 'A');//a -> 97;A -> 65
     printf("z -> %d;a -> %d \n", 'z', 'a');//z -> 122;a -> 97
+
+    printf("%d\n", memcmp("a", "A", 1)); //1
+    printf("%d\n", memcmp(&"a", &"A", 1));//32
+    printf("%d\n", memcmp("A", "a", 1));//-1
+    printf("%d\n", memcmp(&"A", &"a", 1));//-32
     return 0;
 }

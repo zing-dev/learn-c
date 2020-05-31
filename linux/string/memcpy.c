@@ -14,6 +14,7 @@ struct {
 } person, person_copy;
 
 //C 库函数 void *memcpy(void *str1, const void *str2, size_t n) 从存储区 str2 复制 n 个字符到存储区 str1。
+/* Copy N bytes of SRC to DEST.  */
 int main() {
 
     int i = 0;
@@ -52,5 +53,10 @@ int main() {
     memcpy(&person_copy, &person, sizeof(person));
     printf("person_copy: %s, %d \n", person_copy.name, person_copy.age);
 
+    char str[] = "hello";
+    char str2[] = "world world";
+    memcpy(str2, str, strlen(str));
+    printf("%s\n", str); //hello
+    printf("%s\n", str2); //hello world
     return 0;
 }

@@ -9,11 +9,10 @@
 #include <string.h>
 #include <stdio.h>
 
+/* Search N bytes of S for C.  */
 int main() {
     //字符串
     char str[] = "I am your God";
-    //数组
-    int arr[] = {10, 20, 30, 40, 50, 60, 70, 80, 90};
     char *position = (char *) memchr(str, 'y', strlen(str));
     if (position) {
         printf("%s\n", position);//your God
@@ -22,7 +21,12 @@ int main() {
     } else {
         printf("null\n");
     }
+    printf("===================================\n");
+    //数组
+    int arr[] = {10, 20, 30, 40, 50, 60, 70, 80, 90};
     int *pInt = (int *) memchr(arr, 50, sizeof(arr));
+    printf("%d\n", (int) (pInt - arr));//4
+    printf("%ld\n",  (pInt - arr));//4
     printf("%d\n", *pInt);//50
     printf("%c\n", *pInt);//2
     printf("%c\n", (unsigned char) 50); //2
