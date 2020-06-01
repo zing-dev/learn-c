@@ -9,6 +9,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 //extern int printf (const char *__restrict __format, ...);
 extern void println(const char *format, ...) {

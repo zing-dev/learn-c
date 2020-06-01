@@ -1,9 +1,11 @@
 //
-// Created by 张荣响 on 2018/2/12.
+// Created by zing on 2018/2/12.
 //
 
 #include <string.h>
 #include <stdio.h>
+
+/* Find the first occurrence of C in S.  */
 int main() {
     char str[] = "I love this world!";
     char *p = strchr(str, 'I');
@@ -20,11 +22,10 @@ int main() {
     const char *result = str2;
 
     while ((result = strchr(result, target)) != NULL) {
-    //Found 'T' starting at 'Try not. Do, or do not. There is no try.'
-    //Found 'T' starting at 'There is no try.'
+        //Found 'T' starting at 'Try not. Do, or do not. There is no try.'
+        //Found 'T' starting at 'There is no try.'
         printf("Found '%c' starting at '%s'\n", target, result);
-        ++result; // result 自增，否则我们会找到相同位置的目标
+        ++result;
     }
-
     return 0;
 }

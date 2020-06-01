@@ -1,12 +1,11 @@
 //
-// Created by zhangrxiang on 17-8-27.
+// Created by zing on 17-8-27.
 //
-
-
 
 #include <string.h>
 #include <stdio.h>
 
+/* Compare S1 and S2.  */
 int main() {
     const char *string = "Hello";
     const char *string2 = "Hello";
@@ -19,4 +18,10 @@ int main() {
     } else {
         printf("%s\n", "unknown");
     }
+
+    printf("%d\n",strcmp("1","3")); //-2
+    printf("%d\n",strcmp("3","1")); //2
+    printf("%d\n",strcmp("30","1")); //2
+
+    return 0;
 }
