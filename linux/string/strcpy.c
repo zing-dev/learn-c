@@ -1,29 +1,21 @@
 //
-// Created by zhangrongxiang on 2018/2/2 15:01
+// Created by zing on 2018/2/2 15:01
 // File strcpy
 //
-
-#define __STDC_WANT_LIB_EXT1__ 0
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Copy SRC to DEST.  */
+
 int main(void) {
     char *src = "Take the test.";
-//  src[0] = 'M' ; // 这会是未定义行为
+    //src[0] = 'M' ; // 这会是未定义行为
     char dst[strlen(src) + 1]; // +1 以适应空终止符
     strcpy(dst, src);
     dst[0] = 'M'; // OK
     printf("src = %s\ndst = %s\n", src, dst);
-
-#ifdef __STDC_LIB_EXT1__
-    set_constraint_handler_s(ignore_handler_s);
-    int r = strcpy_s(dst, sizeof dst, src);
-    printf("dst = \"%s\", r = %d\n", dst, r);
-    r = strcpy_s(dst, sizeof dst, "Take even more tests.");
-    printf("dst = \"%s\", r = %d\n", dst, r);
-#endif
 
     char string[10];
     char str[] = "Hello World";
@@ -50,8 +42,6 @@ int main(void) {
     printf("%s\n", str2); //Hello World\0
     strcpy(str2, "hi");
     printf("%s\n", str2); //hi\0
-    //strcpy(str2, "everything is file"); //strcpy.c:53:5: warning: '__builtin_memcpy' writing 19 bytes into a region of size 12 overflows the destination [-Wstringop-overflow=]
-    //printf("%s\n", str2); //everything is file
 
     char str3[] = "hello world!\0hello everyone";
     printf("%s\n", str3); //hello world!

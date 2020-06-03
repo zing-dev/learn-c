@@ -8,6 +8,7 @@
 
 //依次检验字符串 str1 中的字符，当被检验字符在字符串 str2 中也包含时，则停止检验，并返回该字符位置。
 //检索字符串 str1 中第一个匹配字符串 str2 中字符的字符，不包含空结束字符。
+/* Find the first occurrence in S of any character in ACCEPT.  */
 int main() {
     int i = 0;
     const char str1[] = "abcde2fghi3jk4l";
@@ -61,14 +62,13 @@ int main() {
     do {
         str = strpbrk(str, sep); // 寻找分隔符
 //        printf("%s\n",str);
-        if (str){
+        if (str) {
             str += strspn(str, sep); // 跳过分隔符
-            printf("%s\n",str);
+            printf("%s\n", str);
         }
         ++cnt; // 增加词计数
     } while (str && *str);
 
     printf("There are %d words\n", cnt); // 5
-
     return 0;
 }

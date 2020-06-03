@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/7 10:41
+// Created by zing on 2018/2/7 10:41
 // File strlen
 //
 
@@ -24,5 +24,18 @@ int main() {
     char str3[] = "万物皆对象";
     printf("%s  -- sizeof --> %d\n", str3, (int) sizeof(str3)); //16 = 3 * 5 + 1
 
+    char *s = "😍";
+    printf("%ld\n", strlen(s));
+    printf("%s\n", s);
+    printf("%x\n", s[0]);
+
+    for (int i = 0; i < strlen(s); i++) {
+        printf("%d %x\t", s[i], s[i]);
+    }
+    printf("\n");
+    char s2[] = {-16, -97, -104, -115, 0};
+    printf("%s\n", s2);
+    char s3[] = {-16, -97, -104, -116, 0};
+    printf("%s\n", s3);
     return 0;
 }

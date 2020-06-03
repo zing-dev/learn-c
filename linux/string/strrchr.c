@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/6 9:12
+// Created by zing on 2018/2/6 9:12
 // File strrchr
 //
 
@@ -7,6 +7,7 @@
 #include <string.h>
 
 //该函数返回 str 中最后一次出现字符 c 的位置。如果未找到该值，则函数返回一个空指针。
+/* Find the last occurrence of C in S.  */
 int main() {
     const char str[] = "https://github.com/zhangrxiang/learn-c";
     const char str2[] = "D:\\WorkSpace\\clionProjects\\learn-c\\string\\strrchr.c";
@@ -35,10 +36,10 @@ int main() {
     printf("%s\n", &(*ret));// \strrchr.c
     printf("%s\n", &*(ret + sizeof(char)));//strrchr.c
 
-    ret = strrchr(str,'A');
-    if (ret){
+    ret = strrchr(str, 'A');
+    if (ret) {
         printf("exists A\n");
-    } else{
+    } else {
 //        no exists A
         printf("no exists A\n");
     }

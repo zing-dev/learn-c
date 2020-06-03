@@ -1,13 +1,16 @@
 //
-// Created by zhangrongxiang on 2018/2/5 17:28
+// Created by zing on 2018/2/5 17:28
 // File strspn
 //
 
 #include <stdio.h>
 #include <string.h>
 
-//C 库函数 size_t strspn(const char *str1, const char *str2) 检索字符串 str1 中第一个不在字符串 str2 中出现的字符下标。
+//C 库函数 size_t strspn(const char *str1, const char *str2)
+// 检索字符串 str1 中第一个不在字符串 str2 中出现的字符下标。
 
+/* Return the length of the initial segment of S which
+   consists entirely of characters in ACCEPT.  */
 int main() {
     size_t len;
     const char str1[] = "ABCDEFG02018ABCDEFG02018";
@@ -37,10 +40,10 @@ int main() {
     const char *low_alpha = "qwertyuiopasdfghjklzxcvbnm";
 
     len = strspn(string, low_alpha);
-    printf("%d\n",(int)len);//5
+    printf("%d\n", (int) len);//5
     //After skipping initial lowercase letters from 'abcde312$#@'
     printf("After skipping initial lowercase letters from '%s'\n"
-               "The remainder is '%s'\n", string, string + len);//The remainder is '312$#@'
+           "The remainder is '%s'\n", string, string + len);//The remainder is '312$#@'
 
     return (0);
 }

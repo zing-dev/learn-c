@@ -3,12 +3,12 @@
 // Copyright (c) 2017 ZRC . All rights reserved.
 //
 
-//#include <syslib.h>
 #include <string.h>
 #include <stdio.h>
 
 //C 库函数 char *strstr(const char *haystack, const char *needle) 在字符串 haystack 中查找第一次出现字符串 needle 的位置，不包含终止符 '\0'。
 
+/* Find the first occurrence of NEEDLE in HAYSTACK.  */
 void find_str(char const *str, char const *substr) {
     char *pos = strstr(str, substr);
     if (pos) {

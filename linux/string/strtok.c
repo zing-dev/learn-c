@@ -1,6 +1,6 @@
 //
-// Created by zhangrongxiang on 2017/8/15 10:59.
-// Copyright (c) 2017 ZRC . All rights reserved.
+// Created by zing on 2017/8/15 10:59.
+// Copyright (c) 2017 ZING . All rights reserved.
 //
 
 #include<string.h>
@@ -14,13 +14,13 @@ void strtoktest() {
     infront of the token,if found*/
     p = strtok(input, "=");
     if (p)
-        printf("%s\n", p);
+        printf("==> %s\n", p);
     /*Asecond call to strtok using a NULL
     as the first parameter returns a pointer
     to the character following the token*/
     p = strtok(NULL, "=");
     if (p)
-        printf("%s\n", (p));
+        printf("=> %s\n", (p));
 }
 
 int strtoktest2() {
@@ -36,22 +36,35 @@ int strtoktest2() {
 //        printf("---->  %s\n",temp);
 //    }
 
-
-
     if (!strcmp(temp, "TPROXY_CPORT")) {
-        printf("-------> %d\n", temp);
+        printf("-------> %s\n", temp);
         if ((temp = (char *) strtok(NULL, " ")) == NULL)
             return 1;
         int GF_TPROXY_CPORT = atoi(temp);
-        printf("--> %d\n", temp);
+        printf("--> %s\n", temp);
         printf("%d\n", GF_TPROXY_CPORT);
         printf("---------------------end---------------------");
     }
     return 1;
 }
 
+/* Divide S into tokens separated by characters in DELIM.  */
+void strtok3(){
+    char text[] = "hello world";
+    char *str = strtok(text, " ");
+    printf("%s\n",str);
+    str = strtok(NULL,",");
+    printf("%s\n",str);
+
+    char text2[] = "world=hello";
+    str = strtok(text2, "=");
+    printf("%s\n",str);
+    str = strtok(NULL,",");
+    printf("%s\n",str);
+}
 int main(void) {
     strtoktest();
-//    strtoktest2();
+    //strtoktest2();
+    strtok3();
     return 0;
 }
