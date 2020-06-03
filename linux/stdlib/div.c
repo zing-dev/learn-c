@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/27 13:12
+// Created by zing on 2018/2/27 13:12
 // File div
 //
 
@@ -13,6 +13,9 @@ typedef struct _div_t {
 } div_t;
 */
 
+/* Return the `div_t', `ldiv_t' or `lldiv_t' representation
+   of the value of NUMER over DENOM. */
+/* GCC may have built-ins for these someday.  */
 int main() {
     int a = 10;
     int b = 5;

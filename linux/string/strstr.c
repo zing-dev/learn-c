@@ -25,9 +25,11 @@ int main() {
     //返回值：若str2是str1的子串，则返回str2在str1的首次出现的地址；
     // 如果str2不是str1的子串，则返回NULL。
     p = strstr(s, l);
-    if (p)
-        //lobalView
+    if (p){
         printf("%s\n", p);
+        //lobalView
+        printf("first occurrence %d\n", (int)(p - s));
+    }
     else
         printf("NotFound!\n");
 

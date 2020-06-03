@@ -1,10 +1,8 @@
 //
-// Created by 张荣响 on 2018/2/14.
+// Created by zing on 2018/2/14.
 //
-
-/* atol example */
-#include <stdio.h>      /* printf, fgets */
-#include <stdlib.h>     /* atol */
+#include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     long int li;
