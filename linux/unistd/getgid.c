@@ -1,11 +1,10 @@
 //
-// Created by zhangrongxiang on 2018/2/26 13:54
+// Created by zing on 2018/2/26 13:54
 // File getgid
 //
 
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
 //getgid - get the real group ID
 
 int main() {

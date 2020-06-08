@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/22 10:00
+// Created by zing on 2018/2/22 10:00
 // File chown
 //
 #include <pwd.h>
@@ -7,8 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     uid_t uid;
     struct passwd *pwd;
     char *endptr;

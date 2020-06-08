@@ -3,21 +3,22 @@
 // File crypt
 //
 
-#define _XOPEN_SOURCE       /* See feature_test_macros(7) */
-#include <unistd.h>
+
 #include <stdio.h>
 #include <memory.h>
 #include <errno.h>
+#include <crypt.h>
 
-int main(){
+int main() {
     char *str = "hello";
     char *salt = "abc";
-    char *rs;
-    crypt(str,salt);//crypt.c:(.text+0x27): undefined reference to `crypt'
-    if(rs != NULL){
-        printf("%s\n",rs);
-    } else{
-        printf("%s\n",strerror(errno));
+    char *rs = NULL;
+    rs = crypt(str, salt);//crypt.c:(.text+0x27): undefined reference to `crypt'
+    if (rs != NULL) {
+        //abl0JrMf6tlhw
+        printf("%s\n", rs);
+    } else {
+        printf("%s\n", strerror(errno));
     }
     return 0;
 }

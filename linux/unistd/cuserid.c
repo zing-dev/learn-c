@@ -4,9 +4,10 @@
 //
 
 #include <stdio.h>
+#include <unistd.h>
 
 int main() {
-    char str[16];
+    char str[32];
     if (cuserid(str) != 0) {
         printf("%s\n", str);
     }
