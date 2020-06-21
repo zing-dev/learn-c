@@ -10,7 +10,7 @@
 
 int get_line(char line[], int maxline);
 
-void copy(char to[], char from[]);
+void copy(char to[], const char from[]);
 
 int main(void) {
     int len;            /* current line length */
@@ -60,7 +60,7 @@ int get_line(char s[], int lim) {
 }
 
 /* copy:  copy 'from' into 'to'; assume to is big enough */
-void copy(char to[], char from[]) {
+void copy(char to[], const char from[]) {
     int i;
 
     i = 0;
