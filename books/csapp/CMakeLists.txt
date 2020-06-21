@@ -1,2 +1,6 @@
+file( GLOB LIB_CSAPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/common/*.c)
+file( GLOB LIB_CSAPP_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/common/*.h )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common)
 add_subdirectory(ch01)
 add_subdirectory(ch02)
+add_subdirectory(test)
