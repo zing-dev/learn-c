@@ -84,7 +84,6 @@ void Kill(pid_t pid, int signum) {
 
 void Pause() {
     (void) pause();
-    return;
 }
 
 unsigned int Sleep(unsigned int secs) {

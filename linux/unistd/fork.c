@@ -19,6 +19,7 @@ int main() {
     }
 
     if (p == 0) {
+        sleep(2);
         printf("I am new process\n");
         printf("pid %d\n",getpid());
         printf("ppid %d\n",getppid());
