@@ -36,3 +36,12 @@ target_link_libraries(csapp-common-forkprob7 pthread)
 
 add_executable(csapp-common-forkprob8 forkprob8.c ${LIB_CSAPP_SOURCES})
 target_link_libraries(csapp-common-forkprob8 pthread)
+
+add_executable(csapp-common-kill kill.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-kill pthread)
+
+add_executable(csapp-common-procmask1 procmask1.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-procmask1 pthread)
+
+add_executable(csapp-common-procmask2 procmask2.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-procmask2 pthread)
