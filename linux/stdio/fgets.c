@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/27 9:51
+// Created by zing on 2018/2/27 9:51
 // File fgets
 //
 
@@ -10,16 +10,18 @@
 
 int main() {
     char buf[16];
-    FILE *file = fopen("./fgets.c", "r");
+    FILE *file = fopen("fgets.c", "w+");
     if (file == NULL) {
         fprintf(stderr, "fopen file error\n");
         exit(EXIT_FAILURE);
     } else {
+        fputs("hello world",file);
+        fseek(file,0,SEEK_SET);
         while (!feof(file)) {
             char *string = fgets(buf, sizeof(buf), file);
             printf("%s", string);
         }
-        printf("\n  fgets over \n");
+        printf("\nfgets over \n");
     }
     fclose(file);
     return EXIT_SUCCESS;

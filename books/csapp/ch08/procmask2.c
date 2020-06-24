@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
     int pid;
     sigset_t mask;
 
+    /* Child terminated or stopped.  */
     Signal(SIGCHLD, handler);
     initjobs(); /* Initialize the job list */
 
