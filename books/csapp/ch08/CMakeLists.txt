@@ -45,3 +45,15 @@ target_link_libraries(csapp-common-procmask1 pthread)
 
 add_executable(csapp-common-procmask2 procmask2.c ${LIB_CSAPP_SOURCES})
 target_link_libraries(csapp-common-procmask2 pthread)
+
+add_executable(csapp-common-restart restart.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-restart pthread)
+
+add_executable(csapp-common-rfork rfork.c)
+target_link_libraries(csapp-common-rfork pthread)
+
+add_executable(csapp-common-setjmp setjmp.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-setjmp pthread)
+
+add_executable(csapp-common-shellex shellex.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(csapp-common-shellex pthread)

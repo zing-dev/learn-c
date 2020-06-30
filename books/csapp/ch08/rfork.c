@@ -35,15 +35,22 @@ pid_t Fork(void) {
     /* Randomly decide to sleep in the parent or the child */
     if (pid == 0) { /* Child */
         if (bool) {
+            printf("pid == 0  %d\n", bool);
             usleep(secs);
         }
     } else { /* Parent */
         if (!bool) {
+            printf("pid != 0  %d\n", bool);
             usleep(secs);
         }
     }
 
     /* Return the PID like a normal fork call */
     return pid;
+}
+
+int main(){
+    Fork();
+    return 0;
 }
 /* $end rfork */
