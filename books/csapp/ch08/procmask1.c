@@ -23,13 +23,14 @@ int main(int argc, char **argv) {
 
     Signal(SIGCHLD, handler);
     initjobs(); /* Initialize the job list */
-
-    while (1) {
+    int i = 0;
+    while (i++ < 100) {
         /* Child process */
         if ((pid = Fork()) == 0) {
             Execve("/bin/date", argv, NULL);
         }
 
+        Sleep(1);
         /* Parent process */
         addjob(pid);  /* Add the child to the job list */
     }

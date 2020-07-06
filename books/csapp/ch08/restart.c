@@ -22,6 +22,7 @@ int main() {
 
     while (i++ < 100) {
         Sleep(1);
+        sleep(1);
         printf("processing...\n");
     }
     exit(0);
