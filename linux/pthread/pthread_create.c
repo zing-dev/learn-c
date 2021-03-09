@@ -36,7 +36,7 @@ int pthread_create1() {
 //void *(*__start_routine) (void *),
 void *print1(void *argv) {
     printf("print1 pid %d thread_id %lx\n",getpid(),pthread_self());
-    printf("get param { %s }\n",argv);
+    printf("get param { %s }\n",(char *)argv);
     for (int i = 0; i < 10; i++) {
         sleep(1);
         printf("print1 %d\n", i);

@@ -7,7 +7,7 @@
 #define LEARN_C_PR_H
 
 int pr() {
-    printf("helloworld");
+    printf("hello world");
     return 0;
 }
 
