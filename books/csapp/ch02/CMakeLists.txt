@@ -1,2 +1,5 @@
 add_executable(2.55-show-bytes 2.55-show-bytes.c)
 add_executable(2.57-show-bytes-more 2.57-show-bytes-more.c)
+add_executable(bis_bic bis_bic.c)
+add_executable(reverse_array reverse_array.c)
+add_executable(zero_sign_extension zero_sign_extension.c)
