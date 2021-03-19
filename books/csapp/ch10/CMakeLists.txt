@@ -13,5 +13,11 @@ target_link_libraries(ex10-2 pthread)
 add_executable(ex10-3 ex10-3.c ${LIB_CSAPP_SOURCES})
 target_link_libraries(ex10-3 pthread)
 
+add_executable(ex10-5 ex10-5.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(ex10-5 pthread)
+
+add_executable(ex10-8 ex10-8.c ${LIB_CSAPP_SOURCES})
+target_link_libraries(ex10-8 pthread)
+
 
 
