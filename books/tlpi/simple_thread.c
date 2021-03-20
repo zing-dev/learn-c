@@ -19,9 +19,9 @@ static void *threadFunc(void *arg) {
 }
 
 int main(int argc, char *argv[]) {
-    pthread_t t1,t2;
+    pthread_t t1, t2;
     void *res;
-    int s,s2;
+    int s, s2;
 
     s = pthread_create(&t1, NULL, threadFunc, "Hello world --------> s \n");
     s2 = pthread_create(&t2, NULL, threadFunc, "Hello world --------> s2 \n");

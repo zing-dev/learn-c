@@ -13,6 +13,7 @@
 
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 static int avail = 0;
+
 static void *threadFunc(void *arg) {
     int cnt = atoi((char *) arg);
     int s, j;
