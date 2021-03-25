@@ -15,7 +15,7 @@ int main() {
         fprintf(stderr, "Invalid address\n");
         exit(EXIT_FAILURE);
     }
-    //0000 ‭0001 0000 0000 0000 0000 0111 1111‬
+    //0000 0001 0000 0000 0000 0000 0111 1111
     //        1          0        0       127
     printf("%d\n", addr.s_addr);//16777343
     printf("%s\n", inet_ntoa(addr));

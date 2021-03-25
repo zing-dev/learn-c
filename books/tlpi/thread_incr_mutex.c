@@ -58,6 +58,6 @@ int main(int argc, char *argv[]) {
         errExitEN(s, "pthread_join");
     gettimeofday(&end, NULL);
     printf("glob = %d\n", glob);
-    printf("运行时间为: %.6f\n", (end.tv_usec - start.tv_usec) * 1.0 / 1000000 + end.tv_sec - start.tv_sec);
+    printf("运行时间为: %.6f\n", (float) (end.tv_usec - start.tv_usec) * 1.0 / 1000000 + end.tv_sec - start.tv_sec);
     exit(EXIT_SUCCESS);
 }

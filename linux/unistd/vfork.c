@@ -12,11 +12,11 @@
    replaced by a call to `execve'.  Return -1 for errors, 0 to the new process,
    and the process ID of the new process to the old process.  */
 
-int main() {
+void test_vfork() {
     pid_t p = vfork();
     if (p == -1) {
         perror("vfork");
-        return errno;
+        return;
     }
 
     if (p == 0) {
@@ -28,5 +28,28 @@ int main() {
         printf("pid %d\n", getpid());
         printf("ppid %d\n", getppid());
     }
+}
+int glob = 6;
+
+void test_vfork2(){
+    int var;
+    pid_t pid;
+    var = 88;
+    printf("parent start glob %d var %d\n",glob,var);
+    if ((pid = vfork()) == -1){
+        perror("vfork");
+        return;
+    } else if (pid == 0){
+        printf("child glob %d var %d\n",glob,var);
+        glob++;
+        var++;
+        printf("child glob %d var %d\n",glob,var);
+        _exit(0);
+    } else{
+        printf("parent end glob %d var %d\n",glob,var);
+    }
+}
+int main() {
+    test_vfork2();
     return EXIT_SUCCESS;
 }

@@ -11,6 +11,6 @@
    the current process could possibly have.  */
 int main() {
     int size = getdtablesize();
-    printf("%d\n", size);//1024
+    printf("%d\n", size);
     return 0;
 }

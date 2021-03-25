@@ -12,15 +12,18 @@
 #include "tlpi_hdr.h"
 
 static void *threadFunc(void *x) {
+    int i = *(int *) x;
+    printf("child %d", i);
     return x;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     pthread_t thr;
     pthread_attr_t attr;
     int s;
+    void *res;
 
-    s = pthread_attr_init(&attr);       /* Assigns default values */
+    s = pthread_attr_init(&attr);/* Assigns default values */
     if (s != 0)
         errExitEN(s, "pthread_attr_init");
 
@@ -36,9 +39,10 @@ int main(int argc, char *argv[]) {
     if (s != 0)
         errExitEN(s, "pthread_attr_destroy");
 
-    s = pthread_join(thr, NULL);
+    s = pthread_join(thr, &res);
     if (s != 0)
         errExitEN(s, "pthread_join failed as expected");
 
+    printf("%d\n", *(int *) res);
     exit(EXIT_SUCCESS);
 }
