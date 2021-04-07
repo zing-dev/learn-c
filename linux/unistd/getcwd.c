@@ -1,5 +1,5 @@
 //
-// Created by zhangrongxiang on 2018/2/24 9:21
+// Created by zing on 2018/2/24 9:21
 // File getcwd
 //
 
@@ -17,8 +17,8 @@
 int main() {
     char buf[128];
     char *rs = getcwd(buf, sizeof(buf));
-    printf("%s\n", rs);//   /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux/unistd
-    printf("%s\n", buf);//  /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux/unistd
+    printf("rs: %s\n", rs);//   /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux/unistd
+    printf("buf: %s\n", buf);//  /mnt/c/Users/zing/workspace/c/learn-c/cmake-build-debug/linux/unistd
     printf("%d\n", buf == rs);//1
     printf("%lu\n",strlen(rs));
     return 0;
